@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>JobID</th>
+        <th>Details</th>
+        <th>Status</th>
+        <th>Progress</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>URL</th>
+        <th>LOG</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function () {
+      var table = $('#data').DataTable({
+        ajax: '/data',
+        columns: [
+          {data: 'job_key'},
+          {data: 'details'},
+          {data: 'status'},
+          {data: 'progress'},
+          {data: 'start_time'},
+          {data: 'end_time'},
+          {data: 'log_path'}
+        ],
+        columnDefs: [ {
+          "targets": -1,
+          "render": function ( data, type, row, meta ) {
+            return '<a href="'+data+'">Download</a>';
+          }
+        },
+        {
+            "targets": 1,
+            "render": function ( data, type, row, meta ) {
+                return '<details> <summary>Details</summary>  <p> '+data+' </p> </details>';
+            }
+        }
+        ]
+      });
+      setInterval( function () {
+      table.ajax.reload();
+    }, 10000 );
+    });
+
+  </script>
+{% endblock %}

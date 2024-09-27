@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nova_server.app module &mdash; Nova Server 1.3.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nova_server.backend package" href="nova_server.backend.html" />
+    <link rel="prev" title="Examples" href="../tutorials/examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Nova Server
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/introduction.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/examples.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">nova_server.app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.backend.html">nova_server.backend package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.exec.html">nova_server.exec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.route.html">nova_server.route package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.utils.html">nova_server.utils package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Nova Server</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">nova_server.app module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/nova_server.app.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-nova_server.app">
+<span id="nova-server-app-module"></span><h1>nova_server.app module<a class="headerlink" href="#module-nova_server.app" title="Permalink to this heading"></a></h1>
+<p>Standalone script for data predictions</p>
+<dl class="simple">
+<dt>Author:</dt><dd><p>Dominik Schiller &lt;<a class="reference external" href="mailto:dominik&#46;schiller&#37;&#52;&#48;uni-a&#46;de">dominik<span>&#46;</span>schiller<span>&#64;</span>uni-a<span>&#46;</span>de</a>&gt;</p>
+</dd>
+<dt>Date:</dt><dd><p>06.09.2023</p>
+</dd>
+</dl>
+<p>This script performs predictions for annotations in the NOVA database using a provided nova-server module for inference and saves the results to the NOVA-DB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param –env<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path to the environment file to read configuration from. Default: ‘’</p>
+</dd>
+<dt class="field-even">type –env<span class="colon">:</span></dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">param –host<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The host IP address for the server. Default: ‘0.0.0.0’</p>
+</dd>
+<dt class="field-even">type –host<span class="colon">:</span></dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">param –port<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The port on which the server will listen. Default: ‘8080’</p>
+</dd>
+<dt class="field-even">type –port<span class="colon">:</span></dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">param –cml_dir<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CML folder to read the training scripts from, same as in Nova. Default: ‘cml’</p>
+</dd>
+<dt class="field-even">type –cml_dir<span class="colon">:</span></dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">param –data_dir<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Data folder to read the training scripts from, same as in Nova. Default: ‘data’</p>
+</dd>
+<dt class="field-even">type –data_dir<span class="colon">:</span></dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">param –cache_dir<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Cache folder where all large files (e.g., model weights) are cached. Default: ‘cache’</p>
+</dd>
+<dt class="field-even">type –cache_dir<span class="colon">:</span></dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">param –tmp_dir<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Folder for temporary data storage. Default: ‘tmp’</p>
+</dd>
+<dt class="field-even">type –tmp_dir<span class="colon">:</span></dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">param –log_dir<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Folder for temporary data storage. Default: ‘log’</p>
+</dd>
+<dt class="field-even">type –log_dir<span class="colon">:</span></dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">app</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">host</span> <span class="mf">0.0.0.0</span> <span class="o">--</span><span class="n">port</span> <span class="mi">53771</span> <span class="o">--</span><span class="n">cml_dir</span> <span class="s2">&quot;/path/to/my/cml&quot;</span> <span class="o">--</span><span class="n">data_dir</span> <span class="s2">&quot;/path/to/my/data&quot;</span> <span class="o">--</span><span class="n">cache_dir</span> <span class="s2">&quot;/path/to/my/cache&quot;</span> <span class="o">--</span><span class="n">tmp_dir</span> <span class="s2">&quot;/path/to/my/tmp&quot;</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials/examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="nova_server.backend.html" class="btn btn-neutral float-right" title="nova_server.backend package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

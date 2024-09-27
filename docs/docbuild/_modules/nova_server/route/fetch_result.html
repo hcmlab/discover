@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nova_server.route.fetch_result &mdash; Nova Server 1.3.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Nova Server
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/introduction.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/examples.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/nova_server.app.html">nova_server.app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/nova_server.backend.html">nova_server.backend package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/nova_server.exec.html">nova_server.exec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/nova_server.route.html">nova_server.route package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/nova_server.utils.html">nova_server.utils package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Nova Server</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">nova_server.route.fetch_result</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for nova_server.route.fetch_result</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Blueprint for retrieving a job&#39;s log file</span>
+
+<span class="sd">Author:</span>
+<span class="sd">    Dominik Schiller &lt;dominik.schiller@uni-a.de&gt;</span>
+<span class="sd">Date:</span>
+<span class="sd">    27.10.2023</span>
+
+<span class="sd">This module defines a Flask Blueprint for retrieving a job&#39;s log file.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">after_this_request</span>
+<span class="kn">from</span> <span class="nn">nova_server.utils.job_utils</span> <span class="kn">import</span> <span class="n">get_job_id_from_request_form</span>
+<span class="kn">from</span> <span class="nn">nova_server.utils</span> <span class="kn">import</span> <span class="n">env</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="n">fetch_result</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s2">&quot;fetch_result&quot;</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">send_file</span><span class="p">,</span><span class="n">Flask</span><span class="p">,</span><span class="n">send_from_directory</span>
+
+<div class="viewcode-block" id="supported_file"><a class="viewcode-back" href="../../../api/nova_server.route.fetch_result.html#nova_server.route.fetch_result.supported_file">[docs]</a><span class="k">def</span> <span class="nf">supported_file</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+
+    <span class="n">file_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">]</span>
+    <span class="n">file_starts_with</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;.&#39;</span>
+    <span class="p">]</span>
+    <span class="n">file_ext</span> <span class="o">=</span> <span class="p">[</span>
+
+    <span class="p">]</span>
+    <span class="k">return</span>  <span class="ow">not</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">file_names</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">file_starts_with</span><span class="p">])</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">file_ext</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="fetch_thread"><a class="viewcode-back" href="../../../api/nova_server.route.fetch_result.html#nova_server.route.fetch_result.fetch_thread">[docs]</a><span class="nd">@fetch_result</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/fetch_result&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">fetch_thread</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieve the results of a specific job.</span>
+
+<span class="sd">    This route allows retrieving the data file for a job by providing the job&#39;s unique identifier in the request.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Data object for the respective job. 404 if not data has been found</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; POST /log</span>
+<span class="sd">        &gt;&gt;&gt; {&quot;job_id&quot;: &quot;12345&quot;}</span>
+<span class="sd">        {&quot;message&quot;: &quot;Log file content here...&quot;}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">request_form</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="n">job_id</span> <span class="o">=</span> <span class="n">get_job_id_from_request_form</span><span class="p">(</span><span class="n">request_form</span><span class="p">)</span>
+        <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">NOVA_SERVER_TMP_DIR</span><span class="p">))</span>
+
+        <span class="n">shared_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">NOVA_SERVER_TMP_DIR</span><span class="p">)</span>
+        <span class="n">job_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">shared_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">job_id</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">job_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
+        <span class="k">elif</span> <span class="n">job_dir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+
+            <span class="n">files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">supported_file</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">job_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)))</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># Zip file Initialization</span>
+                <span class="n">zip_fp</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryFile</span><span class="p">()</span>
+                <span class="n">zipfolder</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_fp</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">compression</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_STORED</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                    <span class="n">zipfolder</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">zipfolder</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+                <span class="c1"># Reset file pointer to keep handle alive</span>
+                <span class="n">zip_fp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">send_file</span><span class="p">(</span><span class="n">zip_fp</span><span class="p">,</span>
+                                 <span class="n">mimetype</span> <span class="o">=</span> <span class="s1">&#39;zip&#39;</span><span class="p">,</span>
+                                 <span class="n">download_name</span><span class="o">=</span> <span class="s1">&#39;result.zip&#39;</span><span class="p">,</span>
+                               <span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">send_file</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Empty folder&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">send_file</span><span class="p">(</span><span class="n">job_dir</span><span class="p">)</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

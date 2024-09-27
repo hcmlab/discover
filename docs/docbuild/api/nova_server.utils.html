@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nova_server.utils package &mdash; Nova Server 1.3.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nova_server.utils.deprecated_dataset_utils module" href="nova_server.utils.deprecated_dataset_utils.html" />
+    <link rel="prev" title="nova_server.route.ui module" href="nova_server.route.ui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Nova Server
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/introduction.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/examples.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nova_server.app.html">nova_server.app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.backend.html">nova_server.backend package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.exec.html">nova_server.exec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.route.html">nova_server.route package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">nova_server.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.deprecated_dataset_utils.html">nova_server.utils.deprecated_dataset_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.deprecated_db_utils.html">nova_server.utils.deprecated_db_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html">nova_server.utils.deprecated_explain_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.env.html">nova_server.utils.env module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.import_utils.html">nova_server.utils.import_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.job_utils.html">nova_server.utils.job_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.log_utils.html">nova_server.utils.log_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.thread_utils.html">nova_server.utils.thread_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.venv_utils.html">nova_server.utils.venv_utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/overview_link.html">Nova Server Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Nova Server</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">nova_server.utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/nova_server.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-nova_server.utils">
+<span id="nova-server-utils-package"></span><h1>nova_server.utils package<a class="headerlink" href="#module-nova_server.utils" title="Permalink to this heading"></a></h1>
+<p>Package containing various utility functions for NOVA-Server</p>
+<dl class="simple">
+<dt>Author:</dt><dd><p>Dominik Schiller &lt;<a class="reference external" href="mailto:dominik&#46;schiller&#37;&#52;&#48;uni-a&#46;de">dominik<span>&#46;</span>schiller<span>&#64;</span>uni-a<span>&#46;</span>de</a>&gt;</p>
+</dd>
+<dt>Date:</dt><dd><p>18.8.2023</p>
+</dd>
+</dl>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.utils.deprecated_dataset_utils.html">nova_server.utils.deprecated_dataset_utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.utils.deprecated_db_utils.html">nova_server.utils.deprecated_db_utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html">nova_server.utils.deprecated_explain_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.bk_proj"><code class="docutils literal notranslate"><span class="pre">bk_proj()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.getTopXpredictions"><code class="docutils literal notranslate"><span class="pre">getTopXpredictions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.graymap"><code class="docutils literal notranslate"><span class="pre">graymap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.heatmap"><code class="docutils literal notranslate"><span class="pre">heatmap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.heatmapCMRmap"><code class="docutils literal notranslate"><span class="pre">heatmapCMRmap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.heatmap_gist_heat"><code class="docutils literal notranslate"><span class="pre">heatmap_gist_heat()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.heatmap_inferno"><code class="docutils literal notranslate"><span class="pre">heatmap_inferno()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.heatmap_rainbow"><code class="docutils literal notranslate"><span class="pre">heatmap_rainbow()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.heatmap_viridis"><code class="docutils literal notranslate"><span class="pre">heatmap_viridis()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.heatmapgnuplot2"><code class="docutils literal notranslate"><span class="pre">heatmapgnuplot2()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.heatmapnipy_spectral"><code class="docutils literal notranslate"><span class="pre">heatmapnipy_spectral()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.image"><code class="docutils literal notranslate"><span class="pre">image()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.postprocess"><code class="docutils literal notranslate"><span class="pre">postprocess()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.deprecated_explain_utils.html#nova_server.utils.deprecated_explain_utils.preprocess"><code class="docutils literal notranslate"><span class="pre">preprocess()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.utils.env.html">nova_server.utils.env module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.utils.import_utils.html">nova_server.utils.import_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.import_utils.html#nova_server.utils.import_utils.assert_or_install_dependencies"><code class="docutils literal notranslate"><span class="pre">assert_or_install_dependencies()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.import_utils.html#nova_server.utils.import_utils.install_package"><code class="docutils literal notranslate"><span class="pre">install_package()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.utils.job_utils.html">nova_server.utils.job_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.Job"><code class="docutils literal notranslate"><span class="pre">Job</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.Job.cancel"><code class="docutils literal notranslate"><span class="pre">Job.cancel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.Job.run"><code class="docutils literal notranslate"><span class="pre">Job.run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.Job.serializable"><code class="docutils literal notranslate"><span class="pre">Job.serializable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.JobStatus"><code class="docutils literal notranslate"><span class="pre">JobStatus</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.JobStatus.ERROR"><code class="docutils literal notranslate"><span class="pre">JobStatus.ERROR</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.JobStatus.FINISHED"><code class="docutils literal notranslate"><span class="pre">JobStatus.FINISHED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.JobStatus.RUNNING"><code class="docutils literal notranslate"><span class="pre">JobStatus.RUNNING</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.JobStatus.WAITING"><code class="docutils literal notranslate"><span class="pre">JobStatus.WAITING</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.get_job_id_from_request_form"><code class="docutils literal notranslate"><span class="pre">get_job_id_from_request_form()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.job_utils.html#nova_server.utils.job_utils.get_random_name"><code class="docutils literal notranslate"><span class="pre">get_random_name()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.utils.log_utils.html">nova_server.utils.log_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.log_utils.html#nova_server.utils.log_utils.SensitiveFormatter"><code class="docutils literal notranslate"><span class="pre">SensitiveFormatter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.log_utils.html#nova_server.utils.log_utils.SensitiveFormatter.format"><code class="docutils literal notranslate"><span class="pre">SensitiveFormatter.format()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.log_utils.html#nova_server.utils.log_utils.get_log_conform_request"><code class="docutils literal notranslate"><span class="pre">get_log_conform_request()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.log_utils.html#nova_server.utils.log_utils.get_log_path_for_thread"><code class="docutils literal notranslate"><span class="pre">get_log_path_for_thread()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.log_utils.html#nova_server.utils.log_utils.get_logger_for_job"><code class="docutils literal notranslate"><span class="pre">get_logger_for_job()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.log_utils.html#nova_server.utils.log_utils.init_logger"><code class="docutils literal notranslate"><span class="pre">init_logger()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.log_utils.html#nova_server.utils.log_utils.remove_log_from_dict"><code class="docutils literal notranslate"><span class="pre">remove_log_from_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.utils.thread_utils.html">nova_server.utils.thread_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.thread_utils.html#nova_server.utils.thread_utils.BackendThread"><code class="docutils literal notranslate"><span class="pre">BackendThread</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.thread_utils.html#nova_server.utils.thread_utils.BackendThread.get_id"><code class="docutils literal notranslate"><span class="pre">BackendThread.get_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="nova_server.utils.thread_utils.html#nova_server.utils.thread_utils.BackendThread.raise_exception"><code class="docutils literal notranslate"><span class="pre">BackendThread.raise_exception()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.thread_utils.html#nova_server.utils.thread_utils.ml_thread_wrapper"><code class="docutils literal notranslate"><span class="pre">ml_thread_wrapper()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.thread_utils.html#nova_server.utils.thread_utils.status_thread_wrapper"><code class="docutils literal notranslate"><span class="pre">status_thread_wrapper()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nova_server.utils.venv_utils.html">nova_server.utils.venv_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.venv_utils.html#nova_server.utils.venv_utils.get_module_run_cmd"><code class="docutils literal notranslate"><span class="pre">get_module_run_cmd()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.venv_utils.html#nova_server.utils.venv_utils.get_python_script_run_cmd"><code class="docutils literal notranslate"><span class="pre">get_python_script_run_cmd()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.venv_utils.html#nova_server.utils.venv_utils.get_shell_script_run_cmd"><code class="docutils literal notranslate"><span class="pre">get_shell_script_run_cmd()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nova_server.utils.venv_utils.html#nova_server.utils.venv_utils.venv_dir_from_mod"><code class="docutils literal notranslate"><span class="pre">venv_dir_from_mod()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="nova_server.route.ui.html" class="btn btn-neutral float-left" title="nova_server.route.ui module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="nova_server.utils.deprecated_dataset_utils.html" class="btn btn-neutral float-right" title="nova_server.utils.deprecated_dataset_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

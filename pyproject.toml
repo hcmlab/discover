@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hcai-discover"
+authors = [
+    {name = "Dominik Schiller", email = "dominik.schiller@uni-a.de"},
+    {name = "Tobias Hallmen", email = "tobias.hallmen@uni-a.de"},
+    {name = "Tobias Baur", email = "tobias.baur@uni-a.de"},
+    {name = "Fabio Hellmann", email = "fabio.hellmann@uni-a.de"}
+]
+description = "DISCOVER is a lightweight server designed to create and manage machine learning jobs based on requests."
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["DISCOVER", "NOVA", "machine learning"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3 :: Only"
+]
+dependencies = [
+    "flask==3.0.0",
+    "hcai-discover-utils",
+    "waitress",
+    "python-dotenv",
+    "psutil",
+    "numpy >= 1.24, < 2.0",
+
+]
+dynamic = ["version"]
+
+[tool.setuptools.packages.find]
+#where = ["src"]  # list of folders that contain the packages (["."] by default)
+#include = ["my_package*"]  # package names should match these glob patterns (["*"] by default)
+exclude = ["*tests*", "local", "cache", "cml", "data", "log", "tmp"]  # exclude packages matching these glob patterns (empty by default)
+
+[tool.setuptools.dynamic]
+version = {attr = "discover.__version__"}
+
+[project.urls]
+Documentation = "https://hcmlab.github.io/nova-server/docbuild/"
+Repository = "https://github.com/hcmlab/discover"
+
+[project.scripts]
+discover = "discover.app:_run"

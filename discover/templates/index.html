@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>JobID</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Progress</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>URL</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for job in jobs %}
+        <tr>
+          <td>{{ job.job_id }}</td>
+          <!--<td>{{ job.job_type }}</td>-->
+          <td>{{ job.status }}</td>
+          <td>{{ job.progress }}</td>
+          <td>{{ job.start_time }}</td>
+          <td>{{ job.end_time }}</td>
+          <!--<td>{{ job.interactive_url }}</td>-->
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+{% block scripts %}
+  <script>
+    $(document).ready(function () {
+      $('#data').DataTable();
+    });
+  </script>
+{% endblock %}

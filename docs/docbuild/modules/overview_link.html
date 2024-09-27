@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova Server Modules &mdash; Nova Server 1.3.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="nova_server.utils.venv_utils module" href="../api/nova_server.utils.venv_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Nova Server
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/introduction.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/examples.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/nova_server.app.html">nova_server.app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/nova_server.backend.html">nova_server.backend package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/nova_server.exec.html">nova_server.exec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/nova_server.route.html">nova_server.route package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/nova_server.utils.html">nova_server.utils package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Nova Server Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#repository-structure">Repository structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#extractors">Extractors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trainer">Trainer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predictors">Predictors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Nova Server</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Nova Server Modules</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/overview_link.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nova-server-modules">
+<h1>Nova Server Modules<a class="headerlink" href="#nova-server-modules" title="Permalink to this heading"></a></h1>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
+<p>This repository contains python modules that can be used together with <a class="reference external" href="https://github.com/hcmlab/nova-server">NOVA-Server</a>.</p>
+</section>
+<section id="repository-structure">
+<h2>Repository structure<a class="headerlink" href="#repository-structure" title="Permalink to this heading"></a></h2>
+<p>The structure of the repository resembles the folder structure of the <a class="reference external" href="https://rawgit.com/hcmlab/nova/master/docs/index.html#cooperative-learning">NOVA CML folder</a>.
+In principle, we distinguish between chains and models.
+In the terminology of NOVA-Server a chain will always be implemented as a <a class="reference external" href="https://github.com/hcmlab/nova-utils/blob/main/nova_utils/interfaces/server_module.py">Extractor</a>
+while a model will always be implemented as either a <a class="reference external" href="https://github.com/hcmlab/nova-utils/blob/main/nova_utils/interfaces/server_module.py">Trainer</a> and/or and <a class="reference external" href="https://github.com/hcmlab/nova-utils/blob/main/nova_utils/interfaces/server_module.py">Predictor</a>:</p>
+<ul class="simple">
+<li><p>Extractor: Stored in the chains directory. Called by using the /extract route of the server. Writes a data stream to disk.</p></li>
+<li><p>Predictor: Store in the trainer/trainer directory. Called by using the /predict route of the server.</p></li>
+<li><p>Trainer: Stored in the trainer/template directory. Called by using the /train route of server. Trains a model and writes the trained model to the template directory. A trainer is always also a predictor.</p></li>
+</ul>
+</section>
+<section id="available-models">
+<h2>Available Models<a class="headerlink" href="#available-models" title="Permalink to this heading"></a></h2>
+<section id="extractors">
+<h3>Extractors<a class="headerlink" href="#extractors" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Module</p></th>
+<th class="head"><p>Input</p></th>
+<th class="head"><p>Output</p></th>
+<th class="head text-center"><p>Status</p></th>
+<th class="head text-left"><p>Url</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><a class="reference internal" href="#chains/nova-server/sentiment/german_sentiment"><span class="xref myst">GermanSentiment</span></a></p></td>
+<td><p>Free scheme annotation</p></td>
+<td><p>Sentiment based on german text</p></td>
+<td class="text-center"><p>✅</p></td>
+<td class="text-left"><p>https://huggingface.co/oliverguhr/german-sentiment-bert</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference internal" href="#chains/nova-server/synchrony"><span class="xref myst">Synchrony</span></a></p></td>
+<td><p>Two feature streams</p></td>
+<td><p>Synchrony between two input streams</p></td>
+<td class="text-center"><p>🚧</p></td>
+<td class="text-left"><p>https://github.com/syncpy/SyncPy</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><a class="reference internal" href="#chains/nova-server/utility/uc1"><span class="xref myst">UC1</span></a></p></td>
+<td><p>Feature stream</p></td>
+<td><p>Featurewise mean over sliding window</p></td>
+<td class="text-center"><p>✅</p></td>
+<td class="text-left"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference internal" href="#chains/nova-server/utility/uc2"><span class="xref myst">UC2</span></a></p></td>
+<td><p>Two feature streams</p></td>
+<td><p>Subtract stream two from stream one</p></td>
+<td class="text-center"><p>✅</p></td>
+<td class="text-left"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><a class="reference internal" href="#chains/nova-server/utility/uc3"><span class="xref myst">UC3</span></a></p></td>
+<td><p>Free scheme annotation</p></td>
+<td><p>Sentiment based on german text</p></td>
+<td class="text-center"><p>✅</p></td>
+<td class="text-left"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference internal" href="#chains/nova-server/utility/uc4"><span class="xref myst">UC4</span></a></p></td>
+<td><p>Audio stream and two discrete annotations</p></td>
+<td><p>Two audio files separate</p></td>
+<td class="text-center"><p>✅</p></td>
+<td class="text-left"><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="trainer">
+<h3>Trainer<a class="headerlink" href="#trainer" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Module</p></th>
+<th class="head text-center"><p>Status</p></th>
+<th class="head text-left"><p>Url</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-center"><p></p></td>
+<td class="text-left"><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="predictors">
+<h3>Predictors<a class="headerlink" href="#predictors" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Module</p></th>
+<th class="head"><p>Input</p></th>
+<th class="head"><p>Output Scheme</p></th>
+<th class="head"><p>Output Description</p></th>
+<th class="head text-center"><p>Status</p></th>
+<th class="head text-left"><p>Url</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><a class="reference internal" href="#models/trainer/free/transcript/whisperx"><span class="xref myst">whisperx</span></a></p></td>
+<td><p>Audio stream</p></td>
+<td><p>Free Annotation</p></td>
+<td><p>Transcript</p></td>
+<td class="text-center"><p>✅</p></td>
+<td class="text-left"><p>https://github.com/m-bain/whisperX</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference internal" href="#models/trainer/continuous/arousal/audio/emow2v"><span class="xref myst">wav2vec arousal</span></a></p></td>
+<td><p>Audio stream</p></td>
+<td><p>Continuous Annotation</p></td>
+<td><p>Arousal</p></td>
+<td class="text-center"><p>✅</p></td>
+<td class="text-left"><p>https://github.com/audeering/w2v2-how-to</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><a class="reference internal" href="#models/trainer/continuous/valence/audio/emow2v"><span class="xref myst">wav2vec valence</span></a></p></td>
+<td><p>Audio stream</p></td>
+<td><p>Continuous Annotation</p></td>
+<td><p>Valence</p></td>
+<td class="text-center"><p>✅</p></td>
+<td class="text-left"><p>https://github.com/audeering/w2v2-how-to</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference internal" href="#models/trainer/continuous/domincance/audio/emow2v"><span class="xref myst">wav2vec dominance</span></a></p></td>
+<td><p>Audio stream</p></td>
+<td><p>Continuous Annotation</p></td>
+<td><p>Dominance</p></td>
+<td class="text-center"><p>✅</p></td>
+<td class="text-left"><p>https://github.com/audeering/w2v2-how-to</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../api/nova_server.utils.venv_utils.html" class="btn btn-neutral float-left" title="nova_server.utils.venv_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
