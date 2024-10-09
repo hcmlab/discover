@@ -13,7 +13,7 @@ jobs:
         with:
             repository: hcmlab/discover-utils
             path: discover-utils
-            ref: refs/heads/release    
+            ref: refs/heads/main    
       - uses: actions/setup-python@v3
       - name: Install dependencies
         run: |
