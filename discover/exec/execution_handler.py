@@ -70,7 +70,7 @@ class ExecutionHandler(ABC):
             env.DISCOVER_DATA_DIR,
             env.DISCOVER_LOG_DIR,
             env.DISCOVER_CACHE_DIR,
-            env.NOVA_SERVER_TMP_DIR,
+            env.DISCOVER_TMP_DIR,
             env.DISCOVER_VIDEO_BACKEND,
         ]
 
@@ -99,7 +99,7 @@ class ExecutionHandler(ABC):
             # Add dotenv variables to arguments for script
             self._script_arguments |= self._nova_server_env_to_arg()
             self._script_arguments.setdefault(
-                "--shared_dir", os.getenv(env.NOVA_SERVER_TMP_DIR)
+                "--shared_dir", os.getenv(env.DISCOVER_TMP_DIR)
             )
 
             args = []
@@ -140,7 +140,7 @@ class ExecutionHandler(ABC):
             # Add dotenv variables to arguments for script
             self._script_arguments |= self._nova_server_env_to_arg()
             self._script_arguments.setdefault(
-                "--shared_dir", os.getenv(env.NOVA_SERVER_TMP_DIR)
+                "--shared_dir", os.getenv(env.DISCOVER_TMP_DIR)
             )
 
             self.backend_handler.run_shell_script(

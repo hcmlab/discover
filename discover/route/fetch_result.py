@@ -101,7 +101,7 @@ def fetch_thread():
         if isinstance(delete_after_download, str):
             delete_after_download = string_to_bool(delete_after_download)
 
-        shared_dir = os.getenv(env.NOVA_SERVER_TMP_DIR)
+        shared_dir = os.getenv(env.DISCOVER_TMP_DIR)
         job_dir = Path(shared_dir) / job_id
 
         if not job_dir.exists():
