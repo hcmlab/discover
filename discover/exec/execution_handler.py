@@ -115,12 +115,12 @@ class ExecutionHandler(ABC):
             # Setup virtual environment
             cml_dir = os.getenv(env.DISCOVER_CML_DIR)
             if cml_dir is None:
-                raise ValueError(f"NOVA_CML_DIR not set")
+                raise ValueError(f"DISCOVER_CML_DIR not set")
 
             module_dir = Path(cml_dir) / self.module_name
             if not module_dir.is_dir():
                 raise NotADirectoryError(
-                    f"NOVA_CML_DIR {module_dir} is not a valid directory"
+                    f"DISCOVER_CML_DIR {module_dir} is not a valid directory"
                 )
 
             extra_index_urls = os.getenv(env.VENV_EXTRA_INDEX_URLS, None)
