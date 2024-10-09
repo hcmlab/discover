@@ -12,7 +12,7 @@ import discover
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Nova Server'
+project = 'DISCOVER'
 copyright = '2023, Dominik Schiller'
 author = 'Dominik Schiller'
 release = discover.__version__
