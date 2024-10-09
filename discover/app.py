@@ -167,7 +167,7 @@ def _run():
 
         return val
 
-    print('\t#Nova Server')
+    print('\t#DISCOVER Config')
     os.environ[env.DISCOVER_HOST] = resolve_arg(
         args.host, env.DISCOVER_HOST, default_args.host
     )

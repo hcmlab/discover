@@ -78,7 +78,7 @@ All variables can be either passed directly as commandline argument, set in a do
 
 If the server started successfully your console output should look like this:
 
-Starting nova-backend server...
+Starting DISCOVER ...
 HOST: 0.0.0.0
 PORT: 8080
 DISCOVER_CML_DIR : cml
@@ -88,7 +88,7 @@ DISCOVER_TMP_DIR : tmp
 DISCOVER_LOG_DIR : log
 ...done
 
-You can find the full documentation of the project [here](https://hcmlab.github.io/nova-server/docbuild/html).
+You can find the full documentation of the project [here](https://hcmlab.github.io/discover/docbuild/).
 
 ## Citation
 If you use DISCOVER consider citing the following paper: 

@@ -16,7 +16,7 @@ def assert_or_install_dependencies(packages, trainer_name):
     site_package_path = (
         Path(site.getsitepackages()[0])
         / ".."
-        / "nova-server-site-packages"
+        / "discover-site-packages"
         / trainer_name
     ).resolve()
     site_package_path.mkdir(parents=True, exist_ok=True)

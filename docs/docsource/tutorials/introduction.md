@@ -2,10 +2,12 @@
 
 ## Prerequesites
 
-Before starting to install NOVA-Server you need to install Python and FFMPEG.
+Before starting to install DISCOVER you need to install Python and FFMPEG.
 While other Python versions may work as well the module is only tested for the following versions:
 
 * 3.9.x
+* 3.10.x
+* 3.11.x
 
 You can download the current version of python for your system [here](https://www.python.org/downloads/).
 
@@ -17,23 +19,23 @@ To do so, open a terminal at the directory where your virtual environment should
 
 You can then activate the virtual environment like this: 
 
-```.\nova-server-venv\Scripts\activate```
+```.\discover-venv\Scripts\activate```
 
 
 ## Setup
 
-Install NOVA-Server using pip like this:
+Install DISCOVER using pip like this:
 
-```pip install hcai-nova-server```
+```pip install hcai-discover```
 
 ## Start the server
 
-To start NOVA-Server you just open a Terminal and type 
+To start DISCOVER you just open a Terminal and type 
 
-```nova-server```
+```discover```
 
 
-NOVA-Server takes the following optional arguments as input:
+DISCOVER takes the following optional arguments as input:
 
 ```--env```: ```''``` : Path to a dotenv file containing your server configuration
 
@@ -51,9 +53,8 @@ NOVA-Server takes the following optional arguments as input:
 
 ```--log_dir``` : ```log``` : Directory to store logfiles.
 
-Internally NOVA-Server converts the input to environment variables with the following names:
-```NOVA_SERVER_HOST```, ```NOVA_SERVER_PORT```
-```NOVA_SERVER_CML_DIR```, ```NOVA_SERVER_CML_DIR```, ```NOVA_SERVER_CML_DIR```, ```NOVA_SERVER_CML_DIR```, ```NOVA_SERVER_CML_DIR```
+Internally DISCOVER converts the input to environment variables with the following names:
+```DISCOVER_HOST```, ```DISCOVER_PORT```, ```DISCOVER_CML_DIR```, ```DISCOVER_CML_DIR```, ```DISCOVER_CML_DIR```, ```DISCOVER_CML_DIR```, ```DISCOVER_CML_DIR```
 
 
 All variables can be either passed directly as commandline argument, set in a [dotenv](https://hexdocs.pm/dotenvy/dotenv-file-format.html) file or as system wide environment variables.
@@ -62,13 +63,16 @@ During runtime the arguments will be prioritized in this order commandline argum
 If the server started successfully your console output should look like this: 
 
 ```
-Starting nova-backend server...
-HOST: 0.0.0.0
-PORT: 8080
-NOVA_CML_DIR : cml
-NOVA_DATA_DIR : data
-NOVA_CACHE_DIR : cache
-NOVA_TMP_DIR : tmp
-NOVA_LOG_DIR : log
-...done
+Loading environment from /my/path/to/.env
+	#DISCOVER Config
+	DISCOVER_HOST: 127.0.0.1
+	DISCOVER_PORT: 37317
+	DISCOVER_CML_DIR: /cml
+	DISCOVER_DATA_DIR: /data
+	DISCOVER_CACHE_DIR: /cache
+	DISCOVER_TMP_DIR: /tmp
+	DISCOVER_LOG_DIR: /log
+	DISCOVER_BACKEND: venv
+	DISCOVER_VIDEO_BACKEND: IMAGEIO
 ```
+
