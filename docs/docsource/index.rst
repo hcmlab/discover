@@ -23,7 +23,8 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
     :maxdepth: 2
     :caption: Modules
 
-    modules/blazeface
+    .. mdinclude:: discover-modules/modules/blazeface/README.md
+
 
 .. toctree::
      :maxdepth: 2
