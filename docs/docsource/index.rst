@@ -3,10 +3,10 @@
     You can adapt this file completely to your liking, but it should at least
     contain the root `toctree` directive.
 
-:github_url: https://github.com/hcmlab/nova-server
+:github_url: https://github.com/hcmlab/discover
 
 
-NovaServer documentation!
+DISCOVER documentation!
 ======================================
 
 DISCOVER is an open-source software framework designed to facilitate computational-driven data exploration in human behavior analysis.
