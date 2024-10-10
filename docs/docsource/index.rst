@@ -18,7 +18,13 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
 
     tutorials/introduction
     tutorials/examples
-      
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Modules
+
+    modules/blazeface
+
 .. toctree::
      :maxdepth: 2
      :caption: Packages
@@ -29,11 +35,7 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
      api/discover.route
      api/discover.utils
 
-.. toctree::
-    :maxdepth: 2
-    :caption: Modules
 
-    modules/blazeface_link.md
 
 
 Indices and tables
