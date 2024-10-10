@@ -9,8 +9,8 @@
 NovaServer documentation!
 ======================================
 
-This project contains a nova backend that can be used to train models or generate explanations for the models on a remote server.
-The server api can be used either from the UI itself or as a standalone tool to just interact with an existing nova database.
+DISCOVER is an open-source software framework designed to facilitate computational-driven data exploration in human behavior analysis.
+This user-friendly and modular platform streamlines complex methodologies, enabling researchers across disciplines to engage in detailed behavioral analysis without extensive technical expertise.
 
 .. toctree::
     :maxdepth: 2
@@ -23,11 +23,11 @@ The server api can be used either from the UI itself or as a standalone tool to 
      :maxdepth: 2
      :caption: Packages
 
-     api/nova_server.app
-     api/nova_server.backend
-     api/nova_server.exec
-     api/nova_server.route
-     api/nova_server.utils
+     api/discover.app
+     api/discover.backend
+     api/discover.exec
+     api/discover.route
+     api/discover.utils
 
 .. toctree::
     :maxdepth: 2

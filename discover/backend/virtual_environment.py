@@ -40,11 +40,11 @@ class VenvHandler:
     Example:
         >>> import logging
         >>> load_dotenv("../.env")
-        >>> log_dir = Path(os.getenv('NOVA_LOG_DIR', '.'))
+        >>> log_dir = Path(os.getenv('DISCOVER_LOG_DIR', '.'))
         >>> log_file = log_dir / 'test.log'
         >>> logging.basicConfig(filename=log_file, encoding='utf-8', level=logging.DEBUG)
         >>> logger = logging.getLogger('test_logger')
-        >>> module_path = Path(os.getenv("NOVA_CML_DIR")) / "test"
+        >>> module_path = Path(os.getenv("DISCOVER_CML_DIR")) / "test"
         >>> venv_handler = VenvHandler(module_path, logger=logger, log_verbose=True)
         >>> venv_handler.run_python_script_from_file(
         ...     module_path / "test.py",

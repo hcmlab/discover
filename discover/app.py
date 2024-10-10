@@ -215,6 +215,7 @@ def _run():
     os.environ[env.VENV_LOG_VERBOSE] = resolve_arg(
         "True", env.VENV_LOG_VERBOSE, "True"
     )
+
     print("...done")
     tempfile.tempdir = os.environ[env.DISCOVER_TMP_DIR]
     host = os.environ[env.DISCOVER_HOST]

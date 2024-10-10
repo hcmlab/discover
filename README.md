@@ -23,7 +23,7 @@ Use Cases
 
 DISCOVER provides a set of blueprints for exploratory data analysis, serving as a starting point for researchers to engage in detailed behavioral analysis.
 
-### Prerequesites
+### Prerequesites
 
 Before starting to install NOVA-Server you need to install Python and FFMPEG. While other Python versions may work as well the module is only tested for the following versions:
 
@@ -38,13 +38,13 @@ You can then activate the virtual environment like this:
 
 .\nova-server-venv\Scripts\activate
 
-Setup
+#### Setup
 
-Install NOVA-Server using pip like this:
+Install DISCOVER using pip like this:
 
-pip install hcai-nova-server
+```pip install hcai-discover```
 
-Start the server
+#### Start the server
 
 To start DISCOVER you just open a Terminal and type
 
@@ -77,8 +77,8 @@ Internally DISCOVER converts the input to environment variables with the followi
 All variables can be either passed directly as commandline argument, set in a dotenv file or as system wide environment variables. During runtime the arguments will be prioritized in this order commandline arguments -> dotenv file -> environment variable -> default value.
 
 If the server started successfully your console output should look like this:
-
-Starting DISCOVER ...
+```
+Starting DISCOVER v1.0.0...
 HOST: 0.0.0.0
 PORT: 8080
 DISCOVER_CML_DIR : cml
@@ -87,8 +87,9 @@ DISCOVER_CACHE_DIR : cache
 DISCOVER_TMP_DIR : tmp
 DISCOVER_LOG_DIR : log
 ...done
+```
 
-You can find the full documentation of the project [here](https://hcmlab.github.io/discover/docbuild/).
+You can find the full documentation of the project [here](https://hcmlab.github.io/discover).
 
 ## Citation
 If you use DISCOVER consider citing the following paper: 
