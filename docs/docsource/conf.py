@@ -28,7 +28,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
     'sphinx_mdinclude',
-    'myst_parser'
+    #'myst_parser'
 
 ]
 source_suffix = ['.rst']
