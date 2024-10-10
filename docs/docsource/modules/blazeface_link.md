@@ -1,2 +1,2 @@
-```{include} discover-modules/models/blazeface/README.md
+```{include} ../../discover-modules/modules/blazeface/README.md
 ```
