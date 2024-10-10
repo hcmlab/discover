@@ -1,4 +1,4 @@
-..  NovaServer documentation master file, created by
+..  DISCOVER documentation master file, created by
     sphinx-quickstart on Thu Apr 20 15:40:50 2023.
     You can adapt this file completely to your liking, but it should at least
     contain the root `toctree` directive.
@@ -23,7 +23,7 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
     :maxdepth: 2
     :caption: Modules
 
-    .. mdinclude:: ../discover-modules/modules/blazeface/README.md
+    modules/blazeface
 
 .. toctree::
      :maxdepth: 2
