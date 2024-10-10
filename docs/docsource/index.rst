@@ -23,7 +23,7 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
     :maxdepth: 2
     :caption: Modules
 
-   modules/blazeface
+    modules/blazeface
 
 
 .. toctree::
