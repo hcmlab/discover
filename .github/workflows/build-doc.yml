@@ -23,7 +23,8 @@ jobs:
       - uses: actions/setup-python@v3
       - name: Install dependencies
         run: |
-          pip install sphinx sphinx_rtd_theme myst-parser sphinx-argparse==0.5.2
+          pip install sphinx sphinx_rtd_theme myst-parser sphinx-argparse==0.5.2 sphinx-mdinclude
+
       - name: Sphinx build
         run: |
           sphinx-apidoc -e -M -d 8 -o docs/docsource/api  discover
