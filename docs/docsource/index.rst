@@ -32,7 +32,9 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
 .. toctree::
     :maxdepth: 2
     :caption: Modules
-    modules/*
+
+    modules/blazeface_link.md
+
 
 Indices and tables
 ==================
