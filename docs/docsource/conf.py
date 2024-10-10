@@ -31,7 +31,7 @@ extensions = [
     'myst_parser'
 
 ]
-source_suffix = ['.rst', '.md']
+source_suffix = ['.rst']
 autodoc_typehints = "none"
 #napoleon_use_param = False
 napoleon_google_docstring = True  # Enable parsing of Google-style pydocs.
