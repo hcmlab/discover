@@ -20,6 +20,7 @@ jobs:
           pip install sphinx sphinx_rtd_theme myst-parser sphinx-argparse==0.5.2
       - name: Sphinx build
         run: |
+          sphinx-apidoc -e -M -d 8 -o docs/docsource/api  discover/discover
           sphinx-apidoc -e -M -d 8 -o docs/docsource/api discover-utils/discover_utils discover-utils/discover_utils/scripts/extract.py discover-utils/discover_utils/scripts/train.py discover-utils/discover_utils/scripts/predict.py
           sphinx-build discover-utils/docs/docsource _build
           sphinx-build docs/docsource _build
