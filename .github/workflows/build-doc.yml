@@ -13,7 +13,13 @@ jobs:
         with:
             repository: hcmlab/discover-utils
             path: discover-utils
-            ref: refs/heads/main    
+            ref: refs/heads/main
+      - name: Checkout discover modules
+        uses: actions/checkout@master
+        with:
+          repository: hcmlab/discover-modules
+          path: discover-modules
+          ref: refs/heads/main
       - uses: actions/setup-python@v3
       - name: Install dependencies
         run: |
