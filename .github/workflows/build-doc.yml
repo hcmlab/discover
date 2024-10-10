@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@master
         with:
           repository: hcmlab/discover-modules
-          path: docs/docsource/discover-modules
+          path: docs/discover-modules
           ref: refs/heads/main
       - uses: actions/setup-python@v3
       - name: Install dependencies
