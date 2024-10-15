@@ -1,0 +1,7 @@
+discover.route.extract module
+=============================
+
+.. automodule:: discover.route.extract
+   :members:
+   :undoc-members:
+   :show-inheritance:

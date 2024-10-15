@@ -1,0 +1,15 @@
+discover\_utils.interfaces package
+==================================
+
+.. automodule:: discover_utils.interfaces
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover_utils.interfaces.server_module
