@@ -314,7 +314,7 @@ class VenvHandler:
             raise subprocess.CalledProcessError(returncode=return_code, cmd=run_cmd)
 
     def kill(self):
-        """Kills parent and children processess"""
+        """Kills parent and children processes"""
         parent = psutil.Process(self.current_process.pid)
         # kill all the child processes
         for child in parent.children(recursive=True):
