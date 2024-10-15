@@ -13,11 +13,17 @@ jobs:
         with:
             repository: hcmlab/discover-utils
             path: discover-utils
-            ref: refs/heads/main    
+            ref: refs/heads/main
+      - name: Checkout discover modules
+        uses: actions/checkout@master
+        with:
+          repository: hcmlab/discover-modules
+          path: docs/discover-modules
+          ref: refs/heads/main
       - uses: actions/setup-python@v3
       - name: Install dependencies
         run: |
-          pip install sphinx sphinx_rtd_theme myst-parser sphinx-argparse==0.5.2
+          pip install sphinx sphinx_rtd_theme myst-parser sphinx-argparse==0.5.2 sphinx-mdinclude
       - name: Sphinx build
         run: |
           sphinx-apidoc -e -M -d 8 -o docs/docsource/api  discover

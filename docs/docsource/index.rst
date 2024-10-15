@@ -6,7 +6,7 @@
 :github_url: https://github.com/hcmlab/discover
 
 
-DISCOVER documentation!
+DISCOVER documentation
 ======================================
 
 DISCOVER is an open-source software framework designed to facilitate computational-driven data exploration in human behavior analysis.
@@ -18,7 +18,18 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
 
     tutorials/introduction
     tutorials/examples
-      
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Modules
+
+    modules/blazeface
+    modules/diaristation
+    modules/facemesh
+    modules/libreface
+    modules/whisperx
+
+
 .. toctree::
      :maxdepth: 2
      :caption: Packages
@@ -29,11 +40,7 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
      api/discover.route
      api/discover.utils
 
-.. toctree::
-    :maxdepth: 2
-    :caption: Modules
 
-    modules/overview_link.md
 
 
 Indices and tables
