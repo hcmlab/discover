@@ -78,7 +78,7 @@ DISCOVER takes the following optional arguments as input:
 
 Internally DISCOVER converts the input to environment variables with the following names:
 
-```DISCOVER_SERVER_HOST```, ```DISCOVER_PORT```, ```DISCOVER_CML_DIR```, ```DISCOVER_CML_DIR```, ```DISCOVER_CML_DIR```, ```DISCOVER_CML_DIR```, ```DISCOVER_CML_DIR```
+```DISCOVER_SERVER_HOST```, ```DISCOVER_PORT```, ```DISCOVER_CML_DIR```, ```DISCOVER_DATA_DIR```, ```DISCOVER_TMP_DIR```, ```DISCOVER_CML_DIR```, ```DISCOVER_LOG_DIR```
 
 
 All variables can be either passed directly as commandline argument, set in a [dotenv](https://hexdocs.pm/dotenvy/dotenv-file-format.html) file or as system wide environment variables.

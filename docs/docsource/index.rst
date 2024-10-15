@@ -24,6 +24,10 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
     :caption: Modules
 
     modules/blazeface
+    modules/diaristation
+    modules/facemesh
+    modules/libreface
+    modules/whisperx
 
 
 .. toctree::
