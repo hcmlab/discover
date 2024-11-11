@@ -88,11 +88,19 @@ class ExecutionHandler(ABC):
             import discover_utils as nu
             from importlib.metadata import entry_points
 
-            ep = [
-                x
-                for x in entry_points().get("console_scripts")
-                if x.name == self.run_script
-            ][0]
+            try:
+                ep = [
+                    x
+                    for x in entry_points().get("console_scripts")
+                    if x.name == self.run_script
+                ][0]
+            except AttributeError:
+                ep = [
+                    x
+                    for x in entry_points(group="console_scripts")
+                    if x.name == self.run_script
+                ][0]
+                
             run_module = importlib.import_module(ep.module)
             main = getattr(run_module, "main")
 
