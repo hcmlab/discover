@@ -66,7 +66,7 @@ Just remember the name :)
 Finally, in the bottom right window you can select various options for the selected module. 
 For a detailed explanation of the options refer to the [documentation](https://hcmlab.github.io/discover/modules/whisperx.html#) of the module.
 
-### 4. Calculating the transcript
+### 4. Creating the transcript
 Once you are satisfied with your selection hit `Send`. 
 Now the text in the bottom left should change to "Process running..." and you should start to see logging output in the log window above the option window on the right side.
 You can now leave NOVA or wait till the process is finished. 
