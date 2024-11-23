@@ -45,7 +45,8 @@ You will find an explanation for each parameter in the API section under `POST /
 
 Now that we have installed all the tools necessary we can start to explore our data in NOVA. 
 To this end we will use a mockup therapy session interaction as a running example. 
-You can download the transcript in the NOVA annotation format [here]()
+You can download the transcript in the NOVA annotation format [here](https://github.com/hcmlab/discover/tree/main/docs/docsource/data)
+
 
 ### Interactive data exploration
 
