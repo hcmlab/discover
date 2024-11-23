@@ -107,7 +107,7 @@ For the first use case we are going to translate the transcript from english to 
 Keep in mind that LENS through DISCOVER only works together with the NOVA database.
 Therefore, you will need to import all the transcripts you want to process into the database before using them.
 
-<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/free_prompt?raw=true" alt="Alt Text" width="500" height="200">
+<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/free_prompt.png?raw=true" alt="Alt Text" width="500" height="200">
 
 At first we are going to create a new free annotation scheme in our target database called `llm_translation`. 
 To begin with the extraction process we first open the DISCOVER modules in NOVA by clicking on  `LEARNING` -> `DISCOVER Server`. 
@@ -123,4 +123,4 @@ In the prompt window we finally type the instruction we want the LLM to apply to
 
 After the module has finished processing navigate to `Database` -> `Load Session` and select the newly created annotation to verify your results. 
 
-<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/translation?raw=true" alt="Alt Text" width="500" height="200">
+<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/translation.png?raw=true" alt="Alt Text" width="500" height="200">
