@@ -38,6 +38,7 @@ For the DISCOVER settings you only need to insert the host ip address and the po
 In the LENS settings page you can specify more parameters that are relevant to how the LLMs behind LENS should interact with the data.
 For an explanation of the individual parameters refer to [the LENS github repository](https://github.com/hcmlab/lens?tab=readme-ov-file#api).
 You will find an explanation for each parameter in the API section under `POST /assist`.  
+
 <img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/nova_lens.png?raw=true" alt="Alt Text" width="500" height="300">
 
 ## Usage
