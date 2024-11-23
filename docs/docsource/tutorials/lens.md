@@ -30,3 +30,5 @@ Once the three services are up and running we first need to connect NOVA to DISC
 To this end open NOVA and click on the gear icon in the top left corner. 
 In the settings menu you should see two tabs DISCOVER and LENS.
 
+
+<img src="../imgs/nova_lens.png" alt="Alt Text" width="500" height="400">
