@@ -51,7 +51,7 @@ Finally provide a fitting name to scheme (e.g. transcript) and hit `ok`.
 Now that we are done with our database preparation we can finally calculate the transcript.
 Click on `LEARNING` -> `DISCOVER Server` in NOVA and you will see the following window: 
 
-<a href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/discover_module?raw=true"><img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/discover_module.png?raw=true" alt="Alt Text" width="500" height="300"></a>
+<a href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/discover_module.png?raw=true"><img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/discover_module.png?raw=true" alt="Alt Text" width="500" height="300"></a>
 
 
 Select the respective dataset (1) in the left column. 
