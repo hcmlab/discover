@@ -18,6 +18,7 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
 
     tutorials/introduction
     tutorials/examples
+    tutorials/lens
 
 .. toctree::
     :maxdepth: 2
@@ -28,6 +29,7 @@ This user-friendly and modular platform streamlines complex methodologies, enabl
     modules/facemesh
     modules/libreface
     modules/whisperx
+    modules/lens
 
 
 .. toctree::

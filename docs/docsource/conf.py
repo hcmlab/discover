@@ -54,7 +54,9 @@ html_theme_options = {
 }
 html_static_path = ['_static']
 html_sidebars = {"**": ["globaltoc.html", "localtoc.html", "searchbox.html"]}
-
+html_css_files = [
+    'custom.css',
+]
 # autodoc_default_options = {
 #     'undoc-members': True,
 #     #'special-members': True
