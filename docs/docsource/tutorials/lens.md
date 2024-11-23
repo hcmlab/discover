@@ -53,11 +53,12 @@ To this end you can just hit the LENS tab on the right side of the NOVA tab bar 
 
 In the upcoming chat window you will see a textbar where you can ask your questions to LENS a model selection drop down menu to select the model you want to interact with and `Context-Aware` checkbox.  
 If you check this box NOVA will automatically attach all currently opened Free and Discrete annotations to the message.
-<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/lens_window.png?raw=true" alt="Alt Text" width="500" height="200">
- 
-For example if you want to analyze the contents of our demo transcript you can just open it in NOVA and start asking LENS about the contents of the transcript. 
 
-<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/lens_chat.png?raw=true" alt="Alt Text" width="500" height="200">
+<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/lens_window.png?raw=true" alt="Alt Text" width="500" height="200">
+
+For example if you want to analyze the contents of our demo transcript you can just open it in NOVA and start asking LENS about the contents of the transcript.
+
+<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/lens_chat.png?raw=true" alt="Alt Text" width="500" height="400">
 
 Keep in mind that the roles and sequential order of the opened annotations will be guaranteed but no specific time-information is provided to the LENS.
 For example The request created by NOVA could look like this.
@@ -107,7 +108,7 @@ For the first use case we are going to translate the transcript from english to 
 Keep in mind that LENS through DISCOVER only works together with the NOVA database.
 Therefore, you will need to import all the transcripts you want to process into the database before using them.
 
-<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/free_prompt.png?raw=true" alt="Alt Text" width="500" height="200">
+<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/free_prompt.png?raw=true" alt="Alt Text" width="1920" height="500">
 
 At first we are going to create a new free annotation scheme in our target database called `llm_translation`. 
 To begin with the extraction process we first open the DISCOVER modules in NOVA by clicking on  `LEARNING` -> `DISCOVER Server`. 
@@ -123,4 +124,4 @@ In the prompt window we finally type the instruction we want the LLM to apply to
 
 After the module has finished processing navigate to `Database` -> `Load Session` and select the newly created annotation to verify your results. 
 
-<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/translation.png?raw=true" alt="Alt Text" width="500" height="200">
+<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/translation.png?raw=true" alt="Alt Text" width="1920" height="500">
