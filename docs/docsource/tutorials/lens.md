@@ -94,7 +94,7 @@ For example The request created by NOVA could look like this.
 ```
 
 
-### LENS over DISCOVER
+### LENS via DISCOVER
 
 Another way to interact with LENS is by using the [DISCOVER module](https://github.com/hcmlab/discover-modules/tree/main/modules/lens).
 With this module DISCOVER uses LENS to automatically create annotations from a provided transcript and a respective prompt.
@@ -121,7 +121,6 @@ Specify the ip and the port under which the LENS server is reachable.
 Specify the provider and and the model you want to use. If you are unsure which models are supported by your LENS installation you can always check the model selection from the LENS chat window in NOVA.
 In the prompt window we finally type the instruction we want the LLM to apply to each label. In our case type "translate the following text to german".
 
+After the module has finished processing navigate to `Database` -> `Load Session` and select the newly created annotation to verify your results. 
 
-
-
-
+<img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/translation?raw=true" alt="Alt Text" width="500" height="200">
