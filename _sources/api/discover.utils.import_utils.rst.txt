@@ -1,0 +1,7 @@
+discover.utils.import\_utils module
+===================================
+
+.. automodule:: discover.utils.import_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

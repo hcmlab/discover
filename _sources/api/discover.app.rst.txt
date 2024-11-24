@@ -1,0 +1,7 @@
+discover.app module
+===================
+
+.. automodule:: discover.app
+   :members:
+   :undoc-members:
+   :show-inheritance:

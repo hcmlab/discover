@@ -1,0 +1,7 @@
+discover.utils.thread\_utils module
+===================================
+
+.. automodule:: discover.utils.thread_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

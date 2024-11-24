@@ -1,0 +1,7 @@
+discover.data.countries module
+==============================
+
+.. automodule:: discover.data.countries
+   :members:
+   :undoc-members:
+   :show-inheritance:
