@@ -39,7 +39,7 @@ dynamic = ["version"]
 [tool.setuptools.packages.find]
 #where = ["src"]  # list of folders that contain the packages (["."] by default)
 #include = ["my_package*"]  # package names should match these glob patterns (["*"] by default)
-exclude = ["*tests*", "local", "cache", "cml", "data", "log", "tmp"]  # exclude packages matching these glob patterns (empty by default)
+exclude = ["*tests*", "local", "cache", "cml", "data", "log", "tmp", "build", "dist", "*.egg-info"]  # exclude packages matching these glob patterns (empty by default)
 
 [tool.setuptools.package-data]
 discover = ["templates/*.html"]
