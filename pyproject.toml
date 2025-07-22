@@ -41,6 +41,9 @@ dynamic = ["version"]
 #include = ["my_package*"]  # package names should match these glob patterns (["*"] by default)
 exclude = ["*tests*", "local", "cache", "cml", "data", "log", "tmp"]  # exclude packages matching these glob patterns (empty by default)
 
+[tool.setuptools.package-data]
+discover = ["templates/*.html"]
+
 [tool.setuptools.dynamic]
 version = {attr = "discover.__version__"}
 
