@@ -7,7 +7,7 @@ ui = Blueprint("ui", __name__)
 @ui.route("/")
 def index():
     jobs = job_utils.get_all_jobs()
-    return render_template("ajax_template.html", title="Current Jobs", jobs=jobs)
+    return render_template("index.html", title="Current Jobs", jobs=jobs)
 
 
 @ui.route("/data")

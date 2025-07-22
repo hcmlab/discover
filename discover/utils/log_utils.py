@@ -10,27 +10,39 @@ Date:
 import logging
 import threading
 import os
-import re
 from pathlib import Path
 from discover.utils import job_utils, env
 
 LOGS = {}
 
 class SensitiveFormatter(logging.Formatter):
-    """Formatter that removes sensitive information in urls."""
-    @staticmethod
-    def _filter(s):
-        password_regex = r"((?<=Password\':) |(?<=db_password)).*?(\"|\').*?(\"|\')"
-        return re.sub(password_regex, r" **** ", s)
-
+    """Formatter that removes sensitive information - now uses centralized sanitization."""
     def format(self, record):
-        original = logging.Formatter.format(self, record)
-        return self._filter(original)
+        # Note: The sanitization is now handled at the data level via sanitize_sensitive_data()
+        # This formatter is kept for compatibility but no longer needs regex filtering
+        return logging.Formatter.format(self, record)
+
+def sanitize_sensitive_data(data):
+    """Sanitize sensitive information from any dictionary or request form"""
+    import copy
+    
+    if not data:
+        return data
+        
+    # Create a copy to avoid modifying original
+    sanitized = copy.deepcopy(dict(data))
+    
+    # Replace known password keys with masked values  
+    password_keys = ['password', 'dbPassword', 'db_password']
+    for key in password_keys:
+        if key in sanitized:
+            sanitized[key] = "****"
+    
+    return sanitized
 
 def get_log_conform_request(request_form):
-    log_conform_request = dict(request_form)
-    log_conform_request["password"] = "---"
-    return log_conform_request
+    """Sanitize sensitive information from request form for logging"""
+    return sanitize_sensitive_data(request_form)
 
 
 def get_log_path_for_thread(job_id):

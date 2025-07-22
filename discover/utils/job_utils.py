@@ -7,7 +7,6 @@ Date:
 
 """
 
-import copy
 import random
 from datetime import datetime
 from enum import Enum
@@ -63,7 +62,7 @@ class JobStatus(Enum):
 
 
 class Job:
-    def __init__(self, job_key, interactive_url=None, log_path=None, details=None):
+    def __init__(self, job_key, interactive_url=None, log_path=None, details=None, job_type=None):
         self.start_time = None
         self.end_time = None
         self.progress = None
@@ -72,19 +71,38 @@ class Job:
         self.interactive_url = interactive_url
         self.log_path = log_path
         self.details = details
+        self.job_type = job_type
         self.execution_handler = None
 
     def serializable(self):
-        s = copy.deepcopy(vars(self))
-        for key in s.keys():
-            s[key] = str(s[key])
-        return s
+        # Only include serializable fields, avoid execution_handler which contains locks
+        # Try to get job type from execution handler if available
+        job_type = self.job_type
+        if not job_type and self.execution_handler and hasattr(self.execution_handler, 'action'):
+            job_type = self.execution_handler.action.value if hasattr(self.execution_handler.action, 'value') else str(self.execution_handler.action)
+        
+        return {
+            'job_key': str(self.job_key),
+            'job_type': str(job_type) if job_type else 'Unknown',
+            'status': str(self.status.name if hasattr(self.status, 'name') else self.status),
+            # 'progress': str(self.progress) if self.progress else '',  # TODO: Implement progress tracking per session and overall sessions
+            'start_time': str(self.start_time) if self.start_time else '',
+            'end_time': str(self.end_time) if self.end_time else '',
+            'log_path': str(self.log_path) if self.log_path else '',
+            'details': str(self._sanitize_details()) if self.details else '',
+            'interactive_url': str(self.interactive_url) if self.interactive_url else ''
+        }
 
     def run(self):
         self.execution_handler.run()
 
     def cancel(self):
         self.execution_handler.cancel()
+    
+    def _sanitize_details(self):
+        """Sanitize sensitive information from job details"""
+        from . import log_utils
+        return log_utils.sanitize_sensitive_data(self.details)
 
 
 @status_thread_wrapper

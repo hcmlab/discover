@@ -45,7 +45,7 @@ from waitress import serve
 from discover.utils import env
 
 print(f"Starting DISCOVER v{__version__}...")
-app = Flask(__name__, template_folder="./templates")
+app = Flask(__name__, template_folder="templates")
 app.register_blueprint(train)
 app.register_blueprint(process)
 app.register_blueprint(log)

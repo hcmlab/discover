@@ -38,7 +38,7 @@ def process_data(request_form, job_id):
     #job_id = get_job_id_from_request_form(request_form)
     job_utils.update_status(job_id, job_utils.JobStatus.RUNNING)
     logger = log_utils.get_logger_for_job(job_id)
-    logger.info(request_form)
+    logger.info(log_utils.sanitize_sensitive_data(request_form))
 
     job = job_utils.get_job(job_id)
     job.execution_handler = NovaProcessHandler(request_form, logger=logger, backend=os.getenv(env.DISCOVER_BACKEND))
