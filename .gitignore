@@ -209,3 +209,10 @@ nova_server/tests/hcai_nova_dynamic/1.0.0/hcai_nova_dynamic-dynamic_split.tfreco
 nova_server/tests/hcai_nova_dynamic/1.0.0/smile.labels.txt
 /test_files/
 cache
+
+# SSL certificates - contain private keys, should not be committed
+*.pem
+*.crt
+*.key
+*.p12
+*.pfx

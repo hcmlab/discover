@@ -41,7 +41,9 @@ from discover.route.upload import upload
 import argparse
 import os
 from pathlib import Path
-from waitress import serve
+#from waitress import serve
+from cheroot.wsgi import Server as WSGIServer
+from cheroot.ssl.builtin import BuiltinSSLAdapter
 from discover.utils import env
 
 print(f"Starting DISCOVER v{__version__}...")
@@ -221,8 +223,30 @@ def _run():
     host = os.environ[env.DISCOVER_HOST]
     port = int(os.environ[env.DISCOVER_PORT])
 
-    serve(app, host=host, port=port, threads=8)
-
+    # SSL setup - simple approach
+    ssl_cert = Path(__file__).parent / 'discover_cert.pem'
+    ssl_key = Path(__file__).parent / 'discover_key.pem'
+    
+    server = WSGIServer((host, port), app, numthreads=8)
+    
+    if ssl_cert.exists() and ssl_key.exists():
+        server.ssl_adapter = BuiltinSSLAdapter(str(ssl_cert), str(ssl_key))
+        print(f"DISCOVER HTTPS server starting on {host}:{port}")
+        server.start()
+    else:
+        print(f"SSL certificates not found at {ssl_cert} and {ssl_key}")
+        print("To enable HTTPS, generate certificates with:")
+        if host == '0.0.0.0':
+            print("  For local access only:")
+            print(f"    openssl req -x509 -newkey rsa:2048 -keyout {ssl_key} -out {ssl_cert} -days 365 -nodes -subj '/CN=localhost'")
+            print("  For local + external access (replace YOUR_EXTERNAL_IP with actual server IP):")
+            print(f"    openssl req -x509 -newkey rsa:2048 -keyout {ssl_key} -out {ssl_cert} -days 365 -nodes \\")
+            print(f"      -subj '/CN=YOUR_EXTERNAL_IP' -addext 'subjectAltName=DNS:localhost,IP:127.0.0.1,IP:YOUR_EXTERNAL_IP'")
+        else:
+            print(f"  For configured host ({host}):")
+            print(f"    openssl req -x509 -newkey rsa:2048 -keyout {ssl_key} -out {ssl_cert} -days 365 -nodes \\")
+            print(f"      -subj '/CN={host}' -addext 'subjectAltName=DNS:localhost,IP:127.0.0.1,IP:{host}'")
+        print(f"Aborting...")
 
 if __name__ == "__main__":
     _run()
