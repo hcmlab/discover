@@ -1,0 +1,7 @@
+discover.route.predict module
+=============================
+
+.. automodule:: discover.route.predict
+   :members:
+   :show-inheritance:
+   :undoc-members:

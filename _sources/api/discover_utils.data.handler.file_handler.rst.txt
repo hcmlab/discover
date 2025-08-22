@@ -1,0 +1,7 @@
+discover\_utils.data.handler.file\_handler module
+=================================================
+
+.. automodule:: discover_utils.data.handler.file_handler
+   :members:
+   :show-inheritance:
+   :undoc-members:
