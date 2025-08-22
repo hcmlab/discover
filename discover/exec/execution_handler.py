@@ -151,7 +151,7 @@ class ExecutionHandler(ABC):
                 "--shared_dir", os.getenv(env.DISCOVER_TMP_DIR)
             )
 
-            self.backend_handler.run_shell_script(
+            self.backend_handler.run_console_script(
                 self.run_script,
                 script_kwargs=self._script_arguments,
             )

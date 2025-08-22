@@ -84,20 +84,28 @@ class VenvHandler:
             # self.logger.error(e)
         stream.close()
 
-    def _run_cmd(self, cmd: str, wait: bool = True) -> int:
+    def _run_cmd(self, cmd, wait: bool = True) -> int:
         """
         Executes a command in a subprocess and logs the output.
 
         Args:
-           cmd (str): The command to execute.
+           cmd (str or list): The command to execute. String for shell commands, list for direct execution.
            wait (bool, optional): If True, wait for the command to complete.
 
         Returns:
             int: Return code of the executed command
         """
-        # TODO check if CREATE_NEW_PROCESS_GROUP works in unix
+        # Use shell=False for list commands to avoid ARG_MAX limits
+        use_shell = isinstance(cmd, str)
+        
+        # Use threading approach for all commands, but ensure proper flushing
+        # Set environment to force unbuffered output from Python subprocesses  
+        env = os.environ.copy()
+        env['PYTHONUNBUFFERED'] = '1'
+        
         self.current_process = Popen(
-            cmd, stdout=PIPE, stderr=PIPE, shell=True, universal_newlines=True
+            cmd, stdout=PIPE, stderr=PIPE, shell=use_shell, universal_newlines=True, 
+            bufsize=0, env=env  # Unbuffered
         )
         t1 = Thread(target=self._reader, args=(self.current_process.stdout, "stdout"))
         t1.start()
@@ -121,7 +129,7 @@ class VenvHandler:
         if not venv_dir.is_dir():
             existed = False
             try:
-                run_cmd = f"{sys.executable} -m venv {venv_dir}"
+                run_cmd = [sys.executable, "-m", "venv", str(venv_dir)]
                 self._run_cmd(run_cmd)
             except Exception as e:
                 shutil.rmtree(venv_dir)
@@ -216,9 +224,11 @@ class VenvHandler:
         # in case of exception log error and install latest release
         except Exception as e:
             self.logger.exception(e)
-            args.append("hcai-discover-utils")
+            package = "hcai-discover-utils"
         finally:
-            args.append(f'"{package}"')
+            # Clean package string and add to args
+            clean_package = package.strip().strip('"').strip("'")
+            args.append(clean_package)
             run_cmd = vu.get_module_run_cmd(self.venv_dir, "pip", args=args)
             self._run_cmd(run_cmd)
 
@@ -285,6 +295,41 @@ class VenvHandler:
         return_code = self._run_cmd(run_cmd)
         if not return_code == 0:
             raise subprocess.CalledProcessError(returncode=return_code, cmd=run_cmd)
+
+    def run_console_script(
+        self, script: str, script_args: list = None, script_kwargs: dict = None
+    ):
+        """
+        Runs a console script installed in the virtual environment using direct execution.
+
+        Args:
+            script (str): The name of the console script to run.
+            script_args (list, optional): List of positional arguments to pass to the script.
+            script_kwargs (dict, optional): Dictionary of keyword arguments to pass to the script.
+
+        Raises:
+            ValueError: If the virtual environment has not been initialized. Call `init_venv()` first.
+            subprocess.CalledProcessError: If the executed command exits with a return value other than 0
+        """
+        if self.venv_dir is None:
+            raise ValueError(
+                "Virtual environment has not been initialized. Call <init_venv()> first."
+            )
+        run_cmd, temp_file = vu.get_console_script_run_cmd(
+            self.venv_dir, script, script_args, script_kwargs
+        )
+        
+        try:
+            return_code = self._run_cmd(run_cmd)
+            if not return_code == 0:
+                raise subprocess.CalledProcessError(returncode=return_code, cmd=run_cmd)
+        finally:
+            # Clean up temporary argument file if it was created
+            if temp_file and os.path.exists(temp_file):
+                try:
+                    os.unlink(temp_file)
+                except OSError:
+                    pass  # Ignore cleanup errors
 
     def run_shell_script(
         self, script: str, script_args: list = None, script_kwargs: dict = None

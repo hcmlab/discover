@@ -130,9 +130,9 @@ def update_status(job_key, status: JobStatus):
     try:
         JOBS[job_key].status = status
 
-        if status == status.RUNNING:
+        if status == JobStatus.RUNNING:
             JOBS[job_key].start_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        if status == status.FINISHED or status == status.ERROR:
+        if status == JobStatus.FINISHED or status == JobStatus.ERROR:
             JOBS[job_key].end_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     except KeyError:
         print(f"Key {job_key} is not in the dictionary")
