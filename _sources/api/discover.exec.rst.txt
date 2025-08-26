@@ -1,0 +1,15 @@
+discover.exec package
+=====================
+
+.. automodule:: discover.exec
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover.exec.execution_handler

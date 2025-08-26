@@ -1,0 +1,19 @@
+discover\_utils.data.file\_reader.video package
+===============================================
+
+.. automodule:: discover_utils.data.file_reader.video
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover_utils.data.file_reader.video.decord
+   discover_utils.data.file_reader.video.decord_batch
+   discover_utils.data.file_reader.video.imageio
+   discover_utils.data.file_reader.video.moviepy
+   discover_utils.data.file_reader.video.pyav

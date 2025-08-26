@@ -1,0 +1,16 @@
+discover\_utils.data.provider package
+=====================================
+
+.. automodule:: discover_utils.data.provider
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover_utils.data.provider.data_manager
+   discover_utils.data.provider.dataset_iterator

@@ -1,0 +1,7 @@
+discover.route.ui module
+========================
+
+.. automodule:: discover.route.ui
+   :members:
+   :show-inheritance:
+   :undoc-members:
