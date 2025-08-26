@@ -65,20 +65,22 @@ DISCOVER takes the following optional arguments as input:
 
 --port : 8080 : The port for the Server to be bound to
 
---cml_dir : cml : The cooperative machine learning directory for Nova
+--cml_dir : cml : The cooperative machine learning directory containing DISCOVER modules (available at: https://github.com/hcmlab/discover-modules)
 
---data_dir : data : Directory where the Nova data resides
+--data_dir : data : Directory where the data resides
 
 --cache_dir : cache : Cache directory for Models and other downloadable content
 
 --tmp_dir : tmp : Directory to store data for temporary usage
 
 --log_dir : log : Directory to store logfiles.
+
+--use_tls : Enable TLS/SSL for HTTPS connections (requires certificates)
 ```
 
 Internally DISCOVER converts the input to environment variables with the following names: 
 
-```DISCOVER_SERVER_HOST```, ```DISCOVER_PORT```, ```DISCOVER_CML_DIR```, ```DISCOVER_DATA_DIR```, ```DISCOVER_TMP_DIR```, ```DISCOVER_CML_DIR```, ```DISCOVER_LOG_DIR```
+```DISCOVER_HOST```, ```DISCOVER_PORT```, ```DISCOVER_CML_DIR```, ```DISCOVER_DATA_DIR```, ```DISCOVER_CACHE_DIR```, ```DISCOVER_TMP_DIR```, ```DISCOVER_LOG_DIR```, ```DISCOVER_USE_TLS```
 
 
 All variables can be either passed directly as commandline argument, set in a [dotenv](https://hexdocs.pm/dotenvy/dotenv-file-format.html) file or as system wide environment variables.
@@ -95,7 +97,16 @@ DISCOVER_CACHE_DIR : cache
 DISCOVER_TMP_DIR : tmp
 DISCOVER_LOG_DIR : log
 ...done
+DISCOVER HTTP server starting on 0.0.0.0:8080
 ```
+
+### Modules
+
+DISCOVER modules contain the machine learning models and processing pipelines. You can get the official modules from:
+
+**https://github.com/hcmlab/discover-modules**
+
+Clone or download the modules repository and set the `--cml_dir` parameter to point to the modules directory.
 
 You can find the full documentation of the project [here](https://hcmlab.github.io/discover).
 
