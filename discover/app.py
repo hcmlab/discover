@@ -118,6 +118,13 @@ parser.add_argument(
     help="The backend used for reading videos requests",
 )
 
+parser.add_argument(
+    "--use_tls",
+    action="store_true",
+    default=False,
+    help="Enable TLS/SSL for HTTPS connections",
+)
+
 
 # Error Handling
 @app.errorhandler(Exception)
@@ -208,6 +215,10 @@ def _run():
     os.environ[env.DISCOVER_VIDEO_BACKEND] = resolve_arg(
         args.video_backend, env.DISCOVER_VIDEO_BACKEND, default_args.video_backend
     )
+    
+    os.environ[env.DISCOVER_USE_TLS] = resolve_arg(
+        str(args.use_tls), env.DISCOVER_USE_TLS, str(default_args.use_tls)
+    )
 
     print('\n\t#Processing backend')
 
@@ -223,30 +234,37 @@ def _run():
     host = os.environ[env.DISCOVER_HOST]
     port = int(os.environ[env.DISCOVER_PORT])
 
-    # SSL setup - simple approach
-    ssl_cert = Path(__file__).parent / 'discover_cert.pem'
-    ssl_key = Path(__file__).parent / 'discover_key.pem'
-    
     server = WSGIServer((host, port), app, numthreads=8)
     
-    if ssl_cert.exists() and ssl_key.exists():
-        server.ssl_adapter = BuiltinSSLAdapter(str(ssl_cert), str(ssl_key))
-        print(f"DISCOVER HTTPS server starting on {host}:{port}")
-        server.start()
-    else:
-        print(f"SSL certificates not found at {ssl_cert} and {ssl_key}")
-        print("To enable HTTPS, generate certificates with:")
-        if host == '0.0.0.0':
-            print("  For local access only:")
-            print(f"    openssl req -x509 -newkey rsa:2048 -keyout {ssl_key} -out {ssl_cert} -days 365 -nodes -subj '/CN=localhost'")
-            print("  For local + external access (replace YOUR_EXTERNAL_IP with actual server IP):")
-            print(f"    openssl req -x509 -newkey rsa:2048 -keyout {ssl_key} -out {ssl_cert} -days 365 -nodes \\")
-            print(f"      -subj '/CN=YOUR_EXTERNAL_IP' -addext 'subjectAltName=DNS:localhost,IP:127.0.0.1,IP:YOUR_EXTERNAL_IP'")
+    # Check if TLS is enabled
+    use_tls = os.environ[env.DISCOVER_USE_TLS].lower() == 'true'
+    
+    if use_tls:
+        ssl_cert = Path(__file__).parent / 'discover_cert.pem'
+        ssl_key = Path(__file__).parent / 'discover_key.pem'
+        
+        if ssl_cert.exists() and ssl_key.exists():
+            server.ssl_adapter = BuiltinSSLAdapter(str(ssl_cert), str(ssl_key))
+            print(f"DISCOVER HTTPS server starting on {host}:{port}")
         else:
-            print(f"  For configured host ({host}):")
-            print(f"    openssl req -x509 -newkey rsa:2048 -keyout {ssl_key} -out {ssl_cert} -days 365 -nodes \\")
-            print(f"      -subj '/CN={host}' -addext 'subjectAltName=DNS:localhost,IP:127.0.0.1,IP:{host}'")
-        print(f"Aborting...")
+            print(f"SSL certificates not found at {ssl_cert} and {ssl_key}")
+            print("To enable HTTPS, generate certificates with:")
+            if host == '0.0.0.0':
+                print("  For local access only:")
+                print(f"    openssl req -x509 -newkey rsa:2048 -keyout {ssl_key} -out {ssl_cert} -days 365 -nodes -subj '/CN=localhost'")
+                print("  For local + external access (replace YOUR_EXTERNAL_IP with actual server IP):")
+                print(f"    openssl req -x509 -newkey rsa:2048 -keyout {ssl_key} -out {ssl_cert} -days 365 -nodes \\")
+                print(f"      -subj '/CN=YOUR_EXTERNAL_IP' -addext 'subjectAltName=DNS:localhost,IP:127.0.0.1,IP:YOUR_EXTERNAL_IP'")
+            else:
+                print(f"  For configured host ({host}):")
+                print(f"    openssl req -x509 -newkey rsa:2048 -keyout {ssl_key} -out {ssl_cert} -days 365 -nodes \\")
+                print(f"      -subj '/CN={host}' -addext 'subjectAltName=DNS:localhost,IP:127.0.0.1,IP:{host}'")
+            print(f"Aborting...")
+            return
+    else:
+        print(f"DISCOVER HTTP server starting on {host}:{port}")
+    
+    server.start()
 
 if __name__ == "__main__":
     _run()

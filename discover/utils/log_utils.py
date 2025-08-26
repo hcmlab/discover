@@ -56,7 +56,12 @@ def init_logger(logger, job_id):
         log_path = get_log_path_for_thread(job_id)
         job_utils.set_log_path(job_id, log_path)
         file_handler = logging.FileHandler(log_path, "w")
-        stream_handler = logging.getLogger().handlers[0]
+        root_logger = logging.getLogger()
+        if root_logger.handlers:
+            stream_handler = root_logger.handlers[0]
+        else:
+            stream_handler = logging.StreamHandler()
+            root_logger.addHandler(stream_handler)
         file_handler.setFormatter(
             SensitiveFormatter(
                 fmt="%(asctime)s %(levelname)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
