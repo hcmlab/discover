@@ -72,17 +72,89 @@ class VenvHandler:
                     if not self.log_verbose:
                         sys.stderr.write(".")
                     else:
-                        sys.stderr.write(s.strip("\n"))
+                        # Sanitize sensitive data before writing to stderr
+                        sanitized_output = self._sanitize_stderr_output(s.strip("\n"))
+                        sys.stderr.write(sanitized_output)
                 else:
+                    # Sanitize sensitive data before logging
+                    sanitized_output = self._sanitize_stderr_output(s.strip("\n"))
                     # if context == "stderr":
-                    #    self.logger.error(s.strip('\n'))
+                    #    self.logger.error(sanitized_output)
                     # else:
-                    self.logger.info(s.strip("\n"))
+                    self.logger.info(sanitized_output)
                 sys.stderr.flush()
             except Exception as e:
                 continue
             # self.logger.error(e)
         stream.close()
+
+    def _sanitize_stderr_output(self, output_line):
+        """
+        Sanitize stderr output to remove sensitive information like passwords.
+        
+        Args:
+            output_line (str): The stderr output line to sanitize.
+            
+        Returns:
+            str: The sanitized output line.
+        """
+        import re
+        
+        # List of password-related patterns to sanitize
+        password_patterns = [
+            r'password["\']?\s*[:=]\s*["\']?([^"\',\s]+)["\']?',
+            r'dbPassword["\']?\s*[:=]\s*["\']?([^"\',\s]+)["\']?', 
+            r'db_password["\']?\s*[:=]\s*["\']?([^"\',\s]+)["\']?',
+            r'--password\s+([^\s]+)',
+            r'-p\s+([^\s]+)',
+            r'PASSWORD["\']?\s*[:=]\s*["\']?([^"\',\s]+)["\']?',
+        ]
+        
+        sanitized_line = output_line
+        for pattern in password_patterns:
+            sanitized_line = re.sub(pattern, lambda m: m.group(0).replace(m.group(1), "****"), sanitized_line, flags=re.IGNORECASE)
+            
+        return sanitized_line
+
+    def _sanitize_command_for_exception(self, cmd):
+        """
+        Sanitize command arguments before including in exception messages.
+        
+        Args:
+            cmd: The command to sanitize (string or list).
+            
+        Returns:
+            Sanitized command with passwords masked.
+        """
+        if isinstance(cmd, list):
+            sanitized_cmd = []
+            password_keys = ['--password', '--db_password', '--db-password', '-p']
+            
+            i = 0
+            while i < len(cmd):
+                arg = str(cmd[i])
+                
+                # Check if this argument is a password flag
+                if any(arg.startswith(key) for key in password_keys):
+                    if '=' in arg:
+                        # Handle --password=value format
+                        key, value = arg.split('=', 1)
+                        sanitized_cmd.append(f"{key}=****")
+                    else:
+                        # Handle --password value format (two separate arguments)
+                        sanitized_cmd.append(arg)  # Add the flag
+                        if i + 1 < len(cmd):  # Check if there's a next argument
+                            sanitized_cmd.append("****")  # Mask the password value
+                            i += 1  # Skip the password value in next iteration
+                else:
+                    # Regular argument, just sanitize any embedded passwords
+                    sanitized_cmd.append(self._sanitize_stderr_output(arg))
+                
+                i += 1
+            
+            return sanitized_cmd
+        else:
+            return self._sanitize_stderr_output(str(cmd))
 
     def _run_cmd(self, cmd, wait: bool = True) -> int:
         """
@@ -294,7 +366,8 @@ class VenvHandler:
         )
         return_code = self._run_cmd(run_cmd)
         if not return_code == 0:
-            raise subprocess.CalledProcessError(returncode=return_code, cmd=run_cmd)
+            sanitized_cmd = self._sanitize_command_for_exception(run_cmd)
+            raise subprocess.CalledProcessError(returncode=return_code, cmd=sanitized_cmd)
 
     def run_console_script(
         self, script: str, script_args: list = None, script_kwargs: dict = None
@@ -322,7 +395,8 @@ class VenvHandler:
         try:
             return_code = self._run_cmd(run_cmd)
             if not return_code == 0:
-                raise subprocess.CalledProcessError(returncode=return_code, cmd=run_cmd)
+                sanitized_cmd = self._sanitize_command_for_exception(run_cmd)
+                raise subprocess.CalledProcessError(returncode=return_code, cmd=sanitized_cmd)
         finally:
             # Clean up temporary argument file if it was created
             if temp_file and os.path.exists(temp_file):
@@ -356,7 +430,8 @@ class VenvHandler:
         )
         return_code = self._run_cmd(run_cmd)
         if not return_code == 0:
-            raise subprocess.CalledProcessError(returncode=return_code, cmd=run_cmd)
+            sanitized_cmd = self._sanitize_command_for_exception(run_cmd)
+            raise subprocess.CalledProcessError(returncode=return_code, cmd=sanitized_cmd)
 
     def kill(self):
         """Kills parent and children processes"""

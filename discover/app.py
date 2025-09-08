@@ -135,8 +135,44 @@ def handle_exception(e):
 
     # now you're handling non-HTTP exceptions only
     msg = traceback.format_exception(e, limit=0)
-    print(msg)
-    return msg[0], 500
+    
+    # Sanitize the traceback before printing/returning
+    sanitized_msg = []
+    for line in msg:
+        sanitized_line = _sanitize_traceback_line(line)
+        sanitized_msg.append(sanitized_line)
+    
+    print(sanitized_msg)
+    return sanitized_msg[0], 500
+
+
+def _sanitize_traceback_line(line):
+    """
+    Sanitize a single traceback line to remove sensitive information like passwords.
+    
+    Args:
+        line (str): The traceback line to sanitize.
+        
+    Returns:
+        str: The sanitized traceback line.
+    """
+    import re
+    
+    # List of password-related patterns to sanitize
+    password_patterns = [
+        r'password["\']?\s*[:=]\s*["\']?([^"\',\s]+)["\']?',
+        r'dbPassword["\']?\s*[:=]\s*["\']?([^"\',\s]+)["\']?', 
+        r'db_password["\']?\s*[:=]\s*["\']?([^"\',\s]+)["\']?',
+        r'--password\s+([^\s]+)',
+        r'-p\s+([^\s]+)',
+        r'PASSWORD["\']?\s*[:=]\s*["\']?([^"\',\s]+)["\']?',
+    ]
+    
+    sanitized_line = line
+    for pattern in password_patterns:
+        sanitized_line = re.sub(pattern, lambda m: m.group(0).replace(m.group(1), "****"), sanitized_line, flags=re.IGNORECASE)
+        
+    return sanitized_line
 
 
 def _run():
