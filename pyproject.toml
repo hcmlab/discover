@@ -27,7 +27,7 @@ classifiers = [
 dependencies = [
     "flask==3.0.0",
     "hcai-discover-utils",
-    "waitress",
+    "cheroot",
     "python-dotenv",
     "psutil",
     "numpy >= 1.24, < 2.0",
@@ -48,7 +48,7 @@ discover = ["templates/*.html"]
 version = {attr = "discover.__version__"}
 
 [project.urls]
-Documentation = "https://hcmlab.github.io/nova-server/docbuild/"
+Documentation = "https://hcmlab.github.io/discover"
 Repository = "https://github.com/hcmlab/discover"
 
 [project.scripts]
