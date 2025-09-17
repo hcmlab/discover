@@ -121,7 +121,6 @@ parser.add_argument(
 parser.add_argument(
     "--use_tls",
     action="store_true",
-    default=False,
     help="Enable TLS/SSL for HTTPS connections",
 )
 
@@ -252,9 +251,13 @@ def _run():
         args.video_backend, env.DISCOVER_VIDEO_BACKEND, default_args.video_backend
     )
     
-    os.environ[env.DISCOVER_USE_TLS] = resolve_arg(
-        str(args.use_tls), env.DISCOVER_USE_TLS, str(default_args.use_tls)
-    )
+    # Only set DISCOVER_USE_TLS if explicitly requested, to allow fallback behavior
+    if args.use_tls:
+        os.environ[env.DISCOVER_USE_TLS] = "true"
+    elif env.DISCOVER_USE_TLS not in os.environ:
+        # Don't set the env var at all if not explicitly requested and not already set
+        # This allows nova_db_handler to use its fallback behavior
+        pass
 
     print('\n\t#Processing backend')
 
@@ -272,8 +275,8 @@ def _run():
 
     server = WSGIServer((host, port), app, numthreads=8)
     
-    # Check if TLS is enabled
-    use_tls = os.environ[env.DISCOVER_USE_TLS].lower() == 'true'
+    # Check if TLS is enabled (only if environment variable exists)
+    use_tls = os.environ.get(env.DISCOVER_USE_TLS, "false").lower() == 'true'
     
     if use_tls:
         ssl_cert = Path(__file__).parent / 'discover_cert.pem'
