@@ -1,0 +1,7 @@
+discover.templates package
+==========================
+
+.. automodule:: discover.templates
+   :members:
+   :show-inheritance:
+   :undoc-members:

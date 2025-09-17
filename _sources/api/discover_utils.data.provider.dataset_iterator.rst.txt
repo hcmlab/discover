@@ -1,0 +1,7 @@
+discover\_utils.data.provider.dataset\_iterator module
+======================================================
+
+.. automodule:: discover_utils.data.provider.dataset_iterator
+   :members:
+   :show-inheritance:
+   :undoc-members:

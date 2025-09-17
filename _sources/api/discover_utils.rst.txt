@@ -1,0 +1,18 @@
+discover\_utils package
+=======================
+
+.. automodule:: discover_utils
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover_utils.data
+   discover_utils.interfaces
+   discover_utils.scripts
+   discover_utils.utils

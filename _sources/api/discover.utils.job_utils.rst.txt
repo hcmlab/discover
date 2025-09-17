@@ -1,0 +1,7 @@
+discover.utils.job\_utils module
+================================
+
+.. automodule:: discover.utils.job_utils
+   :members:
+   :show-inheritance:
+   :undoc-members:

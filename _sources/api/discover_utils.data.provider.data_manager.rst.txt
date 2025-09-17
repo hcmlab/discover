@@ -1,0 +1,7 @@
+discover\_utils.data.provider.data\_manager module
+==================================================
+
+.. automodule:: discover_utils.data.provider.data_manager
+   :members:
+   :show-inheritance:
+   :undoc-members:

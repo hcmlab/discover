@@ -1,0 +1,7 @@
+discover\_utils.utils.string\_utils module
+==========================================
+
+.. automodule:: discover_utils.utils.string_utils
+   :members:
+   :show-inheritance:
+   :undoc-members:

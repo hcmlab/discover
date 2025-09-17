@@ -1,0 +1,7 @@
+discover\_utils.data.static module
+==================================
+
+.. automodule:: discover_utils.data.static
+   :members:
+   :show-inheritance:
+   :undoc-members:
