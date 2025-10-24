@@ -26,8 +26,9 @@ Example:
 import dotenv
 import tempfile
 import traceback
+import logging
 from werkzeug.exceptions import HTTPException
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from discover import __version__
 from discover.route.train import train
 from discover.route.status import status
@@ -57,6 +58,13 @@ app.register_blueprint(cancel)
 app.register_blueprint(cml_info)
 app.register_blueprint(fetch_result)
 app.register_blueprint(upload)
+
+@app.before_request
+def enforce_https():
+    """Reject plain HTTP requests when TLS is enabled to prevent protocol errors."""
+    if os.environ.get(env.DISCOVER_USE_TLS, "false").lower() == 'true':
+        if not request.is_secure:
+            return "HTTPS required - plain HTTP connections are not allowed", 426  # 426 Upgrade Required
 
 parser = argparse.ArgumentParser(
     description="Commandline arguments to configure DISCOVER"
@@ -284,6 +292,15 @@ def _run():
         
         if ssl_cert.exists() and ssl_key.exists():
             server.ssl_adapter = BuiltinSSLAdapter(str(ssl_cert), str(ssl_key))
+
+            # Suppress SSL EOF errors from clients that don't properly close connections
+            class SSLEOFFilter(logging.Filter):
+                def filter(self, record):
+                    msg = record.getMessage()
+                    return 'ssl.SSLEOFError' not in msg and 'EOF occurred in violation of protocol' not in msg
+
+            logging.getLogger('cheroot.error').addFilter(SSLEOFFilter())
+
             print(f"DISCOVER HTTPS server starting on {host}:{port}")
         else:
             print(f"SSL certificates not found at {ssl_cert} and {ssl_key}")
