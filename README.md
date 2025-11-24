@@ -35,13 +35,46 @@ While other Python versions may work as well the module is only tested for the f
 You can download the current version of python for your system [here](https://www.python.org/downloads/).
 
 Download the current version off FFMPEG binaries from [here](https://github.com/BtbN/FFmpeg-Builds/releases) for your system and make sure to extract them to a place that is in your system path.
-It is recommended to setup a separate virtual environment to isolate the NOVA server installation from your system python installation.
+
+### Recommended Installation on Windows: Using WSL
+
+For Windows users, we strongly recommend installing DISCOVER using Windows Subsystem for Linux (WSL) instead of native Windows installation. This approach provides better compatibility and avoids common issues with package compilation.
+
+**Setting up WSL:**
+
+1. Install WSL 2 by opening PowerShell as Administrator and running:
+   ```
+   wsl --install
+   ```
+
+2. After installation, open your WSL terminal (Ubuntu or your chosen distribution).
+
+3. Install the required system packages for building the `av` package and its dependencies:
+   ```bash
+   sudo apt update
+   sudo apt install ffmpeg python3-dev build-essential
+   ```
+
+4. Install Python (if not already installed):
+   ```bash
+   sudo apt install python3 python3-pip python3-venv
+   ```
+
+5. Continue with the Setup instructions below within your WSL environment.
+
+### Virtual Environment Setup
+
+It is recommended to setup a separate virtual environment to isolate the DISCOVER installation from your system python installation.
 To do so, open a terminal at the directory where your virtual environment should be installed and paste the following command:
 
 ```python -m venv discover-venv```
 
 You can then activate the virtual environment like this:
 
+**Linux/macOS/WSL:**
+```source discover-venv/bin/activate```
+
+**Windows (native):**
 ```.\discover-venv\Scripts\activate```
 
 ### Setup
