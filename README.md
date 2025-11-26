@@ -134,6 +134,18 @@ DISCOVER_LOG_DIR : log
 DISCOVER HTTP server starting on 0.0.0.0:8080
 ```
 
+### Job Management
+
+DISCOVER includes a web-based job management interface accessible at the root URL (e.g., `http://localhost:8080` or `https://localhost:8080` with TLS enabled). This interface allows you to:
+
+* Monitor all running, pending, and completed jobs
+* View which module is being used for each job
+* Track session progress (e.g., "2/5" sessions completed)
+* Cancel running or queued jobs
+* Access job logs for detailed information
+
+Jobs that are manually canceled will display a gray "Canceled" button in the Actions column, allowing you to distinguish between naturally failed jobs and those that were canceled by the user.
+
 ### Modules
 
 DISCOVER modules contain the machine learning models and processing pipelines. You can get the official modules from:
