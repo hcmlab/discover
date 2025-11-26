@@ -169,14 +169,20 @@ class VenvHandler:
         """
         # Use shell=False for list commands to avoid ARG_MAX limits
         use_shell = isinstance(cmd, str)
-        
+
         # Use threading approach for all commands, but ensure proper flushing
-        # Set environment to force unbuffered output from Python subprocesses  
+        # Set environment to force unbuffered output from Python subprocesses
         env = os.environ.copy()
         env['PYTHONUNBUFFERED'] = '1'
-        
+
+        # Add job key to environment if available
+        if self.job_key:
+            env['DISCOVER_JOB_KEY'] = self.job_key
+            if self.logger:
+                self.logger.info(f"Setting DISCOVER_JOB_KEY={self.job_key} for subprocess")
+
         self.current_process = Popen(
-            cmd, stdout=PIPE, stderr=PIPE, shell=use_shell, universal_newlines=True, 
+            cmd, stdout=PIPE, stderr=PIPE, shell=use_shell, universal_newlines=True,
             bufsize=0, env=env  # Unbuffered
         )
         t1 = Thread(target=self._reader, args=(self.current_process.stdout, "stdout"))
@@ -311,6 +317,7 @@ class VenvHandler:
         log_verbose: bool = False,
         extra_index_urls: list = None,
         force_requirements: bool = False,
+        job_key: str = None,
     ):
         """
         Initializes the VenvHandler instance.
@@ -320,6 +327,7 @@ class VenvHandler:
             logger (Logger, optional): The logger instance for logging.
             log_verbose (bool, optional): If True, log verbose output.
             force_requirements(bool, optional): If True, requirement.txt will always be installed. If false skipping requirements installation if venv already exist.
+            job_key (str, optional): The job key to pass to subprocesses via DISCOVER_JOB_KEY environment variable.
         """
         self.venv_dir = None
         self.current_process = None
@@ -328,6 +336,7 @@ class VenvHandler:
         self.logger = logger if logger is not None else Logger(__name__)
         self.force_requirements = force_requirements
         self.extra_index_urls = extra_index_urls
+        self.job_key = job_key
         if module_dir is not None:
             self.init_venv()
 

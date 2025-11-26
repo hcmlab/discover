@@ -5,24 +5,32 @@
     <thead>
       <tr>
         <th>Job Key</th>
-        <th>Type</th>
+        <th>Module</th>
         <th>Status</th>
-        <!--<th>Progress</th>--> <!-- TODO: Implement progress tracking per session and overall sessions -->
+        <th>Progress</th>
         <th>Start</th>
         <th>End</th>
-        <th>URL</th>
+        <th>Log</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       {% for job in jobs %}
-        <tr>
+        <tr data-job-key="{{ job.job_key }}" data-status="{{ job.status }}">
           <td>{{ job.job_key }}</td>
-          <td>{{ job.job_type }}</td>
+          <td>{{ job.module_name }}</td>
           <td>{{ job.status }}</td>
-          <!--<td>{{ job.progress }}</td>--> <!-- TODO: Add progress tracking -->
+          <td>{{ job.progress }}</td>
           <td>{{ job.start_time }}</td>
           <td>{{ job.end_time }}</td>
           <td><a href="/log/{{ job.job_key }}" target="_blank">Log</a></td>
+          <td>
+            {% if job.status == 'WAITING' or job.status == 'RUNNING' %}
+              <button class="btn btn-sm btn-danger cancel-job-btn" data-job-key="{{ job.job_key }}">
+                Cancel
+              </button>
+            {% endif %}
+          </td>
         </tr>
       {% endfor %}
     </tbody>
@@ -31,10 +39,46 @@
 {% block scripts %}
   <script>
     $(document).ready(function () {
-      $('#data').DataTable();
-      
+      $('#data').DataTable({
+        "order": [[4, "desc"]]  // Sort by Start time descending
+      });
+
+      // Cancel button handler
+      $('.cancel-job-btn').on('click', function() {
+        var btn = $(this);
+        var jobKey = btn.data('job-key');
+
+        // Disable button and show feedback
+        btn.prop('disabled', true);
+        btn.text('Canceling...');
+        btn.removeClass('btn-danger').addClass('btn-warning');
+
+        // Send cancel request
+        $.ajax({
+          url: '/cancel',
+          method: 'POST',
+          data: { jobID: jobKey },
+          success: function(response) {
+            // Show success feedback
+            btn.text('Canceled');
+            btn.removeClass('btn-warning').addClass('btn-secondary');
+            btn.prop('disabled', true);
+
+            // Update status cell in the same row
+            btn.closest('tr').find('td:nth-child(3)').text('CANCELED');
+          },
+          error: function(xhr, status, error) {
+            // Show error feedback
+            btn.text('Error');
+            btn.removeClass('btn-warning').addClass('btn-danger');
+            btn.prop('disabled', false);
+            console.error('Cancel failed:', error);
+          }
+        });
+      });
+
       // Auto-refresh every 10 seconds
-      setInterval(function() {
+      setTimeout(function() {
         location.reload();
       }, 10000);
     });

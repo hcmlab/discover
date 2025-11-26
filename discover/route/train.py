@@ -38,7 +38,7 @@ def train_model(request_form):
 
     job_utils.update_status(key, job_utils.JobStatus.RUNNING)
     logger = log_utils.get_logger_for_job(key)
-    handler = NovaTrainHandler(request_form, logger=logger)
+    handler = NovaTrainHandler(request_form, logger=logger, job_key=key)
 
     # TODO replace .env with actual path
     dotenv_path = Path(".env").resolve()

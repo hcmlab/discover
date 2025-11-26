@@ -42,12 +42,13 @@ class ExecutionHandler(ABC):
         }
 
     def __init__(
-        self, request_form: dict, backend: str = "venv", logger: Logger = None
+        self, request_form: dict, backend: str = "venv", logger: Logger = None, job_key: str = None
     ):
         self.backend = Backend(backend)
         self.script_arguments = request_form
         self.logger = logger
         self.backend_handler = None
+        self.job_key = job_key
 
     def _nova_server_env_to_arg(self):
         arg_vars = {}
@@ -143,6 +144,7 @@ class ExecutionHandler(ABC):
                     os.getenv(env.VENV_FORCE_UPDATE, "False"),
                 ),
                 extra_index_urls=extra_index_urls,
+                job_key=self.job_key,
             )
 
             # Add dotenv variables to arguments for script

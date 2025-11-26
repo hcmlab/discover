@@ -59,6 +59,7 @@ class JobStatus(Enum):
     RUNNING = 1
     FINISHED = 2
     ERROR = 3
+    CANCELED = 4
 
 
 class Job:
@@ -80,12 +81,16 @@ class Job:
         job_type = self.job_type
         if not job_type and self.execution_handler and hasattr(self.execution_handler, 'action'):
             job_type = self.execution_handler.action.value if hasattr(self.execution_handler.action, 'value') else str(self.execution_handler.action)
-        
+
+        # Extract module name
+        module_name = self._extract_module_name()
+
         return {
             'job_key': str(self.job_key),
             'job_type': str(job_type) if job_type else 'Unknown',
+            'module_name': module_name,
             'status': str(self.status.name if hasattr(self.status, 'name') else self.status),
-            # 'progress': str(self.progress) if self.progress else '',  # TODO: Implement progress tracking per session and overall sessions
+            'progress': str(self.progress) if self.progress else '-',
             'start_time': str(self.start_time) if self.start_time else '',
             'end_time': str(self.end_time) if self.end_time else '',
             'log_path': str(self.log_path) if self.log_path else '',
@@ -103,6 +108,19 @@ class Job:
         """Sanitize sensitive information from job details"""
         from . import log_utils
         return log_utils.sanitize_sensitive_data(self.details)
+
+    def _extract_module_name(self):
+        """Extract module name from trainerFilePath in job details."""
+        try:
+            if not self.details or 'trainerFilePath' not in self.details:
+                return ''
+            trainer_path = self.details.get('trainerFilePath', '')
+            if not trainer_path:
+                return ''
+            from pathlib import PureWindowsPath
+            return PureWindowsPath(trainer_path).parts[0] if trainer_path else ''
+        except Exception:
+            return ''
 
 
 @status_thread_wrapper

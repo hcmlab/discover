@@ -46,7 +46,7 @@ def complete_thread():
         if key in THREADS:
             thread = THREADS[key]
             thread.raise_exception()
-            job_utils.update_status(key, job_utils.JobStatus.WAITING)
+            job_utils.update_status(key, job_utils.JobStatus.CANCELED)
             if key in LOGS:
                 log = LOGS[key]
                 log.info("Action successfully canceled.")
