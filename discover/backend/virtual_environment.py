@@ -178,8 +178,6 @@ class VenvHandler:
         # Add job key to environment if available
         if self.job_key:
             env['DISCOVER_JOB_KEY'] = self.job_key
-            if self.logger:
-                self.logger.info(f"Setting DISCOVER_JOB_KEY={self.job_key} for subprocess")
 
         self.current_process = Popen(
             cmd, stdout=PIPE, stderr=PIPE, shell=use_shell, universal_newlines=True,
