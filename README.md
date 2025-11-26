@@ -26,11 +26,12 @@ DISCOVER provides a set of blueprints for exploratory data analysis, serving as 
 ### Prerequesites
 
 Before starting to install DISCOVER you need to install Python and FFMPEG.
-While other Python versions may work as well the module is only tested for the following versions:
+DISCOVER is currently developed and tested on:
 
-* 3.9.x
-* 3.10.x
-* 3.11.x
+* Python 3.12.x
+* Ubuntu Linux
+
+While other Python versions and operating systems may work, they are not actively tested or supported.
 
 You can download the current version of python for your system [here](https://www.python.org/downloads/).
 
@@ -144,14 +145,15 @@ Clone or download the modules repository and set the `--cml_dir` parameter to po
 You can find the full documentation of the project [here](https://hcmlab.github.io/discover).
 
 ## Citation
-If you use DISCOVER consider citing the following paper: 
+If you use DISCOVER consider citing the following paper:
 
 ```
-@article{schiller2024discover,
-title={DISCOVER: A Data-driven Interactive System for Comprehensive Observation, Visualization, and ExploRation of Human Behaviour},
-author={Schiller, Dominik and Hallmen, Tobias and Withanage Don, Daksitha and Andr{\'e}, Elisabeth and Baur, Tobias},
-journal={arXiv e-prints},
-pages={arXiv--2407},
-year={2024}
+@article{hallmen2025discover,
+  title={DISCOVER: a Data-driven Interactive System for Comprehensive Observation, Visualization, and ExploRation of human behavior},
+  author={Hallmen, Tobias and Schiller, Dominik and Vehlen, Antonia and Eberhardt, Steffen and Baur, Tobias and Withanage, Daksitha and Lutz, Wolfgang and Andr{\'e}, Elisabeth},
+  journal={Frontiers in Digital Health},
+  volume={7},
+  pages={1638539},
+  publisher={Frontiers}
 }
 ```
