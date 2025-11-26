@@ -41,6 +41,7 @@ def complete_thread():
 
         job = job_utils.get_job(key)
         if not job is None:
+            job.was_canceled = True
             job.cancel()
 
         if key in THREADS:

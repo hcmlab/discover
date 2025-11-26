@@ -29,6 +29,10 @@
               <button class="btn btn-sm btn-danger cancel-job-btn" data-job-key="{{ job.job_key }}">
                 Cancel
               </button>
+            {% elif job.was_canceled %}
+              <button class="btn btn-sm btn-secondary" disabled>
+                Canceled
+              </button>
             {% endif %}
           </td>
         </tr>

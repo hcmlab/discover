@@ -74,6 +74,7 @@ class Job:
         self.details = details
         self.job_type = job_type
         self.execution_handler = None
+        self.was_canceled = False
 
     def serializable(self):
         # Only include serializable fields, avoid execution_handler which contains locks
@@ -95,7 +96,8 @@ class Job:
             'end_time': str(self.end_time) if self.end_time else '',
             'log_path': str(self.log_path) if self.log_path else '',
             'details': str(self._sanitize_details()) if self.details else '',
-            'interactive_url': str(self.interactive_url) if self.interactive_url else ''
+            'interactive_url': str(self.interactive_url) if self.interactive_url else '',
+            'was_canceled': self.was_canceled
         }
 
     def run(self):
