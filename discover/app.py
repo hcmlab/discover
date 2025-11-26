@@ -39,6 +39,7 @@ from discover.route.cancel import cancel
 from discover.route.process import process
 from discover.route.fetch_result import fetch_result
 from discover.route.upload import upload
+from discover.route.progress import progress
 import argparse
 import os
 from pathlib import Path
@@ -58,6 +59,7 @@ app.register_blueprint(cancel)
 app.register_blueprint(cml_info)
 app.register_blueprint(fetch_result)
 app.register_blueprint(upload)
+app.register_blueprint(progress)
 
 @app.before_request
 def enforce_https():
