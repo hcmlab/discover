@@ -1,0 +1,400 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>discover.utils.venv_utils &mdash; DISCOVER 1.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=fc837d61"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            DISCOVER
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/introduction.html">DISCOVER - A Modular Software Framework for Human Behavior Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/examples.html#creating-a-transcript-using-nova">Creating a Transcript using NOVA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/lens.html">LENS: Learning and Exploring through Natural language Systems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/blazeface.html">BlazeFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/facemesh.html">FaceMesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/libreface.html">LibreFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/whisperx.html">WhisperX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/lens.html">LENS</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/discover.app.html">discover.app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/discover.backend.html">discover.backend package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/discover.exec.html">discover.exec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/discover.route.html">discover.route package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/discover.utils.html">discover.utils package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DISCOVER</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">discover.utils.venv_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for discover.utils.venv_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utility functions to create virtual environments and execute commands in them</span>
+
+<span class="sd">Author:</span>
+<span class="sd">    Dominik Schiller &lt;dominik.schiller@uni-a.de&gt;</span>
+<span class="sd">Date:</span>
+<span class="sd">    06.09.2023</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">platform</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">discover.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">env</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">importlib.machinery</span><span class="w"> </span><span class="kn">import</span> <span class="n">SourceFileLoader</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_args_run_cmd</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a command argument list from positional and keyword arguments.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        args (list, optional): List of arguments.</span>
+<span class="sd">        kwargs (dict, optional): Dictionary of keyword arguments.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: Combined argument list.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; _args_run_cmd([&#39;arg1&#39;, &#39;arg2&#39;], {&#39;--flag&#39;: &#39;value&#39;})</span>
+<span class="sd">        [&#39;arg1&#39;, &#39;arg2&#39;, &#39;--flag&#39;, &#39;value&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">tmp</span> <span class="o">+=</span> <span class="n">args</span>
+    <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">v</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">tmp</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_venv_python</span><span class="p">(</span><span class="n">env_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the path to the Python executable within a virtual environment.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        env_path (Path): Path to the virtual environment.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Path: Path to the Python executable.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; _get_venv_python(Path(&#39;/path/to/venv&#39;))</span>
+<span class="sd">        Path(&#39;/path/to/venv/bin/python&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">env_path</span> <span class="o">/</span> <span class="s2">&quot;Scripts&quot;</span> <span class="o">/</span> <span class="s2">&quot;python.exe&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">env_path</span> <span class="o">/</span> <span class="s2">&quot;bin&quot;</span> <span class="o">/</span> <span class="s2">&quot;python&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_src_activate_cmd</span><span class="p">(</span><span class="n">env_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate the source command to activate a virtual environmend. Generated output is platform dependend.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        env_path (Path): Path to the virtual environment.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Source activation command.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; _src_activate_cmd(Path(&#39;/path/to/venv&#39;))</span>
+<span class="sd">        &#39;source /path/to/venv/bin/activate&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">env_path</span><span class="o">/</span><span class="s1">&#39;Scripts&#39;</span><span class="o">/</span><span class="s1">&#39;activate&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;. </span><span class="si">{</span><span class="n">env_path</span><span class="o">/</span><span class="s1">&#39;bin&#39;</span><span class="o">/</span><span class="s1">&#39;activate&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<div class="viewcode-block" id="get_module_run_cmd">
+<a class="viewcode-back" href="../../../api/discover.utils.venv_utils.html#discover.utils.venv_utils.get_module_run_cmd">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_module_run_cmd</span><span class="p">(</span>
+    <span class="n">env_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a command to run a Python module within a virtual environment.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        env_path (Path): Path to the virtual environment.</span>
+<span class="sd">        module (str): Python module name.</span>
+<span class="sd">        args (list, optional): List of arguments to pass to the module.</span>
+<span class="sd">        kwargs (dict, optional): Dictionary of keyword arguments to pass to the module.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: Command argument list.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; get_module_run_cmd(Path(&#39;/path/to/venv&#39;), &#39;mymodule&#39;, [&#39;arg1&#39;, &#39;arg2&#39;], {&#39;--flag&#39;: &#39;value&#39;})</span>
+<span class="sd">        [&#39;/path/to/venv/bin/python&#39;, &#39;-m&#39;, &#39;mymodule&#39;, &#39;arg1&#39;, &#39;arg2&#39;, &#39;--flag&#39;, &#39;value&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">python_exe</span> <span class="o">=</span> <span class="n">_get_venv_python</span><span class="p">(</span><span class="n">env_path</span><span class="p">)</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">python_exe</span><span class="p">),</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="n">module</span><span class="p">]</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_args_run_cmd</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">cmd</span></div>
+
+
+
+<div class="viewcode-block" id="get_python_script_run_cmd">
+<a class="viewcode-back" href="../../../api/discover.utils.venv_utils.html#discover.utils.venv_utils.get_python_script_run_cmd">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_python_script_run_cmd</span><span class="p">(</span>
+    <span class="n">env_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">script</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a command to run a Python script within a virtual environment.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        env_path (Path): Path to the virtual environment.</span>
+<span class="sd">        script (Path): Path to the Python script.</span>
+<span class="sd">        args (list, optional): List of arguments to pass to the script.</span>
+<span class="sd">        kwargs (dict, optional): Dictionary of keyword arguments to pass to the script.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: Command argument list.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; get_python_script_run_cmd(Path(&#39;/path/to/venv&#39;), Path(&#39;/path/to/script.py&#39;), [&#39;arg1&#39;, &#39;arg2&#39;], {&#39;--flag&#39;: &#39;value&#39;})</span>
+<span class="sd">        [&#39;/path/to/venv/bin/python&#39;, &#39;/path/to/script.py&#39;, &#39;arg1&#39;, &#39;arg2&#39;, &#39;--flag&#39;, &#39;value&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">python_exe</span> <span class="o">=</span> <span class="n">_get_venv_python</span><span class="p">(</span><span class="n">env_path</span><span class="p">)</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">python_exe</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">script</span><span class="o">.</span><span class="n">resolve</span><span class="p">())]</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_args_run_cmd</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">cmd</span></div>
+
+
+<div class="viewcode-block" id="get_console_script_run_cmd">
+<a class="viewcode-back" href="../../../api/discover.utils.venv_utils.html#discover.utils.venv_utils.get_console_script_run_cmd">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_console_script_run_cmd</span><span class="p">(</span>
+        <span class="n">env_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">script</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a command to run a console script within a virtual environment using direct execution.</span>
+<span class="sd">    Uses argument files for large argument lists to avoid system limits.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        env_path (Path): Path to the virtual environment.</span>
+<span class="sd">        script (str): Name of the console script to run.</span>
+<span class="sd">        args (list, optional): List of arguments to pass to the script.</span>
+<span class="sd">        kwargs (dict, optional): Dictionary of keyword arguments to pass to the script.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: (command_list, temp_file_path) where temp_file_path is None if no file was used</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; get_console_script_run_cmd(Path(&#39;/path/to/venv&#39;), &#39;my_script&#39;, [&#39;arg1&#39;, &#39;arg2&#39;], {&#39;--flag&#39;: &#39;value&#39;})</span>
+<span class="sd">        ([&#39;/path/to/venv/bin/my_script&#39;, &#39;arg1&#39;, &#39;arg2&#39;, &#39;--flag&#39;, &#39;value&#39;], None)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+        <span class="n">script_path</span> <span class="o">=</span> <span class="n">env_path</span> <span class="o">/</span> <span class="s2">&quot;Scripts&quot;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">script</span><span class="si">}</span><span class="s2">.exe&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">script_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">script_path</span> <span class="o">=</span> <span class="n">env_path</span> <span class="o">/</span> <span class="s2">&quot;Scripts&quot;</span> <span class="o">/</span> <span class="n">script</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">script_path</span> <span class="o">=</span> <span class="n">env_path</span> <span class="o">/</span> <span class="s2">&quot;bin&quot;</span> <span class="o">/</span> <span class="n">script</span>
+    
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">script_path</span><span class="p">)]</span>
+    <span class="n">arg_list</span> <span class="o">=</span> <span class="n">_args_run_cmd</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    
+    <span class="c1"># Check if arguments would be too large for command line</span>
+    <span class="c1"># Use a very conservative estimate: 100KB limit to definitely trigger for large batches</span>
+    <span class="n">estimated_size</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">arg_list</span><span class="p">)</span>  <span class="c1"># +1 for spaces</span>
+    <span class="n">max_safe_size</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="mi">1024</span>  <span class="c1"># 100KB - much more conservative</span>
+    
+    <span class="n">temp_file</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">estimated_size</span> <span class="o">&gt;</span> <span class="n">max_safe_size</span><span class="p">:</span>
+        <span class="c1"># Create temporary argument file</span>
+        <span class="n">temp_fd</span><span class="p">,</span> <span class="n">temp_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.args&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;discover_args_&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">os</span><span class="o">.</span><span class="n">fdopen</span><span class="p">(</span><span class="n">temp_fd</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">arg_list</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="c1"># Use @ prefix to indicate argument file (argparse fromfile_prefix_chars)</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">temp_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># If file creation fails, fall back to direct arguments</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">temp_file</span><span class="p">)</span>
+            <span class="n">temp_file</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">arg_list</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">arg_list</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">temp_file</span></div>
+
+
+
+<div class="viewcode-block" id="get_shell_script_run_cmd">
+<a class="viewcode-back" href="../../../api/discover.utils.venv_utils.html#discover.utils.venv_utils.get_shell_script_run_cmd">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_shell_script_run_cmd</span><span class="p">(</span>
+        <span class="n">env_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">script</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a command to run a shell script within a virtual environment. The path to the script musst be set in the path environment variable of the console session.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        env_path (Path): Path to the virtual environment.</span>
+<span class="sd">        script (Path): Path to the Python script.</span>
+<span class="sd">        args (list, optional): List of arguments to pass to the script.</span>
+<span class="sd">        kwargs (dict, optional): Dictionary of keyword arguments to pass to the script.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Run command (shell-based for script execution).</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; get_shell_script_run_cmd(Path(&#39;/path/to/venv&#39;), &#39;my_script&#39;, [&#39;arg1&#39;, &#39;arg2&#39;], {&#39;--flag&#39;: &#39;value&#39;})</span>
+<span class="sd">        &#39;source /path/to/venv/bin/activate &amp;&amp; my_script arg1 arg2 --flag value&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Convert args back to string for shell commands (shell scripts typically don&#39;t have massive args)</span>
+    <span class="n">args_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">args</span> <span class="ow">or</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">arg_list</span> <span class="o">=</span> <span class="n">_args_run_cmd</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">args_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">arg_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args_str</span><span class="p">:</span>
+            <span class="n">args_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">args_str</span>
+    
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_src_activate_cmd</span><span class="p">(</span><span class="n">env_path</span><span class="p">)</span><span class="si">}</span><span class="s2"> &amp;&amp; </span><span class="si">{</span><span class="n">script</span><span class="si">}{</span><span class="n">args_str</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_venv_name_from_mod</span><span class="p">(</span><span class="n">module_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a virtual environment name from a DISCOVER module directory.</span>
+<span class="sd">    The name equals the root folder name of the model. If a version.py file is present at the top level od the module</span>
+<span class="sd">    directory the returned name will be equal to &lt;root_folder_name&gt;@&lt;major_version&gt;.&lt;minor_version&gt;.&lt;patch_version&gt;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        module_dir (Path): Path to the module directory.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Virtual environment name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">venv_name</span> <span class="o">=</span> <span class="n">module_dir</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">version_file</span> <span class="o">=</span> <span class="n">module_dir</span> <span class="o">/</span> <span class="s2">&quot;version.py&quot;</span>
+    <span class="k">if</span> <span class="n">version_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">SourceFileLoader</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">version_file</span><span class="o">.</span><span class="n">resolve</span><span class="p">()))</span><span class="o">.</span><span class="n">load_module</span><span class="p">()</span>
+        <span class="n">venv_name</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">return</span> <span class="n">venv_name</span>
+
+
+<div class="viewcode-block" id="venv_dir_from_mod">
+<a class="viewcode-back" href="../../../api/discover.utils.venv_utils.html#discover.utils.venv_utils.venv_dir_from_mod">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">venv_dir_from_mod</span><span class="p">(</span><span class="n">module_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the path to a virtual environment directory matchin a provided module directory.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        module_dir (Path): Path to the module directory.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Path: Virtual environment directory.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the NOVA_CACHE_DIR environment variable is not set.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; venv_dir_from_mod(Path(&#39;/path/to/my_module&#39;))</span>
+<span class="sd">        Path(&#39;/path/to/venvs/my_module&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parent_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">DISCOVER_CACHE_DIR</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">parent_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;DISCOVER_CACHER_DIR environment variable has not been set&quot;</span><span class="p">)</span>
+
+    <span class="n">parent_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">parent_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;venvs&quot;</span>
+    <span class="n">venv_dir</span> <span class="o">=</span> <span class="n">parent_dir</span> <span class="o">/</span> <span class="n">_venv_name_from_mod</span><span class="p">(</span><span class="n">module_dir</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">venv_dir</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

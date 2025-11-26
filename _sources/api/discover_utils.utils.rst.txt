@@ -1,0 +1,25 @@
+discover\_utils.utils package
+=============================
+
+.. automodule:: discover_utils.utils
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover_utils.utils.anno_utils
+   discover_utils.utils.cache_utils
+   discover_utils.utils.json_utils
+   discover_utils.utils.log_utils
+   discover_utils.utils.path_utils
+   discover_utils.utils.request_utils
+   discover_utils.utils.ssi_data_types
+   discover_utils.utils.ssi_xml_utils
+   discover_utils.utils.stream_utils
+   discover_utils.utils.string_utils
+   discover_utils.utils.type_definitions

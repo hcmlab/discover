@@ -1,0 +1,7 @@
+discover.route.train module
+===========================
+
+.. automodule:: discover.route.train
+   :members:
+   :show-inheritance:
+   :undoc-members:

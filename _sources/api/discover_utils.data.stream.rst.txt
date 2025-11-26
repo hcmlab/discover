@@ -1,0 +1,7 @@
+discover\_utils.data.stream module
+==================================
+
+.. automodule:: discover_utils.data.stream
+   :members:
+   :show-inheritance:
+   :undoc-members:

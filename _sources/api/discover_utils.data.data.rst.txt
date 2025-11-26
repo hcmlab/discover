@@ -1,0 +1,7 @@
+discover\_utils.data.data module
+================================
+
+.. automodule:: discover_utils.data.data
+   :members:
+   :show-inheritance:
+   :undoc-members:

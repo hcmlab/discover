@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LENS: Learning and Exploring through Natural language Systems &mdash; DISCOVER 1.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=fc837d61"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BlazeFace" href="../modules/blazeface.html" />
+    <link rel="prev" title="Examples" href="examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            DISCOVER
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">DISCOVER - A Modular Software Framework for Human Behavior Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html#creating-a-transcript-using-nova">Creating a Transcript using NOVA</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LENS: Learning and Exploring through Natural language Systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#interactive-data-exploration">Interactive data exploration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lens-via-discover">LENS via DISCOVER</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/blazeface.html">BlazeFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/facemesh.html">FaceMesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/libreface.html">LibreFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/whisperx.html">WhisperX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/lens.html">LENS</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.app.html">discover.app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.backend.html">discover.backend package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.exec.html">discover.exec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.route.html">discover.route package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.utils.html">discover.utils package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DISCOVER</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">LENS: Learning and Exploring through Natural language Systems</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/lens.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lens-learning-and-exploring-through-natural-language-systems">
+<h1>LENS: Learning and Exploring through Natural language Systems<a class="headerlink" href="#lens-learning-and-exploring-through-natural-language-systems" title="Link to this heading"></a></h1>
+<p>LENS is lightweight webserver designed to use Large Language Models as tool for data exploration in human interactions.
+In this tutorial we show how LENS can be used in conjunction to with the <a class="reference external" href="https://github.com/hcmlab/nova">NOVA</a> user interface and the <a class="reference external" href="https://github.com/hcmlab/discover">DISCOVER</a> server to explore and categorize textual data.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>First let’s make sure to establish a common understanding of the interplay between NOVA, DISCOVER and LENS.
+NOVA is the user interface to interact with all other services. While NOVA can be used as a standalone tool to visualize and annotated multimodal data streams it also has the built-in ability to communicate with LENS and DISCOVER servers using their respective apis.</p>
+<p>DISCOVER serves as a computational backend to extract features or infer annotations from multimodal data using predefined modules. For example such modules can be used to detect faces in images or create a transcript from an audio signal.
+Since modules all need to implement a common interface, it is straight forward to write your own modules and provide them to others. All modules are producing either annotations or datastreams that can be later visualized in the NOVA user interface.
+DISCOVER also works in tandem together with the NOVA annotation database. Annotations can therefore be directly written to or read from this database to enable coherent data management and easy sharing of results among all database users.</p>
+<p>LENS is lightweight webserver that provides a unified API to contact multiple LLMs using the same request format. This includes local instances such as <a class="reference external" href="https://ollama.com">Ollama</a> or webservices such as <a class="reference external" href="https://chatgpt.com">ChatGPT</a>.
+This api is also integrated in the NOVA user interface to enable a seamless interaction with text annotations from within NOVA.</p>
+<p>In the following we will demonstrate the interaction between those three tools using three exemplary use cases.</p>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>For all the following use cases we assume that you already have NOVA, DISCOVER and LENS installed.
+Refer to the following documentations if this is not the case:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://rawgit.com/hcmlab/nova/master/docs/index.html">NOVA Documentation</a></p></li>
+<li><p><a class="reference external" href="https://hcmlab.github.io/discover/tutorials/introduction.html#getting-started">DISCOVER Documentation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/hcmlab/lens">LENS Documentation</a></p></li>
+</ul>
+<p>Once the three services are up and running we first need to connect NOVA to DISCOVER and LENS.
+To this end open NOVA and click on the gear icon in the top left corner.
+In the settings menu you should see two tabs DISCOVER and LENS.</p>
+<p>For the DISCOVER settings you only need to insert the host ip address and the port number that you used to start the DISCOVER Server</p>
+<p><span class="raw-html-md"><a href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/nova_discover.png?raw=true"><img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/nova_discover.png?raw=true" alt="Alt Text" width="500" height="200"></a></span></p>
+<p>In the LENS settings page you can specify more parameters that are relevant to how the LLMs behind LENS should interact with the data.
+For an explanation of the individual parameters refer to <a class="reference external" href="https://github.com/hcmlab/lens?tab=readme-ov-file#api">the LENS github repository</a>.
+You will find an explanation for each parameter in the API section under <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/assist</span></code>.</p>
+<p><span class="raw-html-md"><a href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/nova_lens.png?raw=true"><img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/nova_lens.png?raw=true" alt="Alt Text" width="500" height="300"></a></span></p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<p>Now that we have installed all the tools necessary we can start to explore our data in NOVA.
+To this end we will use a mockup therapy session interaction as a running example.
+You can download the transcript in the NOVA annotation format <a class="reference external" href="https://github.com/hcmlab/discover/tree/main/docs/docsource/data">here</a></p>
+<section id="interactive-data-exploration">
+<h3>Interactive data exploration<a class="headerlink" href="#interactive-data-exploration" title="Link to this heading"></a></h3>
+<p>The most straight forward use case to interact with lens is by chatting with it.
+To this end you can just hit the LENS tab on the right side of the NOVA tab bar or press <code class="docutils literal notranslate"><span class="pre">ctrl</span> <span class="pre">+</span> <span class="pre">a</span></code> in NOVA.</p>
+<p>In the upcoming chat window you will see a textbar where you can ask your questions to LENS a model selection drop down menu to select the model you want to interact with and <code class="docutils literal notranslate"><span class="pre">Context-Aware</span></code> checkbox. <span class="raw-html-md"><br /></span>
+If you check this box NOVA will automatically attach all currently opened Free and Discrete annotations to the message.</p>
+<p><span class="raw-html-md"><a href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/lens_window.png?raw=true"><img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/lens_window.png?raw=true" alt="Alt Text" width="500" height="200"></a></span></p>
+<p>For example if you want to analyze the contents of our demo transcript you can just open it in NOVA and start asking LENS about the contents of the transcript.</p>
+<p><span class="raw-html-md"><a href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/lens_chat.png?raw=true"><img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/lens_chat.png?raw=true" alt="Alt Text" width="500" height="400"></a></span></p>
+<p>Keep in mind that the roles and sequential order of the opened annotations will be guaranteed but no specific time-information is provided to the LENS.
+For example The request created by NOVA could look like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;system_prompt&#39;</span><span class="p">:</span> <span class="s2">&quot;Your name is Nova Assistant. You are an AI assistant. Keep your answers short, don&#39;t repeat yourself and if you do no know the answer don&#39;t make it up.&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;data&#39;</span><span class="p">:</span>
+        <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Your name is LENS. You are an AI assistant. Keep your answers short, don</span><span class="se">\&#39;</span><span class="s1">t repeat yourself and if you do no know the answer don</span><span class="se">\&#39;</span><span class="s1">t make it up.</span>
+                <span class="p">(</span><span class="n">therapeut</span><span class="p">,</span><span class="s2">&quot;Okay, so this is our first session after the holidays now and I just wanted to chat with you about the holidays and what you experienced during the days.&quot;</span><span class="p">);</span>
+                <span class="p">(</span><span class="n">patient</span><span class="p">,</span><span class="s2">&quot;Happy New Year.&quot;</span><span class="p">);(</span><span class="n">patient</span><span class="p">,</span><span class="s2">&quot;So it started very nicely with seeing my family again after a long time since I live so far from home.&quot;</span><span class="p">);</span>
+                <span class="p">(</span><span class="n">patient</span><span class="p">,</span><span class="s2">&quot;It</span><span class="se">\&#39;</span><span class="s2">s nice to come back and to see everyone again and to, I don</span><span class="se">\&#39;</span><span class="s2">t know, just to have the time and talk and eat and drink and just&quot;</span><span class="p">);</span>
+                <span class="p">(</span><span class="n">patient</span><span class="p">,</span><span class="s2">&quot;I don</span><span class="se">\&#39;</span><span class="s2">t know, play games and be around each other and yeah, just...);</span>
+                <span class="p">(</span><span class="n">therapeut</span><span class="p">,</span><span class="s2">&quot;So you were able to enjoy the time with your family?&quot;</span><span class="p">);</span>
+                <span class="p">(</span><span class="n">patient</span><span class="p">,</span><span class="s2">&quot;Yes.&quot;</span><span class="p">);(</span><span class="n">patient</span><span class="p">,</span><span class="s2">&quot;No, it was very nice seeing everyone and just, yeah, in between things just to have some time the whole day and to, yeah, talk to each other and just be there and relax.&quot;</span><span class="p">);</span>
+                <span class="p">(</span><span class="n">patient</span><span class="p">,</span><span class="s2">&quot;Yeah.&quot;</span><span class="p">)</span>
+                <span class="o">...</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;llama3.2:latest&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;provider&#39;</span><span class="p">:</span> <span class="s1">&#39;ollama&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;summarize the transcript&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="s1">&#39;num_ctx&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+        <span class="s1">&#39;max_new_tokens&#39;</span><span class="p">:</span> <span class="mi">1024</span><span class="p">,</span>
+        <span class="s1">&#39;top_p&#39;</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span>
+        <span class="s1">&#39;top_k&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="s1">&#39;history&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;enforce_determinism&#39;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="lens-via-discover">
+<h3>LENS via DISCOVER<a class="headerlink" href="#lens-via-discover" title="Link to this heading"></a></h3>
+<p>Another way to interact with LENS is by using the <a class="reference external" href="https://github.com/hcmlab/discover-modules/tree/main/modules/lens">DISCOVER module</a>.
+With this module DISCOVER uses LENS to automatically create annotations from a provided transcript and a respective prompt.
+The LENS module consists of two different functionalities.
+The first one is the <code class="docutils literal notranslate"><span class="pre">lens_free_prompt</span></code> module which works by iterating over the transcript an then applies a user defined prompt to each identified segment.
+The second method is the <code class="docutils literal notranslate"><span class="pre">lens_predcit</span></code> module that automatically constructs a prompt to a fit a predefined annotation scheme in nova using information like the name of the labels or a custom description of the labeling scheme.</p>
+<p>We are going to start with an example for the <code class="docutils literal notranslate"><span class="pre">lens_free_prompt</span></code> module.
+For the first use case we are going to translate the transcript from english to german using llama3.2.
+Keep in mind that LENS through DISCOVER only works together with the NOVA database.
+Therefore, you will need to import all the transcripts you want to process into the database before using them.</p>
+<p>&lt;a href=”<a class="reference external" href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/free_prompt.png?raw=true">https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/free_prompt.png?raw=true</a>”&gt;&lt;img src=”<a class="reference external" href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/free_prompt.png?raw=true">https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/free_prompt.png?raw=true</a>” alt=”Alt Text” width=”1920” height=”500”&gt;</p>
+<p>At first we are going to create a new free annotation scheme in our target database called <code class="docutils literal notranslate"><span class="pre">llm_translation</span></code>.
+To begin with the extraction process we first open the DISCOVER modules in NOVA by clicking on  <code class="docutils literal notranslate"><span class="pre">LEARNING</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">DISCOVER</span> <span class="pre">Server</span></code>.
+In the upcoming window we select our desired database on the left side (1).
+As processor we use the <code class="docutils literal notranslate"><span class="pre">lens_free_prompt</span></code> module (2).
+In the input section (3) we select the transcript we want to translate as well as the role and annotator who created original transcript.
+In the ouput section (4) we select out <code class="docutils literal notranslate"><span class="pre">llm_translation</span></code> scheme as output using the same role as the input and an annotator of our own choice.
+In the session selection window (5) select the sessions you want to process.
+Finally in the options window (6) we specify all options that we need to pass to the DISCOVER <a class="reference external" href="https://github.com/hcmlab/discover-modules/tree/main/modules/lens">LENS</a> module.
+Specify the ip and the port under which the LENS server is reachable.
+Specify the provider and and the model you want to use. If you are unsure which models are supported by your LENS installation you can always check the model selection from the LENS chat window in NOVA.
+In the prompt window we finally type the instruction we want the LLM to apply to each label. In our case type “translate the following text to german”.</p>
+<p>After the module has finished processing navigate to <code class="docutils literal notranslate"><span class="pre">Database</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Session</span></code> and select the newly created annotation to verify your results.</p>
+<p><span class="raw-html-md"><a href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/translation.png?raw=true"><img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/translation.png?raw=true" alt="Alt Text" width="1920" height="500"></a></span></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../modules/blazeface.html" class="btn btn-neutral float-right" title="BlazeFace" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

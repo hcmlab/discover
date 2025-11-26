@@ -1,0 +1,7 @@
+discover.data.adjectives module
+===============================
+
+.. automodule:: discover.data.adjectives
+   :members:
+   :show-inheritance:
+   :undoc-members:

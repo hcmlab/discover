@@ -1,0 +1,27 @@
+discover.route package
+======================
+
+.. automodule:: discover.route
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover.route.cancel
+   discover.route.cml_info
+   discover.route.explain
+   discover.route.extract
+   discover.route.fetch_result
+   discover.route.log
+   discover.route.predict
+   discover.route.process
+   discover.route.progress
+   discover.route.status
+   discover.route.train
+   discover.route.ui
+   discover.route.upload

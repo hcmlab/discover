@@ -1,0 +1,7 @@
+discover.route.cml\_info module
+===============================
+
+.. automodule:: discover.route.cml_info
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,20 @@
+discover.utils package
+======================
+
+.. automodule:: discover.utils
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover.utils.env
+   discover.utils.import_utils
+   discover.utils.job_utils
+   discover.utils.log_utils
+   discover.utils.thread_utils
+   discover.utils.venv_utils

@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>discover.utils.job_utils &mdash; DISCOVER 1.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=fc837d61"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            DISCOVER
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/introduction.html">DISCOVER - A Modular Software Framework for Human Behavior Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/examples.html#creating-a-transcript-using-nova">Creating a Transcript using NOVA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/lens.html">LENS: Learning and Exploring through Natural language Systems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/blazeface.html">BlazeFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/facemesh.html">FaceMesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/libreface.html">LibreFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/whisperx.html">WhisperX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/lens.html">LENS</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/discover.app.html">discover.app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/discover.backend.html">discover.backend package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/discover.exec.html">discover.exec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/discover.route.html">discover.route package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/discover.utils.html">discover.utils package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DISCOVER</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">discover.utils.job_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for discover.utils.job_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utility modules for NOVA-Server Jobs</span>
+
+<span class="sd">Author:</span>
+<span class="sd">    Dominik Schiller &lt;dominik.schiller@uni-a.de&gt;</span>
+<span class="sd">Date:</span>
+<span class="sd">    13.09.2023</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">discover.utils.thread_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">status_thread_wrapper</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..data</span><span class="w"> </span><span class="kn">import</span> <span class="n">ANIMALS</span><span class="p">,</span> <span class="n">COLORS</span>
+
+
+<div class="viewcode-block" id="get_job_id_from_request_form">
+<a class="viewcode-back" href="../../../api/discover.utils.job_utils.html#discover.utils.job_utils.get_job_id_from_request_form">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_job_id_from_request_form</span><span class="p">(</span><span class="n">request_form</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the logging key from the provided request form</span>
+<span class="sd">    Args:</span>
+<span class="sd">        request_form (dict): Request form from Nova</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">request_form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;jobID&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">get_random_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">return</span> <span class="n">key</span></div>
+
+
+
+<div class="viewcode-block" id="get_random_name">
+<a class="viewcode-back" href="../../../api/discover.utils.job_utils.html#discover.utils.job_utils.get_random_name">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_random_name</span><span class="p">(</span>
+    <span class="n">combo</span><span class="o">=</span><span class="p">(</span><span class="n">COLORS</span><span class="p">,</span> <span class="n">ANIMALS</span><span class="p">),</span> <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;capital&quot;</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">combo</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;combo cannot be empty&quot;</span><span class="p">)</span>
+
+    <span class="n">random_name</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">word_list</span> <span class="ow">in</span> <span class="n">combo</span><span class="p">:</span>
+        <span class="n">part_name</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">word_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">style</span> <span class="o">==</span> <span class="s2">&quot;capital&quot;</span><span class="p">:</span>
+            <span class="n">part_name</span> <span class="o">=</span> <span class="n">part_name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">style</span> <span class="o">==</span> <span class="s2">&quot;lowercase&quot;</span><span class="p">:</span>
+            <span class="n">part_name</span> <span class="o">=</span> <span class="n">part_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">style</span> <span class="o">==</span> <span class="s2">&quot;uppercase&quot;</span><span class="p">:</span>
+            <span class="n">part_name</span> <span class="o">=</span> <span class="n">part_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="n">random_name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random_name</span><span class="p">)</span></div>
+
+
+
+<span class="n">JOBS</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="JobStatus">
+<a class="viewcode-back" href="../../../api/discover.utils.job_utils.html#discover.utils.job_utils.JobStatus">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">JobStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">WAITING</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">RUNNING</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">FINISHED</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">CANCELED</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+
+<div class="viewcode-block" id="Job">
+<a class="viewcode-back" href="../../../api/discover.utils.job_utils.html#discover.utils.job_utils.Job">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Job</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_key</span><span class="p">,</span> <span class="n">interactive_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">job_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">JobStatus</span><span class="o">.</span><span class="n">WAITING</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">job_key</span> <span class="o">=</span> <span class="n">job_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interactive_url</span> <span class="o">=</span> <span class="n">interactive_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_path</span> <span class="o">=</span> <span class="n">log_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">details</span> <span class="o">=</span> <span class="n">details</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">job_type</span> <span class="o">=</span> <span class="n">job_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execution_handler</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">was_canceled</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Job.serializable">
+<a class="viewcode-back" href="../../../api/discover.utils.job_utils.html#discover.utils.job_utils.Job.serializable">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">serializable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Only include serializable fields, avoid execution_handler which contains locks</span>
+        <span class="c1"># Try to get job type from execution handler if available</span>
+        <span class="n">job_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">job_type</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">job_type</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">execution_handler</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">execution_handler</span><span class="p">,</span> <span class="s1">&#39;action&#39;</span><span class="p">):</span>
+            <span class="n">job_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execution_handler</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">execution_handler</span><span class="o">.</span><span class="n">action</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">execution_handler</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="c1"># Extract module name</span>
+        <span class="n">module_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_module_name</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;job_key&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">job_key</span><span class="p">),</span>
+            <span class="s1">&#39;job_type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">job_type</span><span class="p">)</span> <span class="k">if</span> <span class="n">job_type</span> <span class="k">else</span> <span class="s1">&#39;Unknown&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;module_name&#39;</span><span class="p">:</span> <span class="n">module_name</span><span class="p">,</span>
+            <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">),</span>
+            <span class="s1">&#39;progress&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="k">else</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;start_time&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;log_path&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_path</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_path</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_details</span><span class="p">())</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">details</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;interactive_url&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interactive_url</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive_url</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;was_canceled&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">was_canceled</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Job.run">
+<a class="viewcode-back" href="../../../api/discover.utils.job_utils.html#discover.utils.job_utils.Job.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execution_handler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Job.cancel">
+<a class="viewcode-back" href="../../../api/discover.utils.job_utils.html#discover.utils.job_utils.Job.cancel">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execution_handler</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span></div>
+
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sanitize_details</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sanitize sensitive information from job details&quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_utils</span>
+        <span class="k">return</span> <span class="n">log_utils</span><span class="o">.</span><span class="n">sanitize_sensitive_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">details</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_module_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract module name from trainerFilePath in job details.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">details</span> <span class="ow">or</span> <span class="s1">&#39;trainerFilePath&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">details</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">trainer_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;trainerFilePath&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">trainer_path</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">PureWindowsPath</span>
+            <span class="k">return</span> <span class="n">PureWindowsPath</span><span class="p">(</span><span class="n">trainer_path</span><span class="p">)</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">trainer_path</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+
+
+<span class="nd">@status_thread_wrapper</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_new_job</span><span class="p">(</span><span class="n">job_key</span><span class="p">,</span> <span class="n">interactive_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">request_form</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">log_path</span> <span class="o">=</span> <span class="n">log_utils</span><span class="o">.</span><span class="n">get_log_path_for_thread</span><span class="p">(</span><span class="n">job_key</span><span class="p">)</span>
+    <span class="n">job_details</span> <span class="o">=</span> <span class="n">log_utils</span><span class="o">.</span><span class="n">get_log_conform_request</span><span class="p">(</span><span class="n">request_form</span><span class="p">)</span>
+    <span class="n">job</span> <span class="o">=</span> <span class="n">Job</span><span class="p">(</span><span class="n">job_key</span><span class="p">,</span> <span class="n">interactive_url</span><span class="p">,</span> <span class="n">log_path</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="n">job_details</span><span class="p">)</span>
+    <span class="n">JOBS</span><span class="p">[</span><span class="n">job_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="nd">@status_thread_wrapper</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_job</span><span class="p">(</span><span class="n">job_key</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">job_key</span><span class="p">]</span>
+
+<span class="nd">@status_thread_wrapper</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_job</span><span class="p">(</span><span class="n">job_key</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">JOBS</span><span class="p">[</span><span class="n">job_key</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key </span><span class="si">{</span><span class="n">job_key</span><span class="si">}</span><span class="s2"> is not in the dictionary&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@status_thread_wrapper</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_status</span><span class="p">(</span><span class="n">job_key</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="n">JobStatus</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">job_key</span><span class="p">]</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">JobStatus</span><span class="o">.</span><span class="n">RUNNING</span><span class="p">:</span>
+            <span class="n">JOBS</span><span class="p">[</span><span class="n">job_key</span><span class="p">]</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y, %H:%M:%S&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">JobStatus</span><span class="o">.</span><span class="n">FINISHED</span> <span class="ow">or</span> <span class="n">status</span> <span class="o">==</span> <span class="n">JobStatus</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
+            <span class="n">JOBS</span><span class="p">[</span><span class="n">job_key</span><span class="p">]</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y, %H:%M:%S&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key </span><span class="si">{</span><span class="n">job_key</span><span class="si">}</span><span class="s2"> is not in the dictionary&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@status_thread_wrapper</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_progress</span><span class="p">(</span><span class="n">job_key</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">job_key</span><span class="p">]</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="n">progress</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key </span><span class="si">{</span><span class="n">job_key</span><span class="si">}</span><span class="s2"> is not in the dictionary&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@status_thread_wrapper</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_log_path</span><span class="p">(</span><span class="n">job_key</span><span class="p">,</span> <span class="n">log_path</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">JOBS</span><span class="p">[</span><span class="n">job_key</span><span class="p">]</span><span class="o">.</span><span class="n">log_path</span> <span class="o">=</span> <span class="n">log_path</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key </span><span class="si">{</span><span class="n">job_key</span><span class="si">}</span><span class="s2"> is not in the dictionary&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@status_thread_wrapper</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_log_path</span><span class="p">(</span><span class="n">job_key</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JOBS</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">job_key</span><span class="p">)]</span><span class="o">.</span><span class="n">log_path</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key </span><span class="si">{</span><span class="n">job_key</span><span class="si">}</span><span class="s2"> is not in the dictionary&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@status_thread_wrapper</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_all_jobs</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">job</span><span class="o">.</span><span class="n">serializable</span><span class="p">()</span> <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">JOBS</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

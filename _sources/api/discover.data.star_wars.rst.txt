@@ -1,0 +1,7 @@
+discover.data.star\_wars module
+===============================
+
+.. automodule:: discover.data.star_wars
+   :members:
+   :show-inheritance:
+   :undoc-members:

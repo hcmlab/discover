@@ -1,0 +1,28 @@
+discover\_utils.data package
+============================
+
+.. automodule:: discover_utils.data
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover_utils.data.file_reader
+   discover_utils.data.handler
+   discover_utils.data.provider
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover_utils.data.annotation
+   discover_utils.data.data
+   discover_utils.data.static
+   discover_utils.data.stream

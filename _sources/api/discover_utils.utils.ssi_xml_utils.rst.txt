@@ -1,0 +1,7 @@
+discover\_utils.utils.ssi\_xml\_utils module
+============================================
+
+.. automodule:: discover_utils.utils.ssi_xml_utils
+   :members:
+   :show-inheritance:
+   :undoc-members:

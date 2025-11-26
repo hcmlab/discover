@@ -1,0 +1,7 @@
+discover.data.languages module
+==============================
+
+.. automodule:: discover.data.languages
+   :members:
+   :show-inheritance:
+   :undoc-members:

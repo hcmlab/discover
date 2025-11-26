@@ -1,0 +1,204 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; DISCOVER 1.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=fc837d61"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="LENS: Learning and Exploring through Natural language Systems" href="lens.html" />
+    <link rel="prev" title="DISCOVER - A Modular Software Framework for Human Behavior Analysis" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            DISCOVER
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">DISCOVER - A Modular Software Framework for Human Behavior Analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#creating-a-transcript-using-nova">Creating a Transcript using NOVA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#connect-discover">1. Connect Discover</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database-preparation">2. Database preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-discover-interface-explained">3. The DISCOVER interface explained</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-the-transcript">4. Creating the transcript</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lens.html">LENS: Learning and Exploring through Natural language Systems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/blazeface.html">BlazeFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/facemesh.html">FaceMesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/libreface.html">LibreFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/whisperx.html">WhisperX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/lens.html">LENS</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.app.html">discover.app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.backend.html">discover.backend package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.exec.html">discover.exec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.route.html">discover.route package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.utils.html">discover.utils package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DISCOVER</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/examples.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
+</section>
+<section id="creating-a-transcript-using-nova">
+<h1>Creating a Transcript using NOVA<a class="headerlink" href="#creating-a-transcript-using-nova" title="Link to this heading"></a></h1>
+<p>DISCOVER is tightly interwoven with the NOVA annotation tool.
+This means you can use NOVA as a graphical user interface to run discover modules on data streams and annotations that you have already integrated into NOVA.
+In this example we will illustrate how you can create a transcript from an audio signal for multiple session using the WhisperX module.
+We assume that you have a recent and working version of NOVA running on your system and are familiar with the basic NOVA usage and database navigation.</p>
+<section id="connect-discover">
+<h2>1. Connect Discover<a class="headerlink" href="#connect-discover" title="Link to this heading"></a></h2>
+<p>In the first step we need to connect NOVA to DISCOVER.
+To this end open NOVA and click on the gear icon in the top left corner.
+In the settings menu you should see a DISCOVER tab.
+Insert the host ip address and the port number that you used to start the DISCOVER Server, hit apply and you are done.</p>
+<p><span class="raw-html-md"><a href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/nova_discover.png?raw=true"><img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/nova_discover.png?raw=true" alt="Alt Text" width="500" height="200"></a></span></p>
+</section>
+<section id="database-preparation">
+<h2>2. Database preparation<a class="headerlink" href="#database-preparation" title="Link to this heading"></a></h2>
+<p>We already decided to use the WhisperX module to create the transcript.
+Therefore, we first take a quick look at the modules <a class="reference external" href="https://hcmlab.github.io/discover/modules/whisperx.html#">documentation</a> to learn about the required inputs and outputs for the model.</p>
+<p>Under th <code class="docutils literal notranslate"><span class="pre">IO</span></code> section of the module the documentation states the following</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IO</span>
+
+<span class="n">Explanation</span> <span class="n">of</span> <span class="n">inputs</span> <span class="ow">and</span> <span class="n">outputs</span> <span class="k">as</span> <span class="n">specified</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">trainer</span> <span class="n">file</span><span class="p">:</span>
+
+<span class="n">Input</span>
+
+<span class="n">audio</span> <span class="p">(</span><span class="n">Audio</span><span class="p">):</span> <span class="n">The</span> <span class="nb">input</span> <span class="n">audio</span> <span class="n">to</span> <span class="n">transcribe</span>
+
+<span class="n">Output</span>
+
+<span class="n">The</span> <span class="n">output</span> <span class="n">of</span> <span class="n">the</span> <span class="n">model</span><span class="p">:</span>
+
+<span class="n">transcript</span> <span class="p">(</span><span class="n">FreeAnnotation</span><span class="p">):</span> <span class="n">The</span> <span class="n">transcription</span>
+</pre></div>
+</div>
+<p>Which means that we need to pass an input of type <code class="docutils literal notranslate"><span class="pre">Audio</span></code> and specify a <code class="docutils literal notranslate"><span class="pre">FreeAnnotation</span></code> to write the transcript to.</p>
+<p>In our example we assume that you already have a NOVA database containing audio files for which you want to calculate the transcript.
+So there for all we need to prepare is the output annotation for the transcript.
+To this end we create a new annotation scheme in the NOVA database.
+In NOVA click on <code class="docutils literal notranslate"><span class="pre">DATABASE</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Administration</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Manage</span> <span class="pre">Databases</span></code>.
+Select the database you want to work with in the left column and click the <code class="docutils literal notranslate"><span class="pre">add</span></code> button at the bottom of the <code class="docutils literal notranslate"><span class="pre">Schemes</span></code> column.
+Next select the <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">scheme</span> <span class="pre">with</span> <span class="pre">custom</span> <span class="pre">labels</span></code> option and hit next.
+Finally provide a fitting name to scheme (e.g. transcript) and hit <code class="docutils literal notranslate"><span class="pre">ok</span></code>.</p>
+</section>
+<section id="the-discover-interface-explained">
+<h2>3. The DISCOVER interface explained<a class="headerlink" href="#the-discover-interface-explained" title="Link to this heading"></a></h2>
+<p>Now that we are done with our database preparation we can finally calculate the transcript.
+Click on <code class="docutils literal notranslate"><span class="pre">LEARNING</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">DISCOVER</span> <span class="pre">Server</span></code> in NOVA and you will see the following window:</p>
+<p><span class="raw-html-md"><a href="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/discover_module.png?raw=true"><img src="https://github.com/hcmlab/discover/blob/documentation/docs/docsource/imgs/discover_module.png?raw=true" alt="Alt Text" width="500" height="300"></a></span></p>
+<p>Select the respective dataset (1) in the left column.
+The <code class="docutils literal notranslate"><span class="pre">Processor</span></code> column (2) shows all modules that are available on you DISCOVER server instance.
+Select <code class="docutils literal notranslate"><span class="pre">WhisperX</span></code>.
+Column <code class="docutils literal notranslate"><span class="pre">Inputs</span></code> (3) provides you a selection of all streams in your database that are matching the input requirements of <code class="docutils literal notranslate"><span class="pre">WhisperX</span></code>.
+Since <code class="docutils literal notranslate"><span class="pre">WhisperX</span></code> requires a single Audio file as input you should see all audio streams that are associated with the selected dataset.
+Select the fitting stream and role for which you want to extract the transcript.
+Analogously the <code class="docutils literal notranslate"><span class="pre">Output</span></code> column let you select a fitting output annotation scheme, role and annotator for which <code class="docutils literal notranslate"><span class="pre">WhisperX</span></code> should create the transcript in the database.
+Select the Free annotation scheme that we created in step 2, the same role as for the input and an arbitrary annotator.
+Just remember the name :)
+Finally, in the bottom right window you can select various options for the selected module.
+For a detailed explanation of the options refer to the <a class="reference external" href="https://hcmlab.github.io/discover/modules/whisperx.html#">documentation</a> of the module.</p>
+</section>
+<section id="creating-the-transcript">
+<h2>4. Creating the transcript<a class="headerlink" href="#creating-the-transcript" title="Link to this heading"></a></h2>
+<p>Once you are satisfied with your selection hit <code class="docutils literal notranslate"><span class="pre">Send</span></code>.
+Now the text in the bottom left should change to “Process running…” and you should start to see logging output in the log window above the option window on the right side.
+You can now leave NOVA or wait till the process is finished.
+If you want to get information about the current status of the transcript processing you just need to reopen the <code class="docutils literal notranslate"><span class="pre">DISCOVER</span> <span class="pre">server</span></code> window in  NOVA and select the same settings.
+Once the job is done you can load the transcript annotation using <code class="docutils literal notranslate"><span class="pre">DATABASE</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Session</span></code> and select the respective scheme, role and annotator you specified earlier.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction.html" class="btn btn-neutral float-left" title="DISCOVER - A Modular Software Framework for Human Behavior Analysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lens.html" class="btn btn-neutral float-right" title="LENS: Learning and Exploring through Natural language Systems" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+discover.utils.log\_utils module
+================================
+
+.. automodule:: discover.utils.log_utils
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+discover.route.status module
+============================
+
+.. automodule:: discover.route.status
+   :members:
+   :show-inheritance:
+   :undoc-members:

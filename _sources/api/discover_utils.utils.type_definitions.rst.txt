@@ -1,0 +1,7 @@
+discover\_utils.utils.type\_definitions module
+==============================================
+
+.. automodule:: discover_utils.utils.type_definitions
+   :members:
+   :show-inheritance:
+   :undoc-members:

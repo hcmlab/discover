@@ -1,0 +1,7 @@
+discover\_utils.data.annotation module
+======================================
+
+.. automodule:: discover_utils.data.annotation
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,28 @@
+discover package
+================
+
+.. automodule:: discover
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover.backend
+   discover.data
+   discover.exec
+   discover.route
+   discover.templates
+   discover.utils
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover.app

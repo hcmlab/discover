@@ -1,0 +1,16 @@
+discover\_utils.scripts package
+===============================
+
+.. automodule:: discover_utils.scripts
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover_utils.scripts.parsers
+   discover_utils.scripts.process

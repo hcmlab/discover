@@ -1,0 +1,7 @@
+discover.backend.virtual\_environment module
+============================================
+
+.. automodule:: discover.backend.virtual_environment
+   :members:
+   :show-inheritance:
+   :undoc-members:

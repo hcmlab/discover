@@ -1,0 +1,220 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>discover.utils.job_utils module &mdash; DISCOVER 1.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=fc837d61"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="discover.utils.log_utils module" href="discover.utils.log_utils.html" />
+    <link rel="prev" title="discover.utils.import_utils module" href="discover.utils.import_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            DISCOVER
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/introduction.html">DISCOVER - A Modular Software Framework for Human Behavior Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/examples.html#creating-a-transcript-using-nova">Creating a Transcript using NOVA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/lens.html">LENS: Learning and Exploring through Natural language Systems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/blazeface.html">BlazeFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/facemesh.html">FaceMesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/libreface.html">LibreFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/whisperx.html">WhisperX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/lens.html">LENS</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="discover.app.html">discover.app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discover.backend.html">discover.backend package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discover.exec.html">discover.exec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discover.route.html">discover.route package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="discover.utils.html">discover.utils package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="discover.utils.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="discover.utils.env.html">discover.utils.env module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discover.utils.import_utils.html">discover.utils.import_utils module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">discover.utils.job_utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discover.utils.job_utils.Job"><code class="docutils literal notranslate"><span class="pre">Job</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discover.utils.job_utils.JobStatus"><code class="docutils literal notranslate"><span class="pre">JobStatus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discover.utils.job_utils.get_job_id_from_request_form"><code class="docutils literal notranslate"><span class="pre">get_job_id_from_request_form()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discover.utils.job_utils.get_random_name"><code class="docutils literal notranslate"><span class="pre">get_random_name()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="discover.utils.log_utils.html">discover.utils.log_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discover.utils.thread_utils.html">discover.utils.thread_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discover.utils.venv_utils.html">discover.utils.venv_utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DISCOVER</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="discover.utils.html">discover.utils package</a></li>
+      <li class="breadcrumb-item active">discover.utils.job_utils module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/discover.utils.job_utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-discover.utils.job_utils">
+<span id="discover-utils-job-utils-module"></span><h1>discover.utils.job_utils module<a class="headerlink" href="#module-discover.utils.job_utils" title="Link to this heading"></a></h1>
+<p>Utility modules for NOVA-Server Jobs</p>
+<dl class="simple">
+<dt>Author:</dt><dd><p>Dominik Schiller &lt;<a class="reference external" href="mailto:dominik&#46;schiller&#37;&#52;&#48;uni-a&#46;de">dominik<span>&#46;</span>schiller<span>&#64;</span>uni-a<span>&#46;</span>de</a>&gt;</p>
+</dd>
+<dt>Date:</dt><dd><p>13.09.2023</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="discover.utils.job_utils.Job">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discover.utils.job_utils.</span></span><span class="sig-name descname"><span class="pre">Job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discover/utils/job_utils.html#Job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discover.utils.job_utils.Job" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="discover.utils.job_utils.Job.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discover/utils/job_utils.html#Job.cancel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discover.utils.job_utils.Job.cancel" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discover.utils.job_utils.Job.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discover/utils/job_utils.html#Job.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discover.utils.job_utils.Job.run" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discover.utils.job_utils.Job.serializable">
+<span class="sig-name descname"><span class="pre">serializable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discover/utils/job_utils.html#Job.serializable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discover.utils.job_utils.Job.serializable" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="discover.utils.job_utils.JobStatus">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discover.utils.job_utils.</span></span><span class="sig-name descname"><span class="pre">JobStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discover/utils/job_utils.html#JobStatus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discover.utils.job_utils.JobStatus" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="discover.utils.job_utils.JobStatus.CANCELED">
+<span class="sig-name descname"><span class="pre">CANCELED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#discover.utils.job_utils.JobStatus.CANCELED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="discover.utils.job_utils.JobStatus.ERROR">
+<span class="sig-name descname"><span class="pre">ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#discover.utils.job_utils.JobStatus.ERROR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="discover.utils.job_utils.JobStatus.FINISHED">
+<span class="sig-name descname"><span class="pre">FINISHED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#discover.utils.job_utils.JobStatus.FINISHED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="discover.utils.job_utils.JobStatus.RUNNING">
+<span class="sig-name descname"><span class="pre">RUNNING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#discover.utils.job_utils.JobStatus.RUNNING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="discover.utils.job_utils.JobStatus.WAITING">
+<span class="sig-name descname"><span class="pre">WAITING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#discover.utils.job_utils.JobStatus.WAITING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discover.utils.job_utils.get_job_id_from_request_form">
+<span class="sig-prename descclassname"><span class="pre">discover.utils.job_utils.</span></span><span class="sig-name descname"><span class="pre">get_job_id_from_request_form</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_form</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discover/utils/job_utils.html#get_job_id_from_request_form"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discover.utils.job_utils.get_job_id_from_request_form" title="Link to this definition"></a></dt>
+<dd><p>Returns the logging key from the provided request form
+:param request_form: Request form from Nova
+:type request_form: dict</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discover.utils.job_utils.get_random_name">
+<span class="sig-prename descclassname"><span class="pre">discover.utils.job_utils.</span></span><span class="sig-name descname"><span class="pre">get_random_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(['amaranth',</span> <span class="pre">'amber',</span> <span class="pre">'amethyst',</span> <span class="pre">'apricot',</span> <span class="pre">'aqua',</span> <span class="pre">'aquamarine',</span> <span class="pre">'azure',</span> <span class="pre">'beige',</span> <span class="pre">'black',</span> <span class="pre">'blue',</span> <span class="pre">'blush',</span> <span class="pre">'bronze',</span> <span class="pre">'brown',</span> <span class="pre">'chocolate',</span> <span class="pre">'coffee',</span> <span class="pre">'copper',</span> <span class="pre">'coral',</span> <span class="pre">'crimson',</span> <span class="pre">'cyan',</span> <span class="pre">'emerald',</span> <span class="pre">'fuchsia',</span> <span class="pre">'gold',</span> <span class="pre">'gray',</span> <span class="pre">'green',</span> <span class="pre">'harlequin',</span> <span class="pre">'indigo',</span> <span class="pre">'ivory',</span> <span class="pre">'jade',</span> <span class="pre">'lavender',</span> <span class="pre">'lime',</span> <span class="pre">'magenta',</span> <span class="pre">'maroon',</span> <span class="pre">'moccasin',</span> <span class="pre">'olive',</span> <span class="pre">'orange',</span> <span class="pre">'peach',</span> <span class="pre">'pink',</span> <span class="pre">'plum',</span> <span class="pre">'purple',</span> <span class="pre">'red',</span> <span class="pre">'rose',</span> <span class="pre">'salmon',</span> <span class="pre">'sapphire',</span> <span class="pre">'scarlet',</span> <span class="pre">'silver',</span> <span class="pre">'tan',</span> <span class="pre">'teal',</span> <span class="pre">'tomato',</span> <span class="pre">'turquoise',</span> <span class="pre">'violet',</span> <span class="pre">'white',</span> <span class="pre">'yellow'],</span> <span class="pre">['aardvark',</span> <span class="pre">'aardwolf',</span> <span class="pre">'albatross',</span> <span class="pre">'alligator',</span> <span class="pre">'alpaca',</span> <span class="pre">'amphibian',</span> <span class="pre">'anaconda',</span> <span class="pre">'angelfish',</span> <span class="pre">'anglerfish',</span> <span class="pre">'ant',</span> <span class="pre">'anteater',</span> <span class="pre">'antelope',</span> <span class="pre">'antlion',</span> <span class="pre">'ape',</span> <span class="pre">'aphid',</span> <span class="pre">'armadillo',</span> <span class="pre">'asp',</span> <span class="pre">'baboon',</span> <span class="pre">'badger',</span> <span class="pre">'bandicoot',</span> <span class="pre">'barnacle',</span> <span class="pre">'barracuda',</span> <span class="pre">'basilisk',</span> <span class="pre">'bass',</span> <span class="pre">'bat',</span> <span class="pre">'bear',</span> <span class="pre">'beaver',</span> <span class="pre">'bedbug',</span> <span class="pre">'bee',</span> <span class="pre">'beetle',</span> <span class="pre">'bird',</span> <span class="pre">'bison',</span> <span class="pre">'blackbird',</span> <span class="pre">'boa',</span> <span class="pre">'boar',</span> <span class="pre">'bobcat',</span> <span class="pre">'bobolink',</span> <span class="pre">'bonobo',</span> <span class="pre">'booby',</span> <span class="pre">'bovid',</span> <span class="pre">'bug',</span> <span class="pre">'butterfly',</span> <span class="pre">'buzzard',</span> <span class="pre">'camel',</span> <span class="pre">'canid',</span> <span class="pre">'canidae',</span> <span class="pre">'capybara',</span> <span class="pre">'cardinal',</span> <span class="pre">'caribou',</span> <span class="pre">'carp',</span> <span class="pre">'cat',</span> <span class="pre">'caterpillar',</span> <span class="pre">'catfish',</span> <span class="pre">'catshark',</span> <span class="pre">'cattle',</span> <span class="pre">'centipede',</span> <span class="pre">'cephalopod',</span> <span class="pre">'chameleon',</span> <span class="pre">'cheetah',</span> <span class="pre">'chickadee',</span> <span class="pre">'chicken',</span> <span class="pre">'chimpanzee',</span> <span class="pre">'chinchilla',</span> <span class="pre">'chipmunk',</span> <span class="pre">'cicada',</span> <span class="pre">'clam',</span> <span class="pre">'clownfish',</span> <span class="pre">'cobra',</span> <span class="pre">'cockroach',</span> <span class="pre">'cod',</span> <span class="pre">'condor',</span> <span class="pre">'constrictor',</span> <span class="pre">'coral',</span> <span class="pre">'cougar',</span> <span class="pre">'cow',</span> <span class="pre">'coyote',</span> <span class="pre">'crab',</span> <span class="pre">'crane',</span> <span class="pre">'crawdad',</span> <span class="pre">'crayfish',</span> <span class="pre">'cricket',</span> <span class="pre">'crocodile',</span> <span class="pre">'crow',</span> <span class="pre">'cuckoo',</span> <span class="pre">'damselfly',</span> <span class="pre">'deer',</span> <span class="pre">'dingo',</span> <span class="pre">'dinosaur',</span> <span class="pre">'dog',</span> <span class="pre">'dolphin',</span> <span class="pre">'dormouse',</span> <span class="pre">'dove',</span> <span class="pre">'dragon',</span> <span class="pre">'dragonfly',</span> <span class="pre">'duck',</span> <span class="pre">'eagle',</span> <span class="pre">'earthworm',</span> <span class="pre">'earwig',</span> <span class="pre">'echidna',</span> <span class="pre">'eel',</span> <span class="pre">'egret',</span> <span class="pre">'elephant',</span> <span class="pre">'elk',</span> <span class="pre">'emu',</span> <span class="pre">'ermine',</span> <span class="pre">'falcon',</span> <span class="pre">'felidae',</span> <span class="pre">'ferret',</span> <span class="pre">'finch',</span> <span class="pre">'firefly',</span> <span class="pre">'fish',</span> <span class="pre">'flamingo',</span> <span class="pre">'flea',</span> <span class="pre">'fly',</span> <span class="pre">'flyingfish',</span> <span class="pre">'fowl',</span> <span class="pre">'fox',</span> <span class="pre">'frog',</span> <span class="pre">'galliform',</span> <span class="pre">'gamefowl',</span> <span class="pre">'gayal',</span> <span class="pre">'gazelle',</span> <span class="pre">'gecko',</span> <span class="pre">'gerbil',</span> <span class="pre">'gibbon',</span> <span class="pre">'giraffe',</span> <span class="pre">'goat',</span> <span class="pre">'goldfish',</span> <span class="pre">'goose',</span> <span class="pre">'gopher',</span> <span class="pre">'gorilla',</span> <span class="pre">'grasshopper',</span> <span class="pre">'grouse',</span> <span class="pre">'guan',</span> <span class="pre">'guanaco',</span> <span class="pre">'guineafowl',</span> <span class="pre">'gull',</span> <span class="pre">'guppy',</span> <span class="pre">'haddock',</span> <span class="pre">'halibut',</span> <span class="pre">'hamster',</span> <span class="pre">'hare',</span> <span class="pre">'harrier',</span> <span class="pre">'hawk',</span> <span class="pre">'hedgehog',</span> <span class="pre">'heron',</span> <span class="pre">'herring',</span> <span class="pre">'hippopotamus',</span> <span class="pre">'hookworm',</span> <span class="pre">'hornet',</span> <span class="pre">'horse',</span> <span class="pre">'hoverfly',</span> <span class="pre">'hummingbird',</span> <span class="pre">'hyena',</span> <span class="pre">'iguana',</span> <span class="pre">'impala',</span> <span class="pre">'jackal',</span> <span class="pre">'jaguar',</span> <span class="pre">'jay',</span> <span class="pre">'jellyfish',</span> <span class="pre">'junglefowl',</span> <span class="pre">'kangaroo',</span> <span class="pre">'kingfisher',</span> <span class="pre">'kite',</span> <span class="pre">'kiwi',</span> <span class="pre">'koala',</span> <span class="pre">'koi',</span> <span class="pre">'krill',</span> <span class="pre">'ladybug',</span> <span class="pre">'lamprey',</span> <span class="pre">'landfowl',</span> <span class="pre">'lark',</span> <span class="pre">'leech',</span> <span class="pre">'lemming',</span> <span class="pre">'lemur',</span> <span class="pre">'leopard',</span> <span class="pre">'leopon',</span> <span class="pre">'limpet',</span> <span class="pre">'lion',</span> <span class="pre">'lizard',</span> <span class="pre">'llama',</span> <span class="pre">'lobster',</span> <span class="pre">'locust',</span> <span class="pre">'loon',</span> <span class="pre">'louse',</span> <span class="pre">'lungfish',</span> <span class="pre">'lynx',</span> <span class="pre">'macaw',</span> <span class="pre">'mackerel',</span> <span class="pre">'magpie',</span> <span class="pre">'mammal',</span> <span class="pre">'manatee',</span> <span class="pre">'mandrill',</span> <span class="pre">'marlin',</span> <span class="pre">'marmoset',</span> <span class="pre">'marmot',</span> <span class="pre">'marsupial',</span> <span class="pre">'marten',</span> <span class="pre">'mastodon',</span> <span class="pre">'meadowlark',</span> <span class="pre">'meerkat',</span> <span class="pre">'mink',</span> <span class="pre">'minnow',</span> <span class="pre">'mite',</span> <span class="pre">'mockingbird',</span> <span class="pre">'mole',</span> <span class="pre">'mollusk',</span> <span class="pre">'mongoose',</span> <span class="pre">'moose',</span> <span class="pre">'mosquito',</span> <span class="pre">'moth',</span> <span class="pre">'mouse',</span> <span class="pre">'mule',</span> <span class="pre">'muskox',</span> <span class="pre">'narwhal',</span> <span class="pre">'newt',</span> <span class="pre">'nightingale',</span> <span class="pre">'ocelot',</span> <span class="pre">'octopus',</span> <span class="pre">'opossum',</span> <span class="pre">'orangutan',</span> <span class="pre">'orca',</span> <span class="pre">'ostrich',</span> <span class="pre">'otter',</span> <span class="pre">'owl',</span> <span class="pre">'ox',</span> <span class="pre">'panda',</span> <span class="pre">'panther',</span> <span class="pre">'parakeet',</span> <span class="pre">'parrot',</span> <span class="pre">'parrotfish',</span> <span class="pre">'partridge',</span> <span class="pre">'peacock',</span> <span class="pre">'peafowl',</span> <span class="pre">'pelican',</span> <span class="pre">'penguin',</span> <span class="pre">'perch',</span> <span class="pre">'pheasant',</span> <span class="pre">'pigeon',</span> <span class="pre">'pike',</span> <span class="pre">'pinniped',</span> <span class="pre">'piranha',</span> <span class="pre">'planarian',</span> <span class="pre">'platypus',</span> <span class="pre">'pony',</span> <span class="pre">'porcupine',</span> <span class="pre">'porpoise',</span> <span class="pre">'possum',</span> <span class="pre">'prawn',</span> <span class="pre">'primate',</span> <span class="pre">'ptarmigan',</span> <span class="pre">'puffin',</span> <span class="pre">'puma',</span> <span class="pre">'python',</span> <span class="pre">'quail',</span> <span class="pre">'quelea',</span> <span class="pre">'quokka',</span> <span class="pre">'rabbit',</span> <span class="pre">'raccoon',</span> <span class="pre">'rat',</span> <span class="pre">'rattlesnake',</span> <span class="pre">'raven',</span> <span class="pre">'reindeer',</span> <span class="pre">'reptile',</span> <span class="pre">'rhinoceros',</span> <span class="pre">'roadrunner',</span> <span class="pre">'rodent',</span> <span class="pre">'rook',</span> <span class="pre">'rooster',</span> <span class="pre">'roundworm',</span> <span class="pre">'sailfish',</span> <span class="pre">'salamander',</span> <span class="pre">'salmon',</span> <span class="pre">'sawfish',</span> <span class="pre">'scallop',</span> <span class="pre">'scorpion',</span> <span class="pre">'seahorse',</span> <span class="pre">'shark',</span> <span class="pre">'sheep',</span> <span class="pre">'shrew',</span> <span class="pre">'shrimp',</span> <span class="pre">'silkworm',</span> <span class="pre">'silverfish',</span> <span class="pre">'skink',</span> <span class="pre">'skunk',</span> <span class="pre">'sloth',</span> <span class="pre">'slug',</span> <span class="pre">'smelt',</span> <span class="pre">'snail',</span> <span class="pre">'snake',</span> <span class="pre">'snipe',</span> <span class="pre">'sole',</span> <span class="pre">'sparrow',</span> <span class="pre">'spider',</span> <span class="pre">'spoonbill',</span> <span class="pre">'squid',</span> <span class="pre">'squirrel',</span> <span class="pre">'starfish',</span> <span class="pre">'stingray',</span> <span class="pre">'stoat',</span> <span class="pre">'stork',</span> <span class="pre">'sturgeon',</span> <span class="pre">'swallow',</span> <span class="pre">'swan',</span> <span class="pre">'swift',</span> <span class="pre">'swordfish',</span> <span class="pre">'swordtail',</span> <span class="pre">'tahr',</span> <span class="pre">'takin',</span> <span class="pre">'tapir',</span> <span class="pre">'tarantula',</span> <span class="pre">'tarsier',</span> <span class="pre">'termite',</span> <span class="pre">'tern',</span> <span class="pre">'thrush',</span> <span class="pre">'tick',</span> <span class="pre">'tiger',</span> <span class="pre">'tiglon',</span> <span class="pre">'toad',</span> <span class="pre">'tortoise',</span> <span class="pre">'toucan',</span> <span class="pre">'trout',</span> <span class="pre">'tuna',</span> <span class="pre">'turkey',</span> <span class="pre">'turtle',</span> <span class="pre">'tyrannosaurus',</span> <span class="pre">'unicorn',</span> <span class="pre">'urial',</span> <span class="pre">'vicuna',</span> <span class="pre">'viper',</span> <span class="pre">'vole',</span> <span class="pre">'vulture',</span> <span class="pre">'wallaby',</span> <span class="pre">'walrus',</span> <span class="pre">'warbler',</span> <span class="pre">'wasp',</span> <span class="pre">'weasel',</span> <span class="pre">'whale',</span> <span class="pre">'whippet',</span> <span class="pre">'whitefish',</span> <span class="pre">'wildcat',</span> <span class="pre">'wildebeest',</span> <span class="pre">'wildfowl',</span> <span class="pre">'wolf',</span> <span class="pre">'wolverine',</span> <span class="pre">'wombat',</span> <span class="pre">'woodpecker',</span> <span class="pre">'worm',</span> <span class="pre">'wren',</span> <span class="pre">'xerinae',</span> <span class="pre">'yak',</span> <span class="pre">'zebra'])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'capital'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discover/utils/job_utils.html#get_random_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discover.utils.job_utils.get_random_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="discover.utils.import_utils.html" class="btn btn-neutral float-left" title="discover.utils.import_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="discover.utils.log_utils.html" class="btn btn-neutral float-right" title="discover.utils.log_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

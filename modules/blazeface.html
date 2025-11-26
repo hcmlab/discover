@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlazeFace &mdash; DISCOVER 1.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=fc837d61"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="diaristation.html" />
+    <link rel="prev" title="LENS: Learning and Exploring through Natural language Systems" href="../tutorials/lens.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            DISCOVER
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/introduction.html">DISCOVER - A Modular Software Framework for Human Behavior Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/examples.html#creating-a-transcript-using-nova">Creating a Transcript using NOVA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/lens.html">LENS: Learning and Exploring through Natural language Systems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">BlazeFace</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#options">Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#io">IO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#input">Input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#request">Request</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#citation">Citation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="facemesh.html">FaceMesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="libreface.html">LibreFace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whisperx.html">WhisperX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lens.html">LENS</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.app.html">discover.app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.backend.html">discover.backend package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.exec.html">discover.exec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.route.html">discover.route package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/discover.utils.html">discover.utils package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DISCOVER</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">BlazeFace</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/blazeface.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="blazeface">
+<h1>BlazeFace<a class="headerlink" href="#blazeface" title="Link to this heading"></a></h1>
+<p>This module is a Pytorch implementation of blazeface.
+It will the detect the most prominent face in an image and returns a stream containing the coordinates of the bounding
+box as well as the confidence values.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/pdf/1907.05047.pdf">https://arxiv.org/pdf/1907.05047.pdf</a></p></li>
+<li><p><a class="reference external" href="https://github.com/hollance/BlazeFace-PyTorch">https://github.com/hollance/BlazeFace-PyTorch</a></p></li>
+</ul>
+<section id="options">
+<h2>Options<a class="headerlink" href="#options" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">model</span></code> (<code class="docutils literal notranslate"><span class="pre">list</span></code>):  identifier of the model to choose:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">front</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">back</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_suppression_thresh</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) : <code class="docutils literal notranslate"><span class="pre">0.3</span></code>, The minimum non-maximum-suppression threshold for face detection to be considered overlapped.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_score_thresh</span></code> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) : <code class="docutils literal notranslate"><span class="pre">0.5</span></code>, The minimum confidence score for the face detection to be considered successful.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_size</span></code> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) : <code class="docutils literal notranslate"><span class="pre">50</span></code>,  Number of samples to process at once, increases speed but also (V)RAM consumption.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">repeat_last</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) : <code class="docutils literal notranslate"><span class="pre">True</span></code>,  If set to true frames with a confidence below “min_score_thresh” will be replaced with the last frame where the confidence is above the threshold. The confidence of the replaced frame is set to zero.</p></li>
+</ul>
+</section>
+<section id="io">
+<h2>IO<a class="headerlink" href="#io" title="Link to this heading"></a></h2>
+<p>Explanation of inputs and outputs as specified in the trainer file:</p>
+<section id="input">
+<h3>Input<a class="headerlink" href="#input" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">video</span></code> (<code class="docutils literal notranslate"><span class="pre">Video</span></code>): The video input on which the model should detect the faces</p></li>
+</ul>
+</section>
+<section id="output">
+<h3>Output<a class="headerlink" href="#output" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bounding_box</span></code> (<code class="docutils literal notranslate"><span class="pre">stream:SSIStream:feature;face;boundingbox;blazeface</span></code>) : The output stream containing the coordinated of the bounding box. Coordinates are normalized with respect to the image resolution, with 0,0 being the top left corner. Coordinates might be negative or bigger than one. This reflects an extension of the bounding box beyond the image.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ymin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xmin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ymax</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xmax</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">confidence_value</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">landmarks</span></code> (<code class="docutils literal notranslate"><span class="pre">stream:SSIStream:feature;face;landmarks;blazeface</span></code>) : The output stream containing the coordinated of the landmarks. Coordinates are normalized with respect to the image resolution, with 0,0 being the top left corner. Coordinates might be negative or bigger than one. This reflects an extension of the bounding box beyond the image.</p>
+<ul>
+<li><p>The 12 numbers are the y,x-coordinates of the 6 facial landmark keypoints:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">right_exe_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right_eye_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left_eye_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left_eye_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nose_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nose_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mouth_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mouth_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right_ear_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right_ear_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left_ear_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left_ear_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">confidence_value</span></code></p></li>
+<li><p>Tip: these labeled as seen from the perspective of the person, so their right is your left.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<section id="request">
+<h3>Request<a class="headerlink" href="#request" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;jobID&quot;</span> <span class="p">:</span> <span class="s2">&quot;´blaze_face_stream&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">([</span>
+    <span class="p">{</span><span class="s2">&quot;src&quot;</span><span class="p">:</span><span class="s2">&quot;file:stream:video&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;input&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;input_video&quot;</span><span class="p">,</span> <span class="s2">&quot;uri&quot;</span><span class="p">:</span><span class="s2">&quot;path/to/my/file.mp4&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;src&quot;</span><span class="p">:</span><span class="s2">&quot;file:stream:ssistream&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;output_stream&quot;</span><span class="p">,</span>  <span class="s2">&quot;uri&quot;</span><span class="p">:</span><span class="s2">&quot;path/to/my/stream.stream&quot;</span><span class="p">}</span>
+  <span class="p">]),</span>
+  <span class="s2">&quot;trainerFilePath&quot;</span><span class="p">:</span> <span class="s2">&quot;modules</span><span class="se">\\</span><span class="s2">blazeface</span><span class="se">\\</span><span class="s2">blazeface.trainer&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:8080/process&#39;</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Content-type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/x-www-form-urlencoded&#39;</span><span class="p">}</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@article</span><span class="p">{</span><span class="n">bazarevsky2019blazeface</span><span class="p">,</span>
+<span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="n">Blazeface</span><span class="p">:</span> <span class="n">Sub</span><span class="o">-</span><span class="n">millisecond</span> <span class="n">neural</span> <span class="n">face</span> <span class="n">detection</span> <span class="n">on</span> <span class="n">mobile</span> <span class="n">gpus</span><span class="p">},</span>
+<span class="n">author</span><span class="o">=</span><span class="p">{</span><span class="n">Bazarevsky</span><span class="p">,</span> <span class="n">Valentin</span> <span class="ow">and</span> <span class="n">Kartynnik</span><span class="p">,</span> <span class="n">Yury</span> <span class="ow">and</span> <span class="n">Vakunov</span><span class="p">,</span> <span class="n">Andrey</span> <span class="ow">and</span> <span class="n">Raveendran</span><span class="p">,</span> <span class="n">Karthik</span> <span class="ow">and</span> <span class="n">Grundmann</span><span class="p">,</span> <span class="n">Matthias</span><span class="p">},</span>
+<span class="n">journal</span><span class="o">=</span><span class="p">{</span><span class="n">arXiv</span> <span class="n">preprint</span> <span class="n">arXiv</span><span class="p">:</span><span class="mf">1907.05047</span><span class="p">},</span>
+<span class="n">year</span><span class="o">=</span><span class="p">{</span><span class="mi">2019</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p>Integration of the Pytorch BlazeFace implementation by Matthijs Hollemans into DISCOVER.
+This work is licensed under the same terms as MediaPipe (Apache License 2.0)
+<a class="reference external" href="https://github.com/google/mediapipe/blob/master/LICENSE">https://github.com/google/mediapipe/blob/master/LICENSE</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials/lens.html" class="btn btn-neutral float-left" title="LENS: Learning and Exploring through Natural language Systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="diaristation.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

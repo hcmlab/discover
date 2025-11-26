@@ -1,0 +1,7 @@
+discover.data.colors module
+===========================
+
+.. automodule:: discover.data.colors
+   :members:
+   :show-inheritance:
+   :undoc-members:

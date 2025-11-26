@@ -1,0 +1,21 @@
+discover.data package
+=====================
+
+.. automodule:: discover.data
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover.data.adjectives
+   discover.data.animals
+   discover.data.colors
+   discover.data.countries
+   discover.data.languages
+   discover.data.names
+   discover.data.star_wars
