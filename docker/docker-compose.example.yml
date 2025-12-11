@@ -1,0 +1,119 @@
+services:
+  discover:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Specify DISCOVER version from PyPI (e.g., "1.1.0" or "latest")
+        DISCOVER_VERSION: ${DISCOVER_VERSION:-latest}
+    container_name: discover
+    image: discover:latest
+
+    # USER MAPPING
+    # For rootless Docker: Set to your user ID and group ID
+    # Find with: echo "${UID}:${GID}"
+    # For rootful Docker: Can use 1000:1000 or your user's UID/GID
+    user: "${UID:-1000}:${GID:-1000}"
+
+    # NETWORK PORTS
+    # Maps host port to container port 8080
+    # Access DISCOVER at http://localhost:${DISCOVER_PORT}
+    ports:
+      - "${DISCOVER_PORT:-8080}:8080"
+
+    # VOLUME MOUNTS
+    volumes:
+      # CACHE - Stores module virtual environments and model weights
+      # Size: ~71GB+ (grows with new modules)
+      # MUST persist across restarts for venv reuse
+      - ${DISCOVER_CACHE_DIR:-../cache}:/app/cache
+
+      # CML - ML module source directory (read-only)
+      # Clone from: https://github.com/hcmlab/discover-modules
+      # Contains: Module scripts, requirements.txt, version.py
+      - ${DISCOVER_CML_DIR:-../cml}:/app/cml:ro
+
+      # DATA - Training/processing datasets (READ-WRITE)
+      # Your dataset storage location
+      # WARNING: Modules may write results/outputs back to data directory
+      - ${DISCOVER_DATA_DIR:-../data}:/app/data
+
+      # LOG - Job execution logs
+      # Optional but recommended for audit trail
+      - ${DISCOVER_LOG_DIR:-../log}:/app/log
+
+      # TLS CERTIFICATES (Optional)
+      # Uncomment to use your own certificates instead of auto-generated
+      # Place discover_cert.pem and discover_key.pem in ../certs/
+      # - ../certs/discover_cert.pem:/app/discover/discover_cert.pem:ro
+      # - ../certs/discover_key.pem:/app/discover/discover_key.pem:ro
+
+      # TMP - Temporary files (using tmpfs for performance)
+      # Size limit: 10GB (adjust as needed)
+      - type: tmpfs
+        target: /app/tmp
+        tmpfs:
+          size: 10G
+
+    # ENVIRONMENT CONFIGURATION
+    # Set variables in .env file or uncomment below
+    env_file:
+      - .env
+
+    # Alternatively, specify environment variables directly:
+    # environment:
+    #   DISCOVER_HOST: "0.0.0.0"
+    #   DISCOVER_PORT: "8080"
+    #   DISCOVER_USE_TLS: "false"
+    #   DISCOVER_BACKEND: "venv"
+    #   DISCOVER_VIDEO_BACKEND: "IMAGEIO"
+    #   VENV_FORCE_UPDATE: "False"
+    #   VENV_LOG_VERBOSE: "True"
+    #   # For PyTorch CUDA wheels:
+    #   # VENV_EXTRA_INDEX_URLS: "https://download.pytorch.org/whl/cu118"
+
+    # GPU SUPPORT (NVIDIA)
+    # Requires: nvidia-docker2 or NVIDIA Container Toolkit
+    # Install: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html
+    # GPUs are shared between containers (not exclusively occupied)
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all  # Use all available GPUs
+              # To use specific GPU: count: 1, device_ids: ['0']
+              capabilities: [gpu]
+
+    # RESTART POLICY
+    # Options: no, always, on-failure, unless-stopped
+    restart: unless-stopped
+
+    # HEALTH CHECK
+    # Checks if DISCOVER web server is responding
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080').read()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # LOGGING CONFIGURATION
+    # Prevents log files from growing indefinitely
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# NETWORKS (Optional)
+# Uncomment to create custom network for multi-container setups
+# networks:
+#   discover-network:
+#     driver: bridge
+
+# VOLUMES (Optional)
+# Uncomment to use named volumes instead of bind mounts
+# volumes:
+#   discover-cache:
+#   discover-logs:

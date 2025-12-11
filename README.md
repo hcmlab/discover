@@ -156,6 +156,247 @@ Clone or download the modules repository and set the `--cml_dir` parameter to po
 
 You can find the full documentation of the project [here](https://hcmlab.github.io/discover).
 
+## Docker Deployment
+
+### Prerequisites
+
+**Required:**
+- **Docker Engine 20.10+** or **Docker Desktop**
+  ```bash
+  # Ubuntu/Debian - Install Docker Engine
+  curl -fsSL https://get.docker.com -o get-docker.sh
+  sudo sh get-docker.sh
+
+  # Add user to docker group (for rootless)
+  sudo usermod -aG docker $USER
+  newgrp docker
+  ```
+
+- **Docker Compose V2** (plugin version - NOT standalone V1)
+  ```bash
+  # Verify you have V2 (should show v2.x.x)
+  docker compose version
+
+  # If you have old v1, remove it
+  sudo apt remove docker-compose
+
+  # V2 comes with Docker Engine by default
+  # If missing, install docker-compose-plugin
+  sudo apt install docker-compose-plugin
+  ```
+
+**Optional (for GPU acceleration):**
+- **NVIDIA Container Toolkit** (required for ML modules with GPU)
+  ```bash
+  # Ubuntu/Debian
+  distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+  curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+  curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | \
+    sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+  sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+  sudo systemctl restart docker
+
+  # Test GPU access
+  docker run --rm --gpus all nvidia/cuda:12.9.1-runtime-ubuntu24.04 nvidia-smi
+  ```
+
+**Note:** Without NVIDIA Container Toolkit, modules requiring GPU will fall back to CPU (slower).
+
+### Quick Start
+
+**Automated Setup (Recommended):**
+
+```bash
+# Run setup script from docker directory
+cd docker
+./setup.sh
+
+# Clone discover-modules
+cd ..
+git clone https://github.com/hcmlab/discover-modules.git cml
+
+# Start DISCOVER
+cd docker
+docker compose up -d
+```
+
+**Manual Setup:**
+
+1. **Clone discover-modules repository:**
+   ```bash
+   git clone https://github.com/hcmlab/discover-modules.git cml
+   ```
+
+2. **Navigate to docker directory:**
+   ```bash
+   cd docker
+   ```
+
+3. **Create configuration file:**
+   ```bash
+   cp .env.docker.example .env
+   # Edit .env with your paths and settings
+   ```
+
+4. **Set user permissions (for rootless Docker):**
+   ```bash
+   echo "UID=$(id -u)" >> .env
+   echo "GID=$(id -g)" >> .env
+   ```
+
+5. **Build and start:**
+   ```bash
+   docker compose build
+   docker compose up -d
+   ```
+
+   **Note:** The Docker image installs DISCOVER from PyPI (`hcai-discover`). You can specify a version in `.env`:
+   ```bash
+   DISCOVER_VERSION=1.1.0  # or "latest" for newest version
+   ```
+
+   First build takes ~10-15 minutes to download base image and install dependencies.
+
+6. **Access DISCOVER:**
+   - Web interface: http://localhost:8080
+   - API endpoints: http://localhost:8080/api/*
+
+### Verified Modules
+
+The Docker deployment has been tested and verified with:
+- ✅ **WhisperX** - Speech recognition and transcription
+- ✅ **BlazeFace** - Face detection
+- ✅ GPU acceleration (NVIDIA CUDA 12.9)
+- ✅ TLS/HTTPS with self-signed certificates
+- ✅ Module virtual environment isolation
+- ✅ Network drive mounting for datasets
+
+### Configuration
+
+See `docker/docker-compose.example.yml` for detailed configuration options.
+
+**Multi-GPU Setup:** See `docker/MULTI_GPU.md` for instructions on:
+- Running multiple containers per GPU (e.g., 6 containers on H200 with 144GB VRAM)
+- Running one container per GPU for multi-GPU systems
+- Load balancing and memory management strategies
+
+#### Volume Mapping
+
+You can use **relative** or **absolute** paths in `docker/.env`:
+
+**Example with mixed paths:**
+```bash
+# Relative paths (from project root)
+DISCOVER_CACHE_DIR=../cache
+DISCOVER_LOG_DIR=../log
+
+# Absolute paths (e.g., network drives)
+DISCOVER_DATA_DIR=/mnt/datasets/nova/data
+DISCOVER_CML_DIR=/home/user/discover-modules/modules
+```
+
+**Directory purposes:**
+- `cache/` - Module virtual environments and model weights (~71GB+)
+- `cml/` - ML module source (clone from discover-modules repo)
+- `data/` - Your training/processing datasets (read-write)
+- `log/` - Job execution logs
+
+#### GPU Support
+
+DISCOVER automatically uses all available NVIDIA GPUs. To limit GPU usage:
+
+```yaml
+# In docker-compose.yml
+deploy:
+  resources:
+    reservations:
+      devices:
+        - driver: nvidia
+          device_ids: ['0']  # Use only GPU 0
+          capabilities: [gpu]
+```
+
+**Install NVIDIA Container Toolkit:**
+```bash
+# Ubuntu/Debian
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | \
+  sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+sudo apt-get update && sudo apt-get install -y nvidia-docker2
+sudo systemctl restart docker
+```
+
+#### HTTPS/TLS
+
+Enable TLS in `.env`:
+```bash
+DISCOVER_USE_TLS=true
+```
+
+**Auto-generated certificates (development):**
+DISCOVER will generate self-signed certificates on first start.
+
+**Custom certificates (production):**
+Mount your certificates:
+```yaml
+volumes:
+  - ./certs/discover_cert.pem:/app/discover/discover_cert.pem:ro
+  - ./certs/discover_key.pem:/app/discover/discover_key.pem:ro
+```
+
+### Docker Commands
+
+**Note:** Use `docker compose` (with space) for Docker Compose V2, not `docker-compose` (with hyphen).
+
+```bash
+# Build image
+docker compose build
+
+# Start services
+docker compose up -d
+
+# View logs
+docker compose logs -f
+
+# Stop services
+docker compose down
+
+# Rebuild after code changes
+docker compose up -d --build
+
+# Clean up (removes volumes)
+docker compose down -v
+```
+
+### Troubleshooting
+
+**"undefined volume" error:**
+- Create required directories: `mkdir -p cache cml data log`
+- Or use absolute paths in `.env` for directories that don't exist yet
+
+**Permission errors:**
+- Ensure UID/GID in .env match your user
+- Check volume directory permissions on host
+- For network drives, ensure your user has write access
+
+**GPU not detected:**
+- Verify NVIDIA drivers: `nvidia-smi`
+- Check Docker GPU access: `docker run --rm --gpus all nvidia/cuda:11.8.0-base-ubuntu22.04 nvidia-smi`
+
+**Port already in use:**
+- Change `DISCOVER_PORT` in .env
+- Check: `sudo lsof -i :8080`
+
+**Using Docker Compose V1 instead of V2:**
+- Use `docker compose` (with space), not `docker-compose` (with hyphen)
+- If you see "ModuleNotFoundError: No module named 'distutils'", upgrade to V2:
+  ```bash
+  sudo apt remove docker-compose
+  sudo apt install docker-compose-plugin
+  ```
+
 ## Citation
 If you use DISCOVER consider citing the following paper:
 

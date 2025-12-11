@@ -22,6 +22,46 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Create venv**: `python -m venv discover-venv`
 - **Activate**: `source discover-venv/bin/activate` (Linux/macOS) or `discover-venv\Scripts\activate` (Windows)
 
+### Docker Commands
+All Docker files are located in the `docker/` subdirectory. Run commands from there.
+
+**Important:** Use `docker compose` (V2 with space), not `docker-compose` (V1 with hyphen).
+
+**Quick Start:**
+```bash
+cd docker
+./setup.sh                    # Automated setup
+cd .. && git clone https://github.com/hcmlab/discover-modules.git cml
+cd docker
+# Edit .env with your UID/GID and paths
+docker compose build
+docker compose up -d
+```
+
+**Common Commands:**
+- **Build image**: `docker compose build`
+- **Start services**: `docker compose up -d`
+- **View logs**: `docker compose logs -f`
+- **Stop services**: `docker compose down`
+- **Rebuild**: `docker compose build --no-cache && docker compose up -d`
+- **Clean up (removes volumes)**: `docker compose down -v`
+- **Create .env**: `cp .env.docker.example .env` (then edit with your settings)
+- **Shell access**: `docker compose exec discover bash`
+- **GPU test**: `docker compose exec discover nvidia-smi`
+
+**Configuration:**
+- Docker images install DISCOVER from PyPI, not from source
+- Specify version in `.env`: `DISCOVER_VERSION=1.1.0` or `DISCOVER_VERSION=latest`
+- Set `HOST_PORT` for custom browser access port
+- Use `HOST_*` variables for volume mount paths (host machine)
+- Container always uses `/app/*` paths internally
+
+**Verified Modules:**
+- WhisperX (speech recognition)
+- BlazeFace (face detection)
+- GPU acceleration with CUDA 12.9
+- TLS/HTTPS with self-signed certificates
+
 ## Architecture Overview
 
 DISCOVER is a modular Flask-based web server framework for human behavior analysis that uses virtual environments to run machine learning modules in isolation.

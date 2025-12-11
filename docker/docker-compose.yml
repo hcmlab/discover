@@ -1,0 +1,69 @@
+services:
+  discover:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DISCOVER_VERSION: ${DISCOVER_VERSION:-latest}
+    container_name: discover
+    image: discover:latest
+
+    # User mapping for rootless compatibility
+    user: "${UID:-1000}:${GID:-1000}"
+
+    # Port mapping (HOST_PORT:CONTAINER_PORT)
+    ports:
+      - "${HOST_PORT:-8080}:8080"
+
+    # Volume mounts (use HOST_* variables for host paths)
+    volumes:
+      # Persistent volumes (required)
+      - ${HOST_CACHE_DIR:-../cache}:/app/cache
+      - ${HOST_CML_DIR:-../cml}:/app/cml:ro
+      - ${HOST_DATA_DIR:-../data}:/app/data  # READ-WRITE: modules may write results
+      - ${HOST_LOG_DIR:-../log}:/app/log
+
+      # Temporary directory (mounted from host for proper permissions)
+      - ${HOST_TMP_DIR:-../tmp}:/app/tmp
+
+      # Optional: Mount certificates for TLS
+      # - ../certs:/app/certs:ro
+
+    # Environment variables from file
+    env_file:
+      - .env
+
+    # Override paths to use container paths (not host paths)
+    environment:
+      DISCOVER_HOST: "0.0.0.0"  # Always listen on all interfaces
+      DISCOVER_PORT: "8080"      # DISCOVER listens on 8080 inside container
+      DISCOVER_CML_DIR: /app/cml
+      DISCOVER_DATA_DIR: /app/data
+      DISCOVER_CACHE_DIR: /app/cache
+      DISCOVER_LOG_DIR: /app/log
+      DISCOVER_TMP_DIR: /app/tmp
+
+    # GPU support (NVIDIA)
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all  # Use all available GPUs
+              capabilities: [gpu]
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Health check - override Dockerfile healthcheck to disable when using TLS
+    # The Dockerfile healthcheck attempts to use HTTPS but has issues with env vars
+    # For TLS deployments, rely on manual monitoring instead
+    healthcheck:
+      disable: true
+
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

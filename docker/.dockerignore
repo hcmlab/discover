@@ -1,0 +1,6 @@
+# DISCOVER is installed from PyPI, not built from source
+# Only docker-entrypoint.sh needs to be copied
+
+# Ignore everything except the entrypoint script
+*
+!docker-entrypoint.sh
