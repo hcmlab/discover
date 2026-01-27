@@ -45,10 +45,9 @@ services:
       DISCOVER_CACHE_DIR: /app/cache
       DISCOVER_LOG_DIR: /app/log
       DISCOVER_TMP_DIR: /app/tmp
-      # TLS certificate paths (uncomment along with certs volume mount to enable)
-      # DISCOVER_USE_TLS: "true"
-      # DISCOVER_SSL_CERT: /app/certs/discover_cert.pem
-      # DISCOVER_SSL_KEY: /app/certs/discover_key.pem
+      # TLS cert paths default to container paths (configure DISCOVER_USE_TLS in .env)
+      DISCOVER_SSL_CERT: ${DISCOVER_SSL_CERT:-/app/certs/discover_cert.pem}
+      DISCOVER_SSL_KEY: ${DISCOVER_SSL_KEY:-/app/certs/discover_key.pem}
 
     # GPU support (NVIDIA)
     deploy:
