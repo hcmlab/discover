@@ -289,9 +289,12 @@ def _run():
     use_tls = os.environ.get(env.DISCOVER_USE_TLS, "false").lower() == 'true'
     
     if use_tls:
-        ssl_cert = Path(__file__).parent / 'discover_cert.pem'
-        ssl_key = Path(__file__).parent / 'discover_key.pem'
-        
+        # Use environment variables if set, otherwise fall back to package directory
+        default_cert = Path(__file__).parent / 'discover_cert.pem'
+        default_key = Path(__file__).parent / 'discover_key.pem'
+        ssl_cert = Path(os.environ.get(env.DISCOVER_SSL_CERT, default_cert))
+        ssl_key = Path(os.environ.get(env.DISCOVER_SSL_KEY, default_key))
+
         if ssl_cert.exists() and ssl_key.exists():
             server.ssl_adapter = BuiltinSSLAdapter(str(ssl_cert), str(ssl_key))
 

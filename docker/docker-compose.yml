@@ -11,6 +11,9 @@ services:
     # User mapping for rootless compatibility
     user: "${UID:-1000}:${GID:-1000}"
 
+    # Shared memory size (required for PyTorch DataLoader multiprocessing)
+    shm_size: '2gb'
+
     # Port mapping (HOST_PORT:CONTAINER_PORT)
     ports:
       - "${HOST_PORT:-8080}:8080"
@@ -26,8 +29,8 @@ services:
       # Temporary directory (mounted from host for proper permissions)
       - ${HOST_TMP_DIR:-../tmp}:/app/tmp
 
-      # Optional: Mount certificates for TLS
-      # - ../certs:/app/certs:ro
+      # Optional: Mount certificates for TLS (uncomment to enable)
+      # - ${HOST_CERTS_DIR:-../certs}:/app/certs:ro
 
     # Environment variables from file
     env_file:
@@ -42,6 +45,10 @@ services:
       DISCOVER_CACHE_DIR: /app/cache
       DISCOVER_LOG_DIR: /app/log
       DISCOVER_TMP_DIR: /app/tmp
+      # TLS certificate paths (uncomment along with certs volume mount to enable)
+      # DISCOVER_USE_TLS: "true"
+      # DISCOVER_SSL_CERT: /app/certs/discover_cert.pem
+      # DISCOVER_SSL_KEY: /app/certs/discover_key.pem
 
     # GPU support (NVIDIA)
     deploy:
