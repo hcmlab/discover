@@ -3,6 +3,9 @@
 .vscode/
 .idea/
 
+# Claude Code
+CLAUDE.md
+
 # Vagrant
 .vagrant/
 
