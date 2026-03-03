@@ -1,5 +1,9 @@
 # DISCOVER - A Modular Software Framework for Human Behavior Analysis
 
+[![PyPI version](https://img.shields.io/pypi/v/hcai-discover)](https://pypi.org/project/hcai-discover/)
+[![Python](https://img.shields.io/pypi/pyversions/hcai-discover)](https://pypi.org/project/hcai-discover/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://hcmlab.github.io/discover)
 
 ## Overview
 
