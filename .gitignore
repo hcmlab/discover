@@ -213,6 +213,10 @@ nova_server/tests/hcai_nova_dynamic/1.0.0/smile.labels.txt
 /test_files/
 cache
 
+# Debug/scratch logs dumped at project root
+Log_*.csv
+Log_*.txt
+
 # SSL certificates - contain private keys, should not be committed
 *.pem
 *.crt
