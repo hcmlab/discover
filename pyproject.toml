@@ -23,15 +23,16 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3 :: Only"
 ]
 dependencies = [
     "flask==3.0.0",
-    "hcai-discover-utils",
+    "hcai-discover-utils >= 1.1.1",
     "cheroot",
-    "python-dotenv",
+    "python-dotenv >= 1.2.2",
     "psutil",
-    "numpy >= 1.24, < 2.0",
+    "numpy >= 1.24",
     "toml"
 
 ]
