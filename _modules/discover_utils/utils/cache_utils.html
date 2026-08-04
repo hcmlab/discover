@@ -1,0 +1,435 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>discover_utils.utils.cache_utils &mdash; DISCOVER-Utils 1.2.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=ca842793"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            DISCOVER-Utils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DISCOVER-Utils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">discover_utils.utils.cache_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for discover_utils.utils.cache_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utilities for file download and caching. Partially transferred from https://github.com/tensorflow/tensorflow/blob/v2.5.0/tensorflow/python/keras/utils/data_utils.py#L148-L277&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tarfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zipfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mimetypes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tempfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">NamedTemporaryFile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib</span><span class="w"> </span><span class="kn">import</span> <span class="n">request</span><span class="p">,</span> <span class="n">error</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">zipfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZipFile</span>
+
+<div class="viewcode-block" id="retreive_from_url">
+<a class="viewcode-back" href="../../../api/discover_utils.utils.html#discover_utils.utils.cache_utils.retreive_from_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">retreive_from_url</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept-Encoding&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">})</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">fp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_extension</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">))</span>
+            <span class="n">tmp_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">fp</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tmp_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1"># save the output to a file</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span><span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fp</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span></div>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_resolve_hasher</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">file_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns hash algorithm as hashlib function.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;sha256&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span> <span class="ow">and</span> <span class="n">file_hash</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_hash</span><span class="p">)</span> <span class="o">==</span> <span class="mi">64</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+
+    <span class="c1"># This is used only for legacy purposes.</span>
+    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_hash_file</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;sha256&quot;</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">65535</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates a file sha256 or md5 hash.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    ```python</span>
+<span class="sd">    _hash_file(&#39;/path/to/file.zip&#39;)</span>
+<span class="sd">    &#39;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&#39;</span>
+<span class="sd">    ```</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fpath: path to the file being validated</span>
+<span class="sd">        algorithm: hash algorithm, one of `&#39;auto&#39;`, `&#39;sha256&#39;`, or `&#39;md5&#39;`.</span>
+<span class="sd">            The default `&#39;sha256&#39;` uses sha256.</span>
+<span class="sd">            Note: when &#39;auto&#39; is passed as a string (not a hasher object),</span>
+<span class="sd">            it will default to md5 for legacy compatibility.</span>
+<span class="sd">        chunk_size: Bytes to read at a time, important for large files.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The file hash</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="c1"># Note: we don&#39;t have file_hash here, so &#39;auto&#39; will default to md5</span>
+        <span class="n">hasher</span> <span class="o">=</span> <span class="n">_resolve_hasher</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">hasher</span> <span class="o">=</span> <span class="n">algorithm</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fpath_file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">fpath_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">),</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">hasher</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_archive</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">archive_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extracts an archive if it matches tar, tar.gz, tar.bz, or zip formats.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_path: path to the archive file</span>
+<span class="sd">        path: path to extract the archive file</span>
+<span class="sd">        archive_format: Archive format to try for extracting the file.</span>
+<span class="sd">            Options are &#39;auto&#39;, &#39;tar&#39;, &#39;zip&#39;, and None.</span>
+<span class="sd">            &#39;tar&#39; includes tar, tar.gz, and tar.bz files.</span>
+<span class="sd">            The default &#39;auto&#39; is [&#39;tar&#39;, &#39;zip&#39;].</span>
+<span class="sd">            None or an empty list will return no matches found.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if a match was found and an archive extraction was completed,</span>
+<span class="sd">        False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">archive_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">archive_format</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+        <span class="n">archive_format</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tar&quot;</span><span class="p">,</span> <span class="s2">&quot;zip&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">archive_format</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">archive_format</span> <span class="o">=</span> <span class="p">[</span><span class="n">archive_format</span><span class="p">]</span>
+
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">file_path</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+
+    <span class="k">for</span> <span class="n">archive_type</span> <span class="ow">in</span> <span class="n">archive_format</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">archive_type</span> <span class="o">==</span> <span class="s2">&quot;tar&quot;</span><span class="p">:</span>
+            <span class="n">open_fn</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span>
+            <span class="n">is_match_fn</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">is_tarfile</span>
+        <span class="k">if</span> <span class="n">archive_type</span> <span class="o">==</span> <span class="s2">&quot;zip&quot;</span><span class="p">:</span>
+            <span class="n">open_fn</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span>
+            <span class="n">is_match_fn</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">is_zipfile</span>
+
+        <span class="k">if</span> <span class="n">is_match_fn</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">open_fn</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">archive</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">archive</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="k">except</span> <span class="p">(</span><span class="n">tarfile</span><span class="o">.</span><span class="n">TarError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="ne">KeyboardInterrupt</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                    <span class="k">raise</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="retreive_and_unzip">
+<a class="viewcode-back" href="../../../api/discover_utils.utils.html#discover_utils.utils.cache_utils.retreive_and_unzip">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">retreive_and_unzip</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">extract_to</span><span class="o">=</span><span class="s1">&#39;./tmp&#39;</span><span class="p">,</span> <span class="n">tmp_dir</span><span class="o">=</span><span class="s1">&#39;./tmp&#39;</span><span class="p">):</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span>
+    <span class="n">tmp_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">tmp_file</span> <span class="o">=</span> <span class="n">tmp_dir</span> <span class="o">/</span> <span class="n">fn</span>
+
+    <span class="k">if</span> <span class="n">tmp_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;File </span><span class="si">{</span><span class="n">tmp_file</span><span class="si">}</span><span class="s1"> already exists. Skipping download.&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">retreive_from_url</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">tmp_file</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">tmp_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">zObject</span><span class="p">:</span>
+        <span class="n">zObject</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="n">extract_to</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="validate_file">
+<a class="viewcode-back" href="../../../api/discover_utils.utils.html#discover_utils.utils.cache_utils.validate_file">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_file</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">file_hash</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">65535</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validates a file against a sha256 or md5 hash.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fpath: path to the file being validated</span>
+<span class="sd">        file_hash:  The expected hash string of the file.</span>
+<span class="sd">            The sha256 and md5 hash algorithms are both supported.</span>
+<span class="sd">        algorithm: Hash algorithm, one of &#39;auto&#39;, &#39;sha256&#39;, or &#39;md5&#39;.</span>
+<span class="sd">            The default &#39;auto&#39; detects the hash algorithm in use.</span>
+<span class="sd">        chunk_size: Bytes to read at a time, important for large files.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Whether the file is valid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Normalize the expected hash by stripping whitespace and converting to lowercase</span>
+    <span class="n">file_hash</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">file_hash</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="n">hasher</span> <span class="o">=</span> <span class="n">_resolve_hasher</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">file_hash</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">_hash_file</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">hasher</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">))</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">file_hash</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="get_file">
+<a class="viewcode-back" href="../../../api/discover_utils.utils.html#discover_utils.utils.cache_utils.get_file">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_file</span><span class="p">(</span>
+        <span class="n">fname</span><span class="p">,</span>
+        <span class="n">origin</span><span class="p">,</span>
+        <span class="n">untar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">md5_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">file_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">cache_subdir</span><span class="o">=</span><span class="s2">&quot;downloads&quot;</span><span class="p">,</span>
+        <span class="n">hash_algorithm</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">extract</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">archive_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">cache_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">tmp_dir</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Downloads a file from a URL if it not already in the cache.</span>
+
+<span class="sd">    By default, the file at the url `origin` is downloaded to the</span>
+<span class="sd">    cache_dir &#39;~/.hcai_downloads&#39;, placed in the cache_subdir `downloads`,</span>
+<span class="sd">    and given the filename `fname`. The final location of a file</span>
+<span class="sd">    `example.txt` would therefore be `~/.hcai_downloads/downloads/example.txt`.</span>
+
+<span class="sd">    Files in tar, tar.gz, tar.bz, and zip formats can also be extracted.</span>
+<span class="sd">    Passing a hash will verify the file after download. The command line</span>
+<span class="sd">    programs `shasum` and `sha256sum` can compute the hash.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    ```python</span>
+<span class="sd">    #TODO</span>
+<span class="sd">    ```</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fname: Name of the file. If an absolute path `/path/to/file.txt` is</span>
+<span class="sd">            specified the file will be saved at that location.</span>
+<span class="sd">        origin: Original URL of the file.</span>
+<span class="sd">        untar: Deprecated in favor of `extract` argument.</span>
+<span class="sd">            boolean, whether the file should be decompressed</span>
+<span class="sd">        md5_hash: Deprecated in favor of `file_hash` argument.</span>
+<span class="sd">            md5 hash of the file for verification</span>
+<span class="sd">        file_hash: The expected hash string of the file after download.</span>
+<span class="sd">            The sha256 and md5 hash algorithms are both supported.</span>
+<span class="sd">        cache_subdir: Subdirectory under the cache dir where the file is</span>
+<span class="sd">            saved. If an absolute path `/path/to/folder` is</span>
+<span class="sd">            specified the file will be saved at that location.</span>
+<span class="sd">        hash_algorithm: Select the hash algorithm to verify the file.</span>
+<span class="sd">            options are `&#39;md5&#39;`, `&#39;sha256&#39;`, and `&#39;auto&#39;`.</span>
+<span class="sd">            The default &#39;auto&#39; detects the hash algorithm in use.</span>
+<span class="sd">        extract: True tries extracting the file as an Archive, like tar or zip.</span>
+<span class="sd">        archive_format: Archive format to try for extracting the file.</span>
+<span class="sd">            Options are `&#39;auto&#39;`, `&#39;tar&#39;`, `&#39;zip&#39;`, and `None`.</span>
+<span class="sd">            `&#39;tar&#39;` includes tar, tar.gz, and tar.bz files.</span>
+<span class="sd">            The default `&#39;auto&#39;` corresponds to `[&#39;tar&#39;, &#39;zip&#39;]`.</span>
+<span class="sd">            None or an empty list will return no matches found.</span>
+<span class="sd">        cache_dir: Location to store cached files, when None it</span>
+<span class="sd">            defaults to the default directory `~/.nova_utils/`.</span>
+<span class="sd">        tmp_dir: Location to download temporary files, when no tmp_dir is specificed</span>
+<span class="sd">            cache dir is used.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Path to the downloaded file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">cache_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.nova_utils&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">tmp_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">md5_hash</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">file_hash</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">file_hash</span> <span class="o">=</span> <span class="n">md5_hash</span>
+        <span class="n">hash_algorithm</span> <span class="o">=</span> <span class="s2">&quot;md5&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">W_OK</span><span class="p">):</span>
+        <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;.hcai_models&quot;</span><span class="p">)</span>
+
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="n">cache_dir</span> <span class="o">/</span> <span class="n">cache_subdir</span>
+    <span class="n">data_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1">#TODO if a zipfile is loaded we only compare the hash of the zip file. If the original zip file is deleted it</span>
+    <span class="c1"># will be downloaded again every time</span>
+
+    <span class="k">if</span> <span class="n">untar</span><span class="p">:</span>
+        <span class="n">untar_fpath</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="n">fname</span>
+        <span class="n">fpath</span> <span class="o">=</span> <span class="n">untar_fpath</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="p">(</span><span class="n">untar_fpath</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.tar.gz&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fpath</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="n">fname</span>
+
+    <span class="n">download</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">fpath</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="c1"># File found; verify integrity if a hash was provided.</span>
+        <span class="k">if</span> <span class="n">file_hash</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">validate_file</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">file_hash</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">hash_algorithm</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;A local file was found, but it seems to be &quot;</span>
+                    <span class="s2">&quot;incomplete or outdated because the &quot;</span>
+                    <span class="o">+</span> <span class="n">hash_algorithm</span>
+                    <span class="o">+</span> <span class="s2">&quot; file hash does not match the original value of &quot;</span>
+                    <span class="o">+</span> <span class="n">file_hash</span>
+                    <span class="o">+</span> <span class="s2">&quot; so we will re-download the data.&quot;</span>
+                <span class="p">)</span>
+                <span class="n">download</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">download</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading data from&quot;</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+
+        <span class="n">error_msg</span> <span class="o">=</span> <span class="s2">&quot;URL fetch failure on </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2"> -- </span><span class="si">{}</span><span class="s2">&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">tmp_path</span> <span class="o">=</span> <span class="n">tmp_dir</span> <span class="o">/</span> <span class="n">fname</span>
+                <span class="c1">#request.urlretrieve(origin, tmp_path)</span>
+                <span class="n">retreive_from_url</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="n">tmp_path</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="n">fpath</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">error_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+            <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">URLError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">error_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">))</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="ne">KeyboardInterrupt</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fpath</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+            <span class="k">raise</span>
+
+    <span class="k">if</span> <span class="n">untar</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">untar_fpath</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">_extract_archive</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">untar_fpath</span><span class="p">,</span> <span class="n">archive_format</span><span class="o">=</span><span class="s2">&quot;tar&quot;</span><span class="p">)</span>
+            <span class="c1">#fpath.unlink()</span>
+        <span class="k">return</span> <span class="n">untar_fpath</span>
+
+    <span class="k">if</span> <span class="n">extract</span><span class="p">:</span>
+        <span class="n">_extract_archive</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">archive_format</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fpath</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">dotenv</span>
+    <span class="n">dotenv</span><span class="o">.</span><span class="n">load_dotenv</span><span class="p">()</span>
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DISCOVER_DATA_DIR&quot;</span><span class="p">))</span>
+    <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DISCOVER_CACHE_DIR&quot;</span><span class="p">))</span>
+    <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DISCOVER_TMP_DIR&quot;</span><span class="p">))</span>
+    <span class="n">pth_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DISCOVER_TEST_PTH_URL&quot;</span><span class="p">)</span>
+    <span class="n">st_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DISCOVER_TEST_ST_URL&quot;</span><span class="p">)</span>
+
+    <span class="n">get_file</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="s1">&#39;test.safetensor&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">st_url</span><span class="p">)</span>
+
+    <span class="c1"># Download file and get filepath</span>
+    <span class="n">local_fp</span> <span class="o">=</span> <span class="n">get_file</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">data_dir</span><span class="o">/</span><span class="s1">&#39;blazeface.pth&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">pth_url</span><span class="p">)</span>
+
+    <span class="c1"># Untar local file</span>
+    <span class="n">local_fp</span> <span class="o">=</span> <span class="n">get_file</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">data_dir</span><span class="o">/</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">pth_url</span><span class="p">,</span> <span class="n">untar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Unzip local file</span>
+    <span class="n">local_fp</span> <span class="o">=</span> <span class="n">get_file</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">data_dir</span><span class="o">/</span><span class="s1">&#39;blazeface_test.pth.zip&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">pth_url</span><span class="p">,</span> <span class="n">extract</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dominik Schiller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

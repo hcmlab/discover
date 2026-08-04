@@ -1,0 +1,7 @@
+discover.route.fetch\_result module
+===================================
+
+.. automodule:: discover.route.fetch_result
+   :members:
+   :show-inheritance:
+   :undoc-members:

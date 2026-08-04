@@ -1,0 +1,7 @@
+discover\_utils.scripts.parsers module
+======================================
+
+.. automodule:: discover_utils.scripts.parsers
+   :members:
+   :show-inheritance:
+   :undoc-members:

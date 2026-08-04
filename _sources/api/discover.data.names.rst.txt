@@ -1,0 +1,7 @@
+discover.data.names module
+==========================
+
+.. automodule:: discover.data.names
+   :members:
+   :show-inheritance:
+   :undoc-members:

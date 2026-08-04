@@ -1,0 +1,15 @@
+discover.backend package
+========================
+
+.. automodule:: discover.backend
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover.backend.virtual_environment

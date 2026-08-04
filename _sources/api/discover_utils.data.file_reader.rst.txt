@@ -1,0 +1,15 @@
+discover\_utils.data.file\_reader package
+=========================================
+
+.. automodule:: discover_utils.data.file_reader
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover_utils.data.file_reader.video

@@ -1,0 +1,7 @@
+discover.data.animals module
+============================
+
+.. automodule:: discover.data.animals
+   :members:
+   :show-inheritance:
+   :undoc-members:

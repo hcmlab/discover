@@ -1,0 +1,7 @@
+discover\_utils.data.file\_reader.video.pyav module
+===================================================
+
+.. automodule:: discover_utils.data.file_reader.video.pyav
+   :members:
+   :show-inheritance:
+   :undoc-members:

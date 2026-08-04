@@ -1,0 +1,7 @@
+discover\_utils.interfaces.server\_module module
+================================================
+
+.. automodule:: discover_utils.interfaces.server_module
+   :members:
+   :show-inheritance:
+   :undoc-members:

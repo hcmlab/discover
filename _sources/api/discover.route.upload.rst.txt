@@ -1,0 +1,7 @@
+discover.route.upload module
+============================
+
+.. automodule:: discover.route.upload
+   :members:
+   :show-inheritance:
+   :undoc-members:

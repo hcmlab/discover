@@ -1,0 +1,19 @@
+discover\_utils.data.handler package
+====================================
+
+.. automodule:: discover_utils.data.handler
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   discover_utils.data.handler.file_handler
+   discover_utils.data.handler.ihandler
+   discover_utils.data.handler.nova_db_handler
+   discover_utils.data.handler.request_handler
+   discover_utils.data.handler.url_handler

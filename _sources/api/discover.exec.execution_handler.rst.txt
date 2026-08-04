@@ -1,0 +1,7 @@
+discover.exec.execution\_handler module
+=======================================
+
+.. automodule:: discover.exec.execution_handler
+   :members:
+   :show-inheritance:
+   :undoc-members:

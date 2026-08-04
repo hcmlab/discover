@@ -1,0 +1,7 @@
+discover\_utils.data.handler.ihandler module
+============================================
+
+.. automodule:: discover_utils.data.handler.ihandler
+   :members:
+   :show-inheritance:
+   :undoc-members:

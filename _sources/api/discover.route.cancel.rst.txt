@@ -1,0 +1,7 @@
+discover.route.cancel module
+============================
+
+.. automodule:: discover.route.cancel
+   :members:
+   :show-inheritance:
+   :undoc-members:

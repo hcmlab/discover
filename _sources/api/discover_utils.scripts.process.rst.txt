@@ -1,0 +1,7 @@
+discover\_utils.scripts.process module
+======================================
+
+.. automodule:: discover_utils.scripts.process
+   :members:
+   :show-inheritance:
+   :undoc-members:

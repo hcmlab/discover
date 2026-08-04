@@ -1,0 +1,7 @@
+discover
+========
+
+.. toctree::
+   :maxdepth: 8
+
+   discover
