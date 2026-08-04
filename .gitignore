@@ -217,6 +217,13 @@ cache
 Log_*.csv
 Log_*.txt
 
+# Model weights - downloaded at runtime, never committed
+weights_*/
+*.pt
+*.pth
+*.onnx
+*.safetensors
+
 # SSL certificates - contain private keys, should not be committed
 *.pem
 *.crt
